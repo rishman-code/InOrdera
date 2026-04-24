@@ -992,9 +992,14 @@ footer{background:var(--ink);padding:60px 40px 40px}
 <div class="cta-band" id="cta">
   <h2>Meet your new<br>AI team member.</h2>
   <p>Book a free demo. We'll show InOrdera live on your own menu in 30 minutes — answering calls, upselling, and flagging allergens.</p>
-  <div class="cta-form">
-    <input class="cta-input" type="email" placeholder="your@restaurant.com">
-    <button class="cta-btn">Book Demo</button>
+  <form class="cta-form" name="book-demo" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="demo-form">
+    <input type="hidden" name="form-name" value="book-demo">
+    <input type="hidden" name="bot-field">
+    <input class="cta-input" type="email" name="email" placeholder="your@restaurant.com" required>
+    <button type="submit" class="cta-btn">Book Demo</button>
+  </form>
+  <div id="form-success" style="display:none;background:rgba(255,255,255,0.15);border-radius:var(--r);padding:16px 24px;max-width:420px;margin:0 auto;font-size:15px;color:#fff;position:relative">
+    Thanks! We'll be in touch shortly.
   </div>
   <p class="cta-note">Free 14-day trial · No credit card required · quick setup</p>
 </div>
@@ -1133,6 +1138,22 @@ function rotateWord() {
   }, 360);
 }
 setInterval(rotateWord, 2400);
+
+/* ── DEMO FORM ──────────────────────────────────── */
+document.getElementById('demo-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = this;
+  fetch('/', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    body: new URLSearchParams(new FormData(form)).toString()
+  }).then(() => {
+    form.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }).catch(() => {
+    form.submit();
+  });
+});
 
 /* ── TWEAKS TOGGLE ──────────────────────────────── */
 window.addEventListener('message', e => {
