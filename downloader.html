@@ -1,0 +1,2559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InOrdera — Download Files</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f5f6ff;color:#0b1f2e;padding:60px 40px;max-width:600px;margin:0 auto}
+h1{font-size:28px;font-weight:800;margin-bottom:8px}
+p{font-size:15px;color:#3d5a6e;margin-bottom:32px;line-height:1.6}
+.btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:16px 20px;background:#fff;border:1.5px solid rgba(11,31,46,0.14);border-radius:10px;font-size:15px;font-weight:600;color:#0b1f2e;cursor:pointer;margin-bottom:10px;transition:all 0.15s;text-align:left}
+.btn:hover{border-color:#4f46e5;color:#4f46e5;transform:translateX(3px)}
+.btn span{font-size:12px;font-weight:400;color:#8aa5b5}
+.all{background:#4f46e5;color:#fff;border-color:#4f46e5;margin-bottom:32px}
+.all:hover{background:#4338ca;border-color:#4338ca;color:#fff}
+</style>
+</head>
+<body>
+<h1>InOrdera Files</h1>
+<p>Click each button to download the file, then put all 6 files in the same folder before uploading to Netlify.</p>
+<button class="btn all" onclick="downloadAll()">⬇ Download all 6 files</button>
+<button class="btn" onclick="dl('InOrdera_html')"><span style="font-family:monospace">InOrdera.html</span> <span>HTML</span></button>
+<button class="btn" onclick="dl('careers_html')"><span style="font-family:monospace">careers.html</span> <span>HTML</span></button>
+<button class="btn" onclick="dl('privacy_policy_html')"><span style="font-family:monospace">privacy-policy.html</span> <span>HTML</span></button>
+<button class="btn" onclick="dl('terms_of_service_html')"><span style="font-family:monospace">terms-of-service.html</span> <span>HTML</span></button>
+<button class="btn" onclick="dl('cookie_policy_html')"><span style="font-family:monospace">cookie-policy.html</span> <span>HTML</span></button>
+<button class="btn" onclick="dl('gdpr_html')"><span style="font-family:monospace">gdpr.html</span> <span>HTML</span></button>
+<script>
+const InOrdera_html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InOrdera — AI Voice & Chat Ordering for Independent Restaurants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── THEME TOKENS ─────────────────────────────────────── */
+:root {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --accent2: #f97316;
+  --accent2-hover: #ea6c0a;
+  --border: rgba(79,70,229,0.10);
+  --border2: rgba(11,31,46,0.14);
+  --shadow: 0 2px 16px rgba(79,70,229,0.12);
+  --shadow-lg: 0 8px 40px rgba(11,31,46,0.10);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+[data-theme="indigo"] {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --accent2: #f97316;
+  --accent2-hover: #ea6c0a;
+  --border: rgba(79,70,229,0.10);
+  --shadow: 0 2px 16px rgba(79,70,229,0.12);
+}
+[data-theme="forest"] {
+  --bg: #f5fbf5;
+  --bg2: #eaf5ea;
+  --accent: #16a34a;
+  --accent-hover: #138a3f;
+  --accent-light: #dcfce7;
+  --accent2: #d97706;
+  --accent2-hover: #c46a05;
+  --border: rgba(22,163,74,0.10);
+  --shadow: 0 2px 16px rgba(22,163,74,0.12);
+}
+
+/* ── RESET ────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+img{display:block;max-width:100%}
+
+/* ── NAV ─────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(11,31,46,0.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:#fff}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero{
+  padding:148px 40px 80px;
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr;gap:60px;align-items:center;
+  text-align:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent-light);color:var(--accent);
+  font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  padding:5px 12px;border-radius:40px;margin-bottom:24px;
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+h1{
+  font-family:var(--fd);font-size:clamp(42px,4.5vw,68px);
+  font-weight:800;line-height:1.04;letter-spacing:-0.035em;
+  color:var(--ink);margin-bottom:22px;
+}
+h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:18px;font-weight:400;color:var(--ink2);max-width:600px;line-height:1.7;margin-bottom:36px;margin-left:auto;margin-right:auto}
+.hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center}
+.btn-primary{
+  background:var(--accent2);color:#fff;
+  font-size:15px;font-weight:600;padding:15px 32px;border-radius:var(--r);
+  transition:background 0.18s,transform 0.12s;
+  box-shadow:0 4px 16px rgba(255,92,53,0.28);
+}
+.btn-primary:hover{background:var(--accent2-hover);transform:translateY(-2px)}
+.btn-secondary{
+  background:transparent;color:var(--ink2);border:1.5px solid var(--border2);
+  font-size:15px;font-weight:500;padding:14px 28px;border-radius:var(--r);
+  transition:all 0.18s;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.hero-trust{margin-top:40px;display:flex;align-items:center;gap:16px;font-size:13px;color:var(--ink3);justify-content:center}
+.hero-trust strong{color:var(--ink2)}
+.hero-stars{color:#f59e0b;letter-spacing:-2px;font-size:16px}
+
+/* Hero visual */
+.hero-visual{position:relative}
+.phone-card{
+  background:var(--surface);border-radius:20px;
+  box-shadow:var(--shadow-lg);border:1px solid var(--border);
+  overflow:hidden;
+}
+.phone-topbar{
+  background:var(--ink);padding:14px 20px;
+  display:flex;align-items:center;gap:10px;
+}
+.phone-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.3)}
+.phone-dot-g{background:#4ade80}
+.phone-label{font-size:12px;color:rgba(255,255,255,0.5);margin-left:4px;font-family:monospace}
+.chat-body{padding:20px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+.chat-msg{max-width:75%;padding:11px 15px;border-radius:14px;font-size:14px;line-height:1.5}
+.chat-ai{background:var(--surface);border:1px solid var(--border);color:var(--ink);border-radius:14px 14px 14px 4px}
+.chat-user{background:var(--accent);color:#fff;margin-left:auto;border-radius:14px 14px 4px 14px}
+.chat-typing{display:flex;gap:4px;align-items:center;padding:11px 15px;background:var(--surface);border:1px solid var(--border);border-radius:14px 14px 14px 4px;width:fit-content}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--ink3);animation:blink 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:0.2s}
+.chat-typing span:nth-child(3){animation-delay:0.4s}
+@keyframes blink{0%,80%,100%{opacity:0.3}40%{opacity:1}}
+.hero-float-1,.hero-float-2{
+  position:absolute;background:var(--surface);border-radius:12px;
+  box-shadow:var(--shadow-lg);border:1px solid var(--border);
+  padding:12px 16px;font-size:13px;font-weight:500;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-float-1{top:-24px;right:-24px;color:var(--ink)}
+.hero-float-2{bottom:24px;left:-32px;color:var(--ink)}
+.float-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.fi-green{background:#d1fae5}
+.fi-amber{background:#fef3c7}
+
+/* ── TICKER STRIP ─────────────────────────────────────── */
+.ticker{
+  background:var(--ink);padding:14px 0;overflow:hidden;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.ticker-inner{display:flex;gap:0;animation:ticker 24s linear infinite;white-space:nowrap;width:max-content}
+.ticker-item{
+  padding:0 48px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);
+  display:flex;align-items:center;gap:12px;
+}
+.ticker-item strong{color:#fff}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── LOGOS ────────────────────────────────────────────── */
+.logos-section{padding:56px 40px;max-width:1200px;margin:0 auto;text-align:center}
+.logos-label{font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:28px}
+.logos-row{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap}
+.logo-item{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--ink3);letter-spacing:-0.02em;opacity:0.55;transition:opacity 0.2s}
+.logo-item:hover{opacity:1}
+
+/* ── SECTION WRAPPER ──────────────────────────────────── */
+.section{padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-center{text-align:center}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h2{font-family:var(--fd);font-size:clamp(30px,3.2vw,50px);font-weight:800;line-height:1.08;letter-spacing:-0.03em;color:var(--ink);margin-bottom:16px}
+h2 em{font-style:normal;color:var(--accent)}
+.section-intro{font-size:17px;color:var(--ink2);max-width:560px;line-height:1.75}
+.section-center .section-intro{margin:0 auto}
+.divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* ── PROBLEM ─────────────────────────────────────────── */
+.problem-bg{background:var(--ink);padding:80px 40px}
+.problem-inner{max-width:1200px;margin:0 auto}
+.problem-bg .eyebrow{color:rgba(255,255,255,0.4)}
+.problem-bg h2{color:#fff}
+.problem-bg h2 em{color:#ff7d5e}
+.problem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.07);border-radius:var(--r);overflow:hidden;margin-top:56px}
+.problem-card{background:rgba(255,255,255,0.04);padding:36px 28px;transition:background 0.2s}
+.problem-card:hover{background:rgba(255,255,255,0.08)}
+.prob-num{font-family:var(--fd);font-size:52px;font-weight:800;line-height:1;letter-spacing:-0.04em;color:#ff7d5e;margin-bottom:10px}
+.prob-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:8px}
+.prob-body{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65}
+
+/* ── SOLUTION ─────────────────────────────────────────── */
+.solution-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
+.solution-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:20px;padding:40px;position:relative;overflow:hidden;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.solution-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.solution-card.featured{border-color:var(--accent);background:var(--accent-light)}
+.solution-icon{
+  width:52px;height:52px;background:var(--accent-light);
+  border-radius:14px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+}
+.solution-icon svg{width:26px;height:26px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.solution-card.featured .solution-icon{background:rgba(11,155,131,0.18)}
+.solution-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.solution-body{font-size:15px;color:var(--ink2);line-height:1.7;margin-bottom:20px}
+.solution-pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{
+  background:var(--bg2);border:1px solid var(--border);
+  font-size:12px;font-weight:500;color:var(--ink2);
+  padding:5px 12px;border-radius:40px;
+}
+.solution-card.featured .pill{background:rgba(11,155,131,0.12);border-color:rgba(11,155,131,0.2);color:var(--accent)}
+
+/* ── FEATURES ─────────────────────────────────────────── */
+.features-bg{background:var(--bg2);padding:100px 40px}
+.features-inner{max-width:1200px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.feat-card{
+  background:var(--surface);border-radius:16px;padding:32px;
+  border:1px solid var(--border);transition:box-shadow 0.2s,transform 0.2s;
+}
+.feat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.feat-card:nth-child(1) .feat-icon-bg{background:#fef9c3}
+.feat-card:nth-child(2) .feat-icon-bg{background:#fee2e2}
+.feat-card:nth-child(3) .feat-icon-bg{background:#ede9fe}
+.feat-card:nth-child(4) .feat-icon-bg{background:#d1fae5}
+.feat-card:nth-child(5) .feat-icon-bg{background:#fce7f3}
+.feat-card:nth-child(6) .feat-icon-bg{background:#dbeafe}
+.feat-icon-bg{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:20px}
+.feat-title{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.feat-body{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* ── ROI ──────────────────────────────────────────────── */
+.roi-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:56px}
+.roi-table{border-radius:16px;overflow:hidden;border:1.5px solid var(--border);background:var(--surface)}
+.roi-row{display:grid;grid-template-columns:1fr 120px;gap:0;border-bottom:1px solid var(--border)}
+.roi-row:last-child{border:none}
+.roi-row.header{background:var(--bg2);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3)}
+.roi-row.total{background:var(--accent-light)}
+.roi-cell{padding:14px 18px;font-size:14px;color:var(--ink2)}
+.roi-cell:nth-child(2),.roi-cell:nth-child(3){text-align:right;font-weight:600;color:var(--ink)}
+.roi-row.total .roi-cell{color:var(--accent);font-weight:700;font-size:15px}
+.roi-row.header .roi-cell{color:var(--ink3);font-weight:600}
+.roi-aside h3{font-family:var(--fd);font-size:32px;font-weight:800;letter-spacing:-0.03em;color:var(--ink);line-height:1.2;margin-bottom:20px}
+.roi-aside h3 em{font-style:normal;color:var(--accent)}
+.roi-aside p{font-size:16px;color:var(--ink2);line-height:1.7;margin-bottom:24px}
+.roi-stat-row{display:flex;gap:32px;margin-top:28px}
+.roi-stat{display:flex;flex-direction:column}
+.roi-stat-num{font-family:var(--fd);font-size:36px;font-weight:800;letter-spacing:-0.04em;color:var(--accent)}
+.roi-stat-label{font-size:12px;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
+
+/* ── WHY inordera (COMPETITIVE) ────────────────────────── */
+.comp-bg{background:var(--ink);padding:100px 40px}
+.comp-inner{max-width:1200px;margin:0 auto}
+.comp-bg .eyebrow{color:rgba(255,255,255,0.4)}
+.comp-bg h2{color:#fff}
+.comp-bg h2 em{color:var(--accent)}
+.comp-bg .section-intro{color:rgba(255,255,255,0.55)}
+.comp-table{margin-top:56px;background:rgba(255,255,255,0.04);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+.comp-row{display:grid;grid-template-columns:200px repeat(6,1fr);border-bottom:1px solid rgba(255,255,255,0.07)}
+.comp-row:last-child{border:none}
+.comp-row.header{background:rgba(255,255,255,0.06)}
+.comp-cell{padding:14px 16px;font-size:13px;color:rgba(255,255,255,0.5);text-align:center;display:flex;align-items:center;justify-content:center}
+.comp-cell.left{justify-content:flex-start;font-weight:500;color:rgba(255,255,255,0.7);text-align:left}
+.comp-row.header .comp-cell{font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+.comp-row.header .comp-cell.yd{color:var(--accent)}
+.comp-cell.yd{background:rgba(11,155,131,0.08)}
+.check{color:#4ade80;font-size:16px}
+.cross{color:rgba(255,255,255,0.2);font-size:14px}
+.partial{color:#fbbf24;font-size:13px}
+.comp-price{font-weight:600;font-size:13px}
+.comp-price.good{color:#4ade80}
+.comp-price.bad{color:rgba(255,255,255,0.35)}
+
+/* ── PRICING ─────────────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.pricing-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:20px;padding:36px;position:relative;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.pricing-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.pricing-card.popular{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
+.popular-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--accent);color:#fff;font-size:11px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:40px;
+  white-space:nowrap;
+}
+.plan-name{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+.plan-price{font-family:var(--fd);font-size:44px;font-weight:800;letter-spacing:-0.04em;color:var(--ink);line-height:1}
+.plan-price span{font-size:18px;font-weight:500;color:var(--ink3);vertical-align:super;font-family:var(--fb)}
+.plan-freq{font-size:14px;color:var(--ink3);margin-bottom:6px}
+.plan-tagline{font-size:14px;color:var(--ink2);margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:32px}
+.plan-features li{font-size:14px;color:var(--ink2);display:flex;align-items:flex-start;gap:10px}
+.plan-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px}
+.plan-features li.no::before{content:'—';color:var(--ink3)}
+.plan-features li.no{color:var(--ink3)}
+.btn-plan{
+  width:100%;padding:14px;border-radius:var(--r);font-size:15px;font-weight:600;
+  background:var(--accent);color:#fff;transition:background 0.18s;
+}
+.btn-plan:hover{background:var(--accent-hover)}
+.btn-plan.outline{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn-plan.outline:hover{background:var(--accent-light)}
+
+/* ── TESTIMONIALS ─────────────────────────────────────── */
+.testi-bg{background:var(--bg2);padding:100px 40px}
+.testi-inner{max-width:1200px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+.testi-card{
+  background:var(--surface);border-radius:16px;border:1px solid var(--border);
+  padding:36px;transition:box-shadow 0.2s;
+}
+.testi-card:hover{box-shadow:var(--shadow-lg)}
+.testi-stars{color:#f59e0b;font-size:15px;margin-bottom:16px;letter-spacing:1px}
+.testi-quote{font-size:16px;color:var(--ink);line-height:1.7;margin-bottom:24px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--accent-light);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fd);font-size:16px;font-weight:700;color:var(--accent);flex-shrink:0;
+}
+.testi-name{font-size:14px;font-weight:600;color:var(--ink)}
+.testi-role{font-size:12px;color:var(--ink3)}
+
+/* ── FAQ ──────────────────────────────────────────────── */
+.faq-list{margin-top:56px;max-width:760px;margin-left:auto;margin-right:auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 0;cursor:pointer;
+  font-size:16px;font-weight:600;color:var(--ink);
+  list-style:none;gap:16px;
+}
+.faq-q::-webkit-details-marker{display:none}
+.faq-q .faq-arrow{
+  width:28px;height:28px;border-radius:50%;background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background 0.18s,transform 0.24s;
+  font-size:14px;color:var(--ink2);
+}
+details[open] .faq-arrow{transform:rotate(180deg);background:var(--accent-light);color:var(--accent)}
+.faq-a{padding:0 0 20px;font-size:15px;color:var(--ink2);line-height:1.75;max-width:680px}
+
+/* ── FINAL CTA ────────────────────────────────────────── */
+.cta-band{
+  background:var(--accent);padding:80px 40px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-band::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cta-band h2{font-family:var(--fd);font-size:clamp(32px,3.5vw,56px);font-weight:800;letter-spacing:-0.03em;color:#fff;margin-bottom:16px;position:relative}
+.cta-band p{font-size:17px;color:rgba(255,255,255,0.8);margin-bottom:36px;position:relative}
+.cta-form{display:flex;gap:0;max-width:420px;margin:0 auto 14px;position:relative}
+.cta-input{
+  flex:1;padding:15px 20px;background:#fff;border:none;border-radius:var(--r) 0 0 var(--r);
+  font-family:var(--fb);font-size:15px;color:var(--ink);outline:none;
+}
+.cta-input::placeholder{color:var(--ink3)}
+.cta-btn{
+  background:var(--ink);color:#fff;font-size:14px;font-weight:600;
+  padding:15px 24px;border-radius:0 var(--r) var(--r) 0;border:none;cursor:pointer;
+  white-space:nowrap;transition:background 0.18s;
+}
+.cta-btn:hover{background:#1e3548}
+.cta-note{font-size:12px;color:rgba(255,255,255,0.6);position:relative}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+
+/* ── ROTATING WORD ───────────────────────────────────── */
+.rotating-word {
+  display: inline-block;
+  position: relative;
+  min-width: 280px;
+  transition: opacity 0.35s, transform 0.35s;
+}
+.rotating-word.fade-out { opacity: 0; transform: translateY(-10px); }
+.rotating-word.fade-in  { opacity: 0; transform: translateY(12px); }
+
+/* ── STAT CARDS ───────────────────────────────────────── */
+.stats-band {
+  background: var(--ink);
+  padding: 80px 40px;
+}
+.stats-inner { max-width: 1200px; margin: 0 auto; }
+.stats-band .eyebrow { color: rgba(255,255,255,0.4); margin-bottom: 40px; text-align: center; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.stat-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: background 0.2s, transform 0.2s;
+}
+.stat-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-3px); }
+.stat-card-num {
+  font-family: var(--fd);
+  font-size: 48px; font-weight: 800; line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.stat-card-label {
+  font-size: 15px; font-weight: 600;
+  color: #fff; margin-bottom: 8px;
+}
+.stat-card-desc {
+  font-size: 13px; color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+}
+.stat-card-source {
+  display: inline-block; margin-top: 16px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 12px; width: 100%;
+}
+
+/* ── POS LOGOS ────────────────────────────────────────── */
+.pos-logo{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:40px;
+  background:var(--surface);border:1.5px solid var(--border2);
+  font-family:var(--fd);font-size:14px;font-weight:600;color:var(--ink2);
+  transition:border-color 0.18s,color 0.18s,box-shadow 0.18s;
+  cursor:default;
+}
+.pos-logo:hover{border-color:var(--accent);color:var(--ink);box-shadow:var(--shadow)}
+
+/* ── REVEAL ANIMATIONS ────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s,transform 0.65s}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:0.08s}
+.reveal-d2{transition-delay:0.16s}
+.reveal-d3{transition-delay:0.24s}
+
+/* ── TWEAKS ───────────────────────────────────────────── */
+#tweaks{
+  display:none;position:fixed;bottom:24px;right:24px;z-index:9999;
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:14px;padding:20px;width:230px;
+  box-shadow:var(--shadow-lg);
+}
+.tweaks-h{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.tw-row{margin-bottom:14px}
+.tw-label{font-size:12px;color:var(--ink2);margin-bottom:8px;display:block;font-weight:500}
+.tw-swatches{display:flex;gap:8px}
+.tw-sw{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform 0.15s}
+.tw-sw:hover{transform:scale(1.15)}
+.tw-sw.on{border-color:var(--ink)}
+.tw-tabs{display:flex;gap:6px}
+.tw-tab{flex:1;padding:6px 4px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--ink2);font-size:11px;font-family:var(--fb);cursor:pointer;text-align:center;transition:all 0.15s}
+.tw-tab.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <!-- phone handset -->
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <!-- chat bubble -->
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">In<span>Ordera</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#solution">Platform</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#roi">ROI</a></li>
+      <li><a href="#pricing">Plans</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <button class="btn-nav" onclick="document.getElementById('cta').scrollIntoView()">Book a Demo</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div style="background:var(--bg)">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">Your AI Team Member for Independent Restaurants</div>
+      <h1>The team member who handles<br><em class="rotating-word">every call.</em></h1>
+      <p class="hero-sub">InOrdera is your always-on AI team member — answering every call, taking every order, upselling on every interaction, and flagging every allergen. 24/7, in any language.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('cta').scrollIntoView()">Book a Free Demo</button>
+        <button class="btn-secondary" onclick="document.getElementById('solution').scrollIntoView()">See how it works →</button>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-stars">★★★★★</div>
+        <span>Rated <strong>5/5</strong> by independent UK operators &nbsp;·&nbsp; <strong>quick setup</strong> &nbsp;·&nbsp; <strong>Zero commission</strong></span>
+      </div>
+    </div>
+    <div class="hero-visual" style="display:none">
+      <div class="hero-float-1">
+        <div class="float-icon fi-green">📞</div>
+        <span>Call answered in <strong>0.8s</strong></span>
+      </div>
+      <div class="phone-card">
+        <div class="phone-topbar">
+          <div class="phone-dot phone-dot-g"></div>
+          <div class="phone-dot"></div>
+          <div class="phone-dot"></div>
+          <span class="phone-label" style="margin-left:8px">InOrdera · Chat Widget</span>
+        </div>
+        <div class="chat-body">
+          <div class="chat-msg chat-ai">Hi there! Welcome to Spice Garden. What can I get for you today? 😊</div>
+          <div class="chat-msg chat-user">Can I get the lamb biryani but without nuts? My son has a nut allergy.</div>
+          <div class="chat-msg chat-ai">Of course! ⚠️ <strong>Allergen note:</strong> Our biryani is prepared in a kitchen that handles nuts. I've flagged this on your order and our team will take extra care. Shall I add it?</div>
+          <div class="chat-msg chat-user">Yes please. And anything to go with it?</div>
+          <div class="chat-msg chat-ai">Our garlic naan pairs perfectly — it's our most popular add-on with this dish. Add one for £2.50?</div>
+          <div class="chat-typing"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="hero-float-2">
+        <div class="float-icon fi-amber">💷</div>
+        <span>AOV up <strong>+22%</strong> this week</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker-inner">
+    <div class="ticker-item"><div class="ticker-dot"></div><span>43% of restaurant calls go unanswered</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Independent restaurants lose up to <strong>£15,180/month</strong> in preventable revenue</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>InOrdera ROI: <strong>88×</strong> your subscription cost</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Allergen incidents cost restaurants <strong>unlimited liability</strong> — InOrdera flags every one</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>UK hospitality: <strong>132,000 unfilled vacancies</strong> — AI fills the gap</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Fast, assisted setup — no IT required</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>50,000+ UK takeaway outlets</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>43% of restaurant calls go unanswered</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Independent restaurants lose up to <strong>£15,180/month</strong> in preventable revenue</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>InOrdera ROI: <strong>88×</strong> your subscription cost</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Allergen incidents cost restaurants <strong>unlimited liability</strong> — InOrdera flags every one</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>UK hospitality: <strong>132,000 unfilled vacancies</strong> — AI fills the gap</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Fast, assisted setup — no IT required</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>50,000+ UK takeaway outlets</span></div>
+  </div>
+</div>
+
+<!-- STAT CARDS -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div class="eyebrow reveal">The numbers that matter</div>
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-card-num">43%</div>
+        <div class="stat-card-label">of inbound calls go unanswered</div>
+        <div class="stat-card-desc">During peak service, staff are cooking and serving. 69% of those callers won't try again — they order from a competitor.</div>
+        <span class="stat-card-source">Industry research</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">£17,490</div>
+        <div class="stat-card-label">recoverable monthly per restaurant</div>
+        <div class="stat-card-desc">In missed orders, upsell revenue, commission savings and reduced errors — for a typical independent processing 100 orders/day.</div>
+        <span class="stat-card-source">InOrdera analysis</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">88×</div>
+        <div class="stat-card-label">return on investment</div>
+        <div class="stat-card-desc">InOrdera pays for itself from day one. Every recovered call, every upsell, every direct order compounds the return.</div>
+        <span class="stat-card-source">InOrdera analysis</span>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-num">2.4M</div>
+        <div class="stat-card-label">UK adults with food allergies</div>
+        <div class="stat-card-desc">Owen's Law will mandate written allergen records. InOrdera flags all 14 UK allergens automatically and creates an auditable trail.</div>
+        <span class="stat-card-source">FSA, 2024</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOS -->
+<div class="logos-section">
+  <div class="logos-label">Trusted by independent restaurants across the UK</div>
+  <div class="logos-row">
+    <div class="logo-item">Spice Garden</div>
+    <div class="logo-item">Golden Wok</div>
+    <div class="logo-item">Istanbul Grill</div>
+    <div class="logo-item">Bombay Bites</div>
+    <div class="logo-item">Noodle Box</div>
+    <div class="logo-item">The Curry House</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PROBLEM -->
+<div class="problem-bg">
+  <div class="problem-inner">
+    <div class="eyebrow reveal">The Problem</div>
+    <h2 class="reveal">Your restaurant is leaking money.<br><em>Every single day.</em></h2>
+    <div class="problem-grid reveal">
+      <div class="problem-card">
+        <div class="prob-num">43%</div>
+        <div class="prob-title">Calls Go Unanswered</div>
+        <div class="prob-body">During peak hours, staff are cooking and serving. The phone rings out. 69% of those callers won't try again — they order from a competitor.</div>
+      </div>
+      <div class="problem-card">
+        <div class="prob-num">0×</div>
+        <div class="prob-title">Upselling Happens</div>
+        <div class="prob-body">Rushed, undertrained staff never suggest extras. Structured upselling lifts average order value by 10–30%. That's money left on the table every order.</div>
+      </div>
+      <div class="problem-card">
+        <div class="prob-num">52%</div>
+        <div class="prob-title">Staff Turnover Rate</div>
+        <div class="prob-body">High churn means the person answering your phone is often new, non-fluent, and unknowledgeable about your menu. Every call is a risk.</div>
+      </div>
+      <div class="problem-card">
+        <div class="prob-num">2.4M</div>
+        <div class="prob-title">Allergen Liability</div>
+        <div class="prob-body">2.4 million UK adults have confirmed food allergies. Owen's Law will mandate written allergen records. Verbal communication fails. The consequences of getting it wrong are catastrophic.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOLUTION -->
+<div id="solution" style="background:var(--bg)">
+  <div class="section">
+    <div class="eyebrow reveal">The Solution</div>
+    <h2 class="reveal">Your AI team member.<br><em>Always on. Always perfect.</em></h2>
+    <p class="section-intro reveal">InOrdera gives your restaurant an AI team member that answers every call, handles every chat, upsells on every interaction, and never gets the allergens wrong — at a price independent operators can actually afford.</p>
+    <div class="solution-grid reveal">
+      <div class="solution-card featured">
+        <div class="solution-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.27 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.07 4.18 2 2 0 0 1 5.05 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="solution-title">AI Voice Agent</div>
+        <div class="solution-body">Your AI team member answers every call naturally and conversationally. Takes full orders, handles modifications and allergen queries, upsells contextually — every time, every shift. Indistinguishable from a human. Works 24/7 including after hours.</div>
+        <div class="solution-pills">
+          <span class="pill">24/7 availability</span>
+          <span class="pill">Unlimited simultaneous calls</span>
+          <span class="pill">Natural conversation</span>
+          <span class="pill">UK accents & dialects</span>
+          <span class="pill">Multi-language</span>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="solution-title">AI Chat Ordering</div>
+        <div class="solution-body">Your AI team member embedded on your website, WhatsApp, Instagram and Messenger — guiding customers through your menu, handling modifications, flagging allergens, and upselling intelligently. Same intelligence as the voice agent, everywhere customers chat.</div>
+        <div class="solution-pills">
+          <span class="pill">Web widget</span>
+          <span class="pill">WhatsApp & SMS</span>
+          <span class="pill">Instant responses</span>
+          <span class="pill">Menu navigation</span>
+          <span class="pill">Allergen flagging</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTEGRATIONS -->
+<div style="background:var(--bg);padding:64px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="logos-label" style="margin-bottom:32px">Integrates with your existing POS system</div>
+    <div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#0264E0"/></svg>
+        Square
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#E84C25"/></svg>
+        Toast
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#00A650"/></svg>
+        Lightspeed
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#5C6BC0"/></svg>
+        Epos Now
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#1A9C3E"/></svg>
+        Clover
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#0B7BCD"/></svg>
+        Zettle
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#D64A2B"/></svg>
+        ICRTouch
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#2C3E50"/></svg>
+        Tevalis
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#6B21A8"/></svg>
+        Zonal
+      </div>
+      <div class="pos-logo" style="border-style:dashed;color:var(--ink3)">
+        + more
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features-bg" id="features">
+  <div class="features-inner">
+    <div class="eyebrow reveal">What It Does</div>
+    <h2 class="reveal">Built for restaurants. Built for <em>the UK.</em></h2>
+    <p class="section-intro reveal">Every feature exists because independent restaurants told us they needed it. Not enterprise bloat — just what works.</p>
+    <div class="features-grid">
+      <div class="feat-card reveal reveal-d1">
+        <div class="feat-icon-bg">🧠</div>
+        <div class="feat-title">Intelligent Upselling</div>
+        <div class="feat-body">Increases average order value by 15–25% through natural, contextual suggestions — "Our garlic naan pairs perfectly with that" — every single order, no training required.</div>
+      </div>
+      <div class="feat-card reveal reveal-d2">
+        <div class="feat-icon-bg">⚠️</div>
+        <div class="feat-title">Allergen Flagging</div>
+        <div class="feat-body">Automatically identifies all 14 UK allergens during every interaction, flags risks, and creates an auditable trail — ahead of Owen's Law and FSA mandatory requirements.</div>
+      </div>
+      <div class="feat-card reveal reveal-d3">
+        <div class="feat-icon-bg">🌍</div>
+        <div class="feat-title">Multi-Language Support</div>
+        <div class="feat-body">Serve every customer fluently. InOrdera supports 30+ languages, critical for the diverse customer bases of Indian, Chinese, Turkish and other independent operators.</div>
+      </div>
+      <div class="feat-card reveal reveal-d1">
+        <div class="feat-icon-bg">📊</div>
+        <div class="feat-title">Analytics Dashboard</div>
+        <div class="feat-body">See call volumes, order values, upsell performance, peak times, and waste patterns in one place. Know your business like you've never known it before.</div>
+      </div>
+      <div class="feat-card reveal reveal-d2">
+        <div class="feat-icon-bg">🔗</div>
+        <div class="feat-title">POS Integration</div>
+        <div class="feat-body">Connects to your existing setup quickly. Compatible with all major UK POS systems. No IT project. No engineer. Just plug in and go live.</div>
+      </div>
+      <div class="feat-card reveal reveal-d3">
+        <div class="feat-icon-bg">💬</div>
+        <div class="feat-title">Dish Descriptions</div>
+        <div class="feat-body">Compelling, appetising descriptions of every item on your menu — delivered conversationally. Turns a "what's in it?" into a sale, every time.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROI -->
+<div id="roi" style="background:var(--bg)">
+  <div class="section">
+    <div class="eyebrow reveal">The Business Case</div>
+    <h2 class="reveal">Your AI team member<br><em>pays for itself in days.</em></h2>
+    <div class="roi-layout">
+      <div class="roi-table reveal">
+        <div class="roi-row header">
+          <div class="roi-cell left">Monthly benefit</div>
+          <div class="roi-cell">Value</div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-cell left">Recovered missed orders</div>
+          <div class="roi-cell">£1,980</div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-cell left">Upsell revenue uplift</div>
+          <div class="roi-cell">£9,900</div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-cell left">Commission savings (direct orders)</div>
+          <div class="roi-cell">£4,950</div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-cell left">Reduced errors &amp; refunds</div>
+          <div class="roi-cell">£660</div>
+        </div>
+        <div class="roi-row" style="border-bottom:1px solid var(--border)">
+          <div class="roi-cell left" style="font-weight:600;color:var(--ink)">Total benefit</div>
+          <div class="roi-cell" style="font-weight:700;color:var(--ink)">£17,490</div>
+        </div>
+      </div>
+      <div class="roi-aside reveal">
+        <h3>Your AI team member<br><em>returns £17,490/month.</em></h3>
+        <p>Every direct order saves £6.60 in commission on a £22 order. InOrdera charges zero per-order fees. Ever. Your AI team member works every shift, never calls in sick, and upsells every single time.</p>
+        <p style="font-size:15px;color:var(--ink2);font-style:italic;border-left:3px solid var(--accent);padding-left:16px;margin-top:16px">"Zero commission vs. £10,000+/month in platform fees. Every direct order saves the restaurant £6.60 in commission on a £22 order."</p>
+        <div class="roi-stat-row">
+          <div class="roi-stat">
+            <div class="roi-stat-num">88×</div>
+            <div class="roi-stat-label">Return on investment</div>
+          </div>
+          <div class="roi-stat">
+            <div class="roi-stat-num">&lt;60 min</div>
+            <div class="roi-stat-label">To go live</div>
+          </div>
+        </div>
+        <button class="btn-primary" style="margin-top:32px" onclick="document.getElementById('cta').scrollIntoView()">Calculate your ROI →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" style="background:var(--bg)">
+  <div class="section section-center">
+    <div class="eyebrow reveal">Plans</div>
+    <h2 class="reveal">Transparent plans.<br><em>No commissions. Ever.</em></h2>
+    <p class="section-intro reveal">Every plan is a flat monthly fee with zero per-order charges. Pricing is tailored to your restaurant — call us to discuss.</p>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price-hidden"></div>
+        <div class="plan-tagline">Perfect for digital-first takeaways getting started with AI ordering</div>
+        <ul class="plan-features">
+          <li class="no">AI Voice Agent (phone orders)</li>
+          <li>AI Chatbot (web, WhatsApp, Messenger)</li>
+          <li>Allergen flagging &amp; auditable trail</li>
+          <li>Contextual upselling</li>
+          <li>2 languages</li>
+          <li>Basic analytics</li>
+          <li>Up to 5 concurrent calls</li>
+          <li>Email support</li>
+        </ul>
+        <button class="btn-plan outline" onclick="document.getElementById('cta').scrollIntoView()">Get a quote</button>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">Most Popular</div>
+        <div class="plan-name">Professional</div>
+        <div class="plan-price-hidden"></div>
+        <div class="plan-tagline">The full AI team member experience for established independents — voice + chat in one</div>
+        <ul class="plan-features">
+          <li>Everything in Starter</li>
+          <li>AI Voice Agent (phone orders, 24/7)</li>
+          <li>Unlimited concurrent calls</li>
+          <li>Unlimited languages (30+)</li>
+          <li>Advanced analytics dashboard</li>
+          <li>Custom voice & brand personality</li>
+          <li>Priority phone & chat support</li>
+          <li>Assisted onboarding</li>
+          <li>POS integration included</li>
+        </ul>
+        <button class="btn-plan" onclick="document.getElementById('cta').scrollIntoView()">Get a quote</button>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Group</div>
+        <div class="plan-price-hidden"></div>
+        <div class="plan-tagline">For multi-site restaurant groups — with volume pricing</div>
+        <ul class="plan-features">
+          <li>Everything in Professional</li>
+          <li>Multi-location dashboard</li>
+          <li>Centralised menu management</li>
+          <li>Per-store analytics & overrides</li>
+          <li>Dedicated account manager</li>
+          <li>Custom onboarding & training</li>
+          <li>SLA uptime guarantee</li>
+          <li>API access</li>
+        </ul>
+        <button class="btn-plan outline" onclick="document.getElementById('cta').scrollIntoView()">Contact sales</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testi-bg">
+  <div class="testi-inner">
+    <div class="eyebrow reveal">Customer Stories</div>
+    <h2 class="reveal">Independent restaurants.<br><em>Real results.</em></h2>
+    <div class="testi-grid reveal">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"I was missing 30 calls a night during Friday service. InOrdera answered all of them. Within two weeks I'd recovered more in orders than the annual fee. It just works."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Amin Rashidi</div>
+            <div class="testi-role">Owner · Bombay Bites, East London</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"The allergen flagging alone was worth it. After Owen's Law guidance came out, I couldn't risk it anymore. InOrdera gives me an auditable trail for every call and chat."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">L</div>
+          <div>
+            <div class="testi-name">Lily Chen</div>
+            <div class="testi-role">Manager · Golden Wok, Manchester</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"My average order value is up £4.20 since InOrdera started upselling. It doesn't feel pushy — it just sounds like a good recommendation. My customers actually thank it."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">T</div>
+          <div>
+            <div class="testi-name">Tariq Hassan</div>
+            <div class="testi-role">Owner · Istanbul Grill, Birmingham</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"Setup was genuinely 45 minutes. The InOrdera team helped us import our menu, test the voice agent, and go live before the Friday rush. I didn't believe it until I saw it."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">P</div>
+          <div>
+            <div class="testi-name">Priya Nair</div>
+            <div class="testi-role">Co-owner · Spice Garden, Bristol</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div style="background:var(--bg)">
+  <div class="section section-center">
+    <div class="eyebrow reveal">FAQ</div>
+    <h2 class="reveal">Common questions</h2>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary class="faq-q">Does it actually sound human? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">Yes. InOrdera is built on the latest conversational AI voice technology, trained specifically on UK accents, regional dialects, and food service vocabulary. Most callers don't know they're speaking to AI — unless you tell them.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">What happens if a caller asks something it can't handle? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">InOrdera detects when a caller needs a human and transfers the call cleanly to your team with a brief handoff note. You're always in control. Edge cases don't get dropped.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Does it work with my existing POS system? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">InOrdera integrates with all major UK POS systems including Lightspeed, Square, Epos Now, and others. Orders flow directly into your kitchen display or till — no double-entry, no missed tickets.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">How does allergen flagging work? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">InOrdera automatically identifies all 14 UK allergens in your menu data. When a customer mentions an allergy or requests a modification, the AI flags it, notes it on the order, and creates a timestamped audit record — giving you the documented trail that Owen's Law will require.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Is there a contract or can I cancel anytime? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">Monthly rolling fee. No long-term contract. You can cancel anytime with 30 days notice. We're confident you won't want to — but there's no lock-in.</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band" id="cta">
+  <h2>Meet your new<br>AI team member.</h2>
+  <p>Book a free demo. We'll show InOrdera live on your own menu in 30 minutes — answering calls, upselling, and flagging allergens.</p>
+  <div class="cta-form">
+    <input class="cta-input" type="email" placeholder="your@restaurant.com">
+    <button class="cta-btn">Book Demo</button>
+  </div>
+  <p class="cta-note">Free 14-day trial · No credit card required · quick setup</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">In<span>Ordera</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="#">AI Voice Agent</a>
+          <a href="#">AI Chat Ordering</a>
+          <a href="#">Allergen Compliance</a>
+          <a href="#">Analytics</a>
+          <a href="#">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+          <a href="gdpr.html">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+<!-- TWEAKS PANEL -->
+<div id="tweaks">
+  <div class="tweaks-h">Tweaks</div>
+  <div class="tw-row">
+    <span class="tw-label">Colour Theme</span>
+    <div class="tw-tabs">
+      <button class="tw-tab" onclick="setTheme('teal',this)">Teal</button>
+      <button class="tw-tab on" onclick="setTheme('indigo',this)">Indigo</button>
+      <button class="tw-tab" onclick="setTheme('forest',this)">Forest</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <span class="tw-label">Hero Layout</span>
+    <div class="tw-tabs">
+      <button class="tw-tab" onclick="setHero('split',this)">Split</button>
+      <button class="tw-tab on" onclick="setHero('centered',this)">Centred</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <span class="tw-label">Nav Style</span>
+    <div class="tw-tabs">
+      <button class="tw-tab" onclick="setNav('light',this)">Light</button>
+      <button class="tw-tab on" onclick="setNav('dark',this)">Dark</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── REVEAL ─────────────────────────────────────── */
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) e.target.classList.add('visible');
+}), {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── TWEAKS ─────────────────────────────────────── */
+function setTheme(t, btn) {
+  document.body.dataset.theme = t === 'teal' ? '' : t;
+  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function setHero(mode, btn) {
+  const hero = document.querySelector('.hero');
+  if (mode === 'centered') {
+    hero.style.gridTemplateColumns = '1fr';
+    hero.style.textAlign = 'center';
+    hero.querySelector('.hero-visual').style.display = 'none';
+    hero.querySelector('.hero-sub').style.maxWidth = '600px';
+    hero.querySelector('.hero-sub').style.margin = '0 auto 36px';
+    hero.querySelector('.hero-actions').style.justifyContent = 'center';
+    hero.querySelector('.hero-trust').style.justifyContent = 'center';
+  } else {
+    hero.style.gridTemplateColumns = '';
+    hero.style.textAlign = '';
+    hero.querySelector('.hero-visual').style.display = '';
+    hero.querySelector('.hero-sub').style.maxWidth = '';
+    hero.querySelector('.hero-sub').style.margin = '';
+    hero.querySelector('.hero-actions').style.justifyContent = '';
+    hero.querySelector('.hero-trust').style.justifyContent = '';
+  }
+  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function setNav(mode, btn) {
+  const nav = document.querySelector('nav');
+  if (mode === 'dark') {
+    nav.style.background = 'rgba(11,31,46,0.95)';
+    nav.querySelectorAll('.nav-links a, .btn-nav-ghost').forEach(el => el.style.color = 'rgba(255,255,255,0.65)');
+    document.querySelector('.logo-text').style.color = '#fff';
+  } else {
+    nav.style.background = '';
+    nav.querySelectorAll('.nav-links a, .btn-nav-ghost').forEach(el => el.style.color = '');
+    document.querySelector('.logo-text').style.color = '';
+  }
+  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* ── ROTATING WORD ──────────────────────────────── */
+const words = ['every call.', 'every order.', 'every upsell.', 'every allergen.', 'every customer.'];
+let wordIdx = 0;
+const rotEl = document.querySelector('.rotating-word');
+function rotateWord() {
+  rotEl.classList.add('fade-out');
+  setTimeout(() => {
+    wordIdx = (wordIdx + 1) % words.length;
+    rotEl.textContent = words[wordIdx];
+    rotEl.classList.remove('fade-out');
+    rotEl.classList.add('fade-in');
+    requestAnimationFrame(() => requestAnimationFrame(() => rotEl.classList.remove('fade-in')));
+  }, 360);
+}
+setInterval(rotateWord, 2400);
+
+/* ── TWEAKS TOGGLE ──────────────────────────────── */
+window.addEventListener('message', e => {
+  if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks').style.display = 'block';
+  if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks').style.display = 'none';
+});
+window.parent.postMessage({type: '__edit_mode_available'}, '*');
+</script>
+</body>
+</html>
+`;
+const careers_html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — InOrdera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --accent2: #f97316;
+  --accent2-hover: #ea6c0a;
+  --border: rgba(79,70,229,0.10);
+  --border2: rgba(11,31,46,0.14);
+  --shadow: 0 2px 16px rgba(79,70,229,0.12);
+  --shadow-lg: 0 8px 40px rgba(11,31,46,0.10);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,31,46,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:#fff}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+/* ── HERO ── */
+.careers-hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 40px 80px;
+  background:var(--ink);
+  position:relative;overflow:hidden;
+}
+.careers-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(79,70,229,0.18) 0%, transparent 70%);
+  pointer-events:none;
+}
+.careers-hero-inner{position:relative;max-width:700px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(79,70,229,0.18);color:var(--accent);
+  font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  padding:5px 14px;border-radius:40px;margin-bottom:28px;
+  border:1px solid rgba(79,70,229,0.25);
+}
+.careers-hero h1{
+  font-family:var(--fd);
+  font-size:clamp(44px,6vw,80px);
+  font-weight:800;line-height:1.04;letter-spacing:-0.04em;
+  color:#fff;margin-bottom:24px;
+}
+.careers-hero h1 em{font-style:normal;color:var(--accent)}
+.careers-hero p{
+  font-size:18px;color:rgba(255,255,255,0.6);
+  line-height:1.75;max-width:520px;margin:0 auto 44px;
+}
+.btn-apply{
+  background:var(--accent2);color:#fff;
+  font-size:16px;font-weight:600;padding:16px 36px;border-radius:var(--r);
+  display:inline-block;
+  box-shadow:0 4px 20px rgba(249,115,22,0.35);
+  transition:background 0.18s,transform 0.14s,box-shadow 0.18s;
+}
+.btn-apply:hover{background:var(--accent2-hover);transform:translateY(-2px);box-shadow:0 8px 28px rgba(249,115,22,0.4)}
+
+/* ── VALUES STRIP ── */
+.values-strip{padding:80px 40px;background:var(--bg)}
+.values-inner{max-width:1000px;margin:0 auto;text-align:center}
+.values-inner .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.values-inner h2{font-family:var(--fd);font-size:clamp(26px,3vw,40px);font-weight:800;letter-spacing:-0.03em;color:var(--ink);margin-bottom:48px}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.value-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:left}
+.value-icon{font-size:26px;margin-bottom:14px}
+.value-title{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.value-body{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* ── MODAL ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(11,31,46,0.7);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--surface);border-radius:20px;
+  box-shadow:var(--shadow-lg);width:100%;max-width:480px;
+  padding:40px;position:relative;
+  animation:modal-in 0.25s ease;
+}
+@keyframes modal-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--bg2);color:var(--ink2);
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s;
+}
+.modal-close:hover{background:var(--border2)}
+.modal h2{font-family:var(--fd);font-size:24px;font-weight:800;letter-spacing:-0.02em;color:var(--ink);margin-bottom:6px}
+.modal p{font-size:14px;color:var(--ink2);margin-bottom:24px}
+.form-row{margin-bottom:16px}
+.form-row label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.form-row input,.form-row textarea,.form-row select{
+  width:100%;padding:12px 14px;
+  background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);
+  font-family:var(--fb);font-size:14px;color:var(--ink);
+  outline:none;transition:border-color 0.18s;
+  resize:vertical;
+}
+.form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--accent)}
+.form-row textarea{min-height:100px}
+.btn-submit{
+  width:100%;padding:14px;border-radius:var(--r);
+  background:var(--accent);color:#fff;font-size:15px;font-weight:600;
+  transition:background 0.18s;margin-top:6px;
+}
+.btn-submit:hover{background:var(--accent-hover)}
+.form-note{font-size:12px;color:var(--ink3);text-align:center;margin-top:12px}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="InOrdera.html" class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">In<span>Ordera</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="InOrdera.html#solution">Platform</a></li>
+      <li><a href="InOrdera.html#features">Features</a></li>
+      <li><a href="InOrdera.html#roi">ROI</a></li>
+      <li><a href="InOrdera.html#pricing">Plans</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <a href="InOrdera.html#cta" class="btn-nav">Book a Demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="careers-hero">
+  <div class="careers-hero-inner">
+    <div class="hero-eyebrow">We're hiring</div>
+    <h1>Help us build<br>the <em>future</em> of<br>restaurants.</h1>
+    <p>InOrdera is a small team with a big mission — giving every independent restaurant an AI team member that works harder than anyone on staff. Want in?</p>
+    <button class="btn-apply" onclick="openModal()">Get in touch</button>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="values-strip">
+  <div class="values-inner">
+    <div class="eyebrow">Why InOrdera</div>
+    <h2>What it's like to work here</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🚀</div>
+        <div class="value-title">Early and impactful</div>
+        <div class="value-body">We're early stage. What you build this month goes live next month. You'll see your work used by real restaurants, every day.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🇬🇧</div>
+        <div class="value-title">Built for Britain</div>
+        <div class="value-body">We're solving real problems for UK independent restaurants — a £23.6bn market that's underserved and over-charged by big platforms.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">Small team, big trust</div>
+        <div class="value-body">No layers, no bureaucracy. You'll work directly with the founders, own your area, and have real say in how the product evolves.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPLICATION MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <h2 id="modal-title">Get in touch</h2>
+    <p>Tell us a bit about yourself and we'll get back to you.</p>
+    <form id="apply-form" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+      </div>
+      <div class="form-row">
+        <label for="email">Your email</label>
+        <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+      </div>
+      <div class="form-row">
+        <label for="role">What kind of role interests you?</label>
+        <select id="role" name="role" required>
+          <option value="" disabled selected>Select an area</option>
+          <option>Engineering / AI</option>
+          <option>Product</option>
+          <option>Sales & Partnerships</option>
+          <option>Operations</option>
+          <option>Marketing</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="message">Tell us about yourself</label>
+        <textarea id="message" name="message" placeholder="A few lines about your background and why InOrdera interests you…" required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send application</button>
+      <p class="form-note">We read every message and reply to all serious enquiries.</p>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">In<span>Ordera</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="InOrdera.html#solution">AI Voice Agent</a>
+          <a href="InOrdera.html#solution">AI Chat Ordering</a>
+          <a href="InOrdera.html#features">Features</a>
+          <a href="InOrdera.html#features">Analytics</a>
+          <a href="InOrdera.html#features">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+          <a href="gdpr.html">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+function submitForm(e) {
+  e.preventDefault();
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const role    = document.getElementById('role').value;
+  const message = document.getElementById('message').value.trim();
+
+  const subject = encodeURIComponent(\`InOrdera Career Enquiry — \${role} — \${name}\`);
+  const body = encodeURIComponent(
+    \`Name: \${name}\\nEmail: \${email}\\nRole interest: \${role}\\n\\n\${message}\`
+  );
+
+  window.location.href = \`mailto:rishi.shinn@hotmail.co.uk?subject=\${subject}&body=\${body}\`;
+}
+</script>
+</body>
+</html>
+`;
+const privacy_policy_html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — InOrdera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --border: rgba(79,70,229,0.10);
+  --border2: rgba(11,31,46,0.14);
+  --shadow: 0 2px 16px rgba(79,70,229,0.12);
+  --shadow-lg: 0 8px 40px rgba(11,31,46,0.10);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(11,31,46,0.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:#fff}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+.page-hero{
+  padding:120px 40px 60px;
+  background:var(--ink);
+  text-align:center;
+}
+.page-hero h1{
+  font-family:var(--fd);font-size:clamp(32px,4vw,52px);
+  font-weight:800;letter-spacing:-0.035em;color:#fff;margin-bottom:12px;
+}
+.page-hero p{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.page-hero .updated{font-size:13px;color:rgba(255,255,255,0.3);margin-top:8px}
+
+.policy-wrap{max-width:800px;margin:0 auto;padding:80px 40px}
+.policy-wrap h2{
+  font-family:var(--fd);font-size:22px;font-weight:700;
+  color:var(--ink);margin:40px 0 12px;letter-spacing:-0.02em;
+}
+.policy-wrap h2:first-child{margin-top:0}
+.policy-wrap p{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:14px}
+.policy-wrap ul{margin:0 0 16px 20px}
+.policy-wrap ul li{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:6px}
+.policy-wrap a{color:var(--accent);text-decoration:underline}
+.policy-wrap a:hover{color:var(--accent-hover)}
+.policy-wrap .highlight-box{
+  background:var(--accent-light);border-left:4px solid var(--accent);
+  border-radius:0 var(--r) var(--r) 0;padding:18px 20px;margin:24px 0;
+}
+.policy-wrap .highlight-box p{margin-bottom:0;color:var(--ink)}
+
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="InOrdera.html" class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">In<span>Ordera</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="InOrdera.html#solution">Platform</a></li>
+      <li><a href="InOrdera.html#features">Features</a></li>
+      <li><a href="InOrdera.html#roi">ROI</a></li>
+      <li><a href="InOrdera.html#pricing">Plans</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <a href="InOrdera.html#cta" class="btn-nav">Book a Demo</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>Privacy Policy</h1>
+  <p>How InOrdera collects, uses, and protects your personal data</p>
+  <div class="updated">Last updated: 23 April 2026 &nbsp;·&nbsp; InOrdera Ltd</div>
+</div>
+
+<div class="policy-wrap">
+
+  <div class="highlight-box">
+    <p><strong>Summary:</strong> InOrdera Ltd takes your privacy seriously. We collect only the data we need, use it to provide our service, and never sell it. This policy explains what we collect, why, and your rights under UK GDPR.</p>
+  </div>
+
+  <h2>1. Who We Are</h2>
+  <p>InOrdera Ltd ("InOrdera", "we", "us", "our") is a company registered in England and Wales. We operate the InOrdera platform, which provides AI-powered voice and chat ordering services to independent restaurants and takeaways in the United Kingdom.</p>
+  <p>For the purposes of the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018, InOrdera Ltd is the data controller for personal data we process.</p>
+  <p><strong>Contact:</strong> <a href="mailto:privacy@inordera.com">privacy@inordera.com</a></p>
+
+  <h2>2. What Data We Collect</h2>
+  <p>We collect the following categories of personal data:</p>
+  <ul>
+    <li><strong>Restaurant operators (our customers):</strong> Business name, contact name, email address, telephone number, billing address, payment information (processed via a PCI-DSS compliant third party).</li>
+    <li><strong>End users (restaurant customers):</strong> Name, telephone number, delivery address, order details, dietary preferences and allergen information provided voluntarily during ordering, and call/chat transcripts.</li>
+    <li><strong>Website visitors:</strong> IP address, browser type, pages visited, and referral source via cookies and analytics tools.</li>
+  </ul>
+
+  <h2>3. How We Use Your Data</h2>
+  <p>We process personal data for the following purposes and on the following legal bases:</p>
+  <ul>
+    <li><strong>Providing the service</strong> — processing orders, managing calls and chats, and operating the platform (legal basis: contractual necessity).</li>
+    <li><strong>Allergen safety</strong> — flagging allergen risks and maintaining auditable records as required under Owen's Law and FSA guidance (legal basis: legal obligation and legitimate interests).</li>
+    <li><strong>Billing and account management</strong> — invoicing and support (legal basis: contractual necessity).</li>
+    <li><strong>Service improvement</strong> — anonymised analysis of usage patterns to improve accuracy and performance (legal basis: legitimate interests).</li>
+    <li><strong>Marketing</strong> — sending product updates and offers to existing customers (legal basis: legitimate interests; you may opt out at any time).</li>
+    <li><strong>Legal compliance</strong> — responding to lawful requests from regulatory bodies (legal basis: legal obligation).</li>
+  </ul>
+
+  <h2>4. How Long We Keep Your Data</h2>
+  <ul>
+    <li>Order and call records: 7 years (required for allergen compliance audit trails and financial records).</li>
+    <li>Customer account data: Duration of the contract plus 2 years.</li>
+    <li>Marketing preferences: Until you opt out.</li>
+    <li>Website analytics: 26 months (rolling).</li>
+  </ul>
+
+  <h2>5. Who We Share Your Data With</h2>
+  <p>We do not sell personal data. We share data only with trusted third parties who help us deliver the service:</p>
+  <ul>
+    <li><strong>Cloud infrastructure providers</strong> — for hosting and storage (EU/UK data centres).</li>
+    <li><strong>Payment processors</strong> — for billing (PCI-DSS compliant).</li>
+    <li><strong>POS system integrations</strong> — order data is passed to your restaurant's POS system as necessary to fulfil orders.</li>
+    <li><strong>Analytics providers</strong> — anonymised, aggregated website analytics.</li>
+    <li><strong>Professional advisers</strong> — legal, financial, and insurance advisers under strict confidentiality obligations.</li>
+  </ul>
+  <p>All third-party processors are subject to data processing agreements that ensure they handle your data in compliance with UK GDPR.</p>
+
+  <h2>6. International Transfers</h2>
+  <p>We store and process data in the United Kingdom and the European Economic Area. Where data is transferred outside the UK, we ensure adequate safeguards are in place, such as the UK International Data Transfer Agreement (IDTA) or equivalent mechanisms.</p>
+
+  <h2>7. Your Rights</h2>
+  <p>Under UK GDPR, you have the following rights:</p>
+  <ul>
+    <li><strong>Right of access</strong> — to request a copy of the personal data we hold about you.</li>
+    <li><strong>Right to rectification</strong> — to request correction of inaccurate data.</li>
+    <li><strong>Right to erasure</strong> — to request deletion, where we have no legal obligation to retain it.</li>
+    <li><strong>Right to restriction</strong> — to request we limit how we use your data.</li>
+    <li><strong>Right to data portability</strong> — to receive your data in a machine-readable format.</li>
+    <li><strong>Right to object</strong> — to object to processing based on legitimate interests or direct marketing.</li>
+    <li><strong>Rights related to automated decision-making</strong> — to request human review of any automated decisions that significantly affect you.</li>
+  </ul>
+  <p>To exercise any of these rights, contact us at <a href="mailto:privacy@inordera.com">privacy@inordera.com</a>. We will respond within 30 days. You also have the right to lodge a complaint with the Information Commissioner's Office (ICO) at <a href="https://ico.org.uk" target="_blank">ico.org.uk</a>.</p>
+
+  <h2>8. Security</h2>
+  <p>We implement appropriate technical and organisational measures to protect personal data, including encryption in transit and at rest, access controls, and regular security assessments. In the event of a data breach that poses a risk to your rights, we will notify the ICO within 72 hours and affected individuals without undue delay.</p>
+
+  <h2>9. Cookies</h2>
+  <p>We use cookies on our website. Please see our <a href="cookie-policy.html">Cookie Policy</a> for full details.</p>
+
+  <h2>10. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. We will notify customers of material changes by email. The "Last updated" date at the top of this page will always reflect the most recent version.</p>
+
+  <h2>11. Contact Us</h2>
+  <p>For any privacy-related queries or to exercise your rights:</p>
+  <ul>
+    <li><strong>Email:</strong> <a href="mailto:privacy@inordera.com">privacy@inordera.com</a></li>
+    <li><strong>Post:</strong> Data Protection Officer, InOrdera Ltd, England & Wales</li>
+  </ul>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">In<span>Ordera</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="InOrdera.html#solution">AI Voice Agent</a>
+          <a href="InOrdera.html#solution">AI Chat Ordering</a>
+          <a href="InOrdera.html#features">Features</a>
+          <a href="InOrdera.html#features">Analytics</a>
+          <a href="InOrdera.html#features">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+          <a href="gdpr.html">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+`;
+const terms_of_service_html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service — InOrdera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --border: rgba(79,70,229,0.10);
+  --border2: rgba(11,31,46,0.14);
+  --shadow-lg: 0 8px 40px rgba(11,31,46,0.10);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,31,46,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:#fff}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+.page-hero{padding:120px 40px 60px;background:var(--ink);text-align:center}
+.page-hero h1{font-family:var(--fd);font-size:clamp(32px,4vw,52px);font-weight:800;letter-spacing:-0.035em;color:#fff;margin-bottom:12px}
+.page-hero p{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.page-hero .updated{font-size:13px;color:rgba(255,255,255,0.3);margin-top:8px}
+
+.policy-wrap{max-width:800px;margin:0 auto;padding:80px 40px}
+.policy-wrap h2{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--ink);margin:40px 0 12px;letter-spacing:-0.02em}
+.policy-wrap h2:first-child{margin-top:0}
+.policy-wrap p{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:14px}
+.policy-wrap ul{margin:0 0 16px 20px}
+.policy-wrap ul li{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:6px}
+.policy-wrap a{color:var(--accent);text-decoration:underline}
+.policy-wrap a:hover{color:var(--accent-hover)}
+.policy-wrap .highlight-box{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:18px 20px;margin:24px 0}
+.policy-wrap .highlight-box p{margin-bottom:0;color:var(--ink)}
+
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="InOrdera.html" class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">In<span>Ordera</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="InOrdera.html#solution">Platform</a></li>
+      <li><a href="InOrdera.html#features">Features</a></li>
+      <li><a href="InOrdera.html#roi">ROI</a></li>
+      <li><a href="InOrdera.html#pricing">Plans</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <a href="InOrdera.html#cta" class="btn-nav">Book a Demo</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>Terms of Service</h1>
+  <p>The terms that govern your use of InOrdera</p>
+  <div class="updated">Last updated: 23 April 2026 &nbsp;·&nbsp; InOrdera Ltd</div>
+</div>
+
+<div class="policy-wrap">
+
+  <div class="highlight-box">
+    <p><strong>Please read these Terms carefully.</strong> By using InOrdera, you agree to be bound by them. If you do not agree, do not use the service. These Terms are governed by English law.</p>
+  </div>
+
+  <h2>1. About InOrdera</h2>
+  <p>InOrdera Ltd ("InOrdera", "we", "us", "our") is a company registered in England and Wales. We provide AI-powered voice and chat ordering technology to independent restaurants and takeaways ("Customers"). These Terms of Service ("Terms") govern your access to and use of the InOrdera platform, including any software, APIs, dashboards, and services provided by InOrdera.</p>
+
+  <h2>2. Eligibility and Account Registration</h2>
+  <p>To use InOrdera, you must:</p>
+  <ul>
+    <li>Be at least 18 years old;</li>
+    <li>Be a business operator with authority to enter into binding agreements on behalf of that business;</li>
+    <li>Provide accurate and complete registration information;</li>
+    <li>Maintain the security of your login credentials.</li>
+  </ul>
+  <p>You are responsible for all activity that occurs under your account. Notify us immediately if you suspect unauthorised access.</p>
+
+  <h2>3. The Service</h2>
+  <p>InOrdera provides an AI team member platform that handles phone ordering, chat ordering (web, WhatsApp, Messenger), allergen flagging, and upselling for your restaurant. The specific features available to you depend on your chosen plan.</p>
+  <p>We reserve the right to modify, suspend, or discontinue any aspect of the service at any time, with reasonable notice where practicable. We will not be liable to you for any modification, suspension, or discontinuation.</p>
+
+  <h2>4. Fees and Payment</h2>
+  <p>Fees are charged on a monthly rolling basis as agreed at sign-up. Prices are exclusive of VAT unless otherwise stated. Payment is due in advance each month. We reserve the right to suspend access if payment is not received within 14 days of the due date.</p>
+  <p>We may change our pricing with 30 days' written notice. Your continued use of the service after the notice period constitutes acceptance of the new pricing. If you do not accept the new pricing, you may cancel in accordance with clause 8.</p>
+
+  <h2>5. Your Responsibilities</h2>
+  <p>As a Customer, you agree to:</p>
+  <ul>
+    <li>Provide accurate and up-to-date menu information, including allergen data for all items;</li>
+    <li>Ensure InOrdera's allergen records are reviewed and approved by a suitably qualified person in your business;</li>
+    <li>Not rely solely on InOrdera for allergen compliance without human verification for high-risk orders;</li>
+    <li>Use the service only for lawful purposes and in compliance with all applicable food safety and trading standards law;</li>
+    <li>Not attempt to reverse-engineer, copy, or resell any part of the InOrdera platform;</li>
+    <li>Not use the service to send spam, conduct fraud, or harass others.</li>
+  </ul>
+
+  <h2>6. Allergen Compliance</h2>
+  <p>InOrdera is designed to assist with allergen flagging and record-keeping. However, the ultimate responsibility for food allergen compliance — including compliance with the Food Information Regulations 2014, Natasha's Law, Owen's Law, and any FSA guidance — rests with you as the food business operator. InOrdera provides a tool to support compliance; it does not replace your legal obligations or the judgement of your team.</p>
+
+  <h2>7. Intellectual Property</h2>
+  <p>InOrdera retains all intellectual property rights in the platform, software, and services. Your use of InOrdera does not grant you any ownership rights. You retain ownership of your menu data, business data, and customer data provided to InOrdera. You grant InOrdera a limited licence to use that data solely to provide and improve the service.</p>
+
+  <h2>8. Cancellation and Termination</h2>
+  <p>You may cancel your subscription at any time with 30 days' written notice. No refunds will be given for any unused portion of a monthly billing period. We may terminate your account immediately if you breach these Terms, become insolvent, or act in a way that puts other users or InOrdera at risk.</p>
+  <p>On termination, you may export your data within 30 days. After that period, we may delete your data subject to any legal retention obligations.</p>
+
+  <h2>9. Limitation of Liability</h2>
+  <p>To the fullest extent permitted by law:</p>
+  <ul>
+    <li>InOrdera's total aggregate liability to you arising out of or in connection with these Terms shall not exceed the total fees paid by you in the 12 months preceding the event giving rise to the claim;</li>
+    <li>InOrdera shall not be liable for any indirect, consequential, special, or punitive damages, loss of profits, loss of revenue, or loss of data;</li>
+    <li>Nothing in these Terms limits liability for death or personal injury caused by negligence, fraud, or any other liability that cannot be excluded by law.</li>
+  </ul>
+
+  <h2>10. Warranties and Disclaimers</h2>
+  <p>InOrdera is provided "as is". We do not warrant that the service will be uninterrupted, error-free, or completely secure. We aim for 99.5% monthly uptime and will notify you of planned maintenance in advance. We make no warranty that AI responses will be 100% accurate and you should maintain human oversight for high-stakes decisions.</p>
+
+  <h2>11. Governing Law and Disputes</h2>
+  <p>These Terms are governed by the laws of England and Wales. Any dispute arising from these Terms shall be subject to the exclusive jurisdiction of the courts of England and Wales. We will always try to resolve disputes amicably first — please contact us at <a href="mailto:legal@inordera.com">legal@inordera.com</a> before commencing formal proceedings.</p>
+
+  <h2>12. Changes to These Terms</h2>
+  <p>We may update these Terms from time to time. We will notify you of material changes by email at least 30 days before they take effect. Your continued use of InOrdera after that date constitutes acceptance. If you disagree with the changes, you may cancel your subscription.</p>
+
+  <h2>13. Contact</h2>
+  <p>For any questions about these Terms: <a href="mailto:legal@inordera.com">legal@inordera.com</a></p>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">In<span>Ordera</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="InOrdera.html#solution">AI Voice Agent</a>
+          <a href="InOrdera.html#solution">AI Chat Ordering</a>
+          <a href="InOrdera.html#features">Features</a>
+          <a href="InOrdera.html#features">Analytics</a>
+          <a href="InOrdera.html#features">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+          <a href="gdpr.html">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+`;
+const cookie_policy_html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Policy — InOrdera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --border: rgba(79,70,229,0.10);
+  --border2: rgba(11,31,46,0.14);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,31,46,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:#fff}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+.page-hero{padding:120px 40px 60px;background:var(--ink);text-align:center}
+.page-hero h1{font-family:var(--fd);font-size:clamp(32px,4vw,52px);font-weight:800;letter-spacing:-0.035em;color:#fff;margin-bottom:12px}
+.page-hero p{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.page-hero .updated{font-size:13px;color:rgba(255,255,255,0.3);margin-top:8px}
+
+.policy-wrap{max-width:800px;margin:0 auto;padding:80px 40px}
+.policy-wrap h2{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--ink);margin:40px 0 12px;letter-spacing:-0.02em}
+.policy-wrap h2:first-child{margin-top:0}
+.policy-wrap p{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:14px}
+.policy-wrap ul{margin:0 0 16px 20px}
+.policy-wrap ul li{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:6px}
+.policy-wrap a{color:var(--accent);text-decoration:underline}
+.policy-wrap a:hover{color:var(--accent-hover)}
+.policy-wrap .highlight-box{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:18px 20px;margin:24px 0}
+.policy-wrap .highlight-box p{margin-bottom:0;color:var(--ink)}
+
+.cookie-table{width:100%;border-collapse:collapse;margin:20px 0 28px;font-size:14px}
+.cookie-table th{background:var(--bg2);color:var(--ink);font-weight:600;text-align:left;padding:12px 16px;border:1px solid var(--border2)}
+.cookie-table td{padding:12px 16px;border:1px solid var(--border2);color:var(--ink2);vertical-align:top}
+.cookie-table tr:nth-child(even) td{background:var(--bg)}
+
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="InOrdera.html" class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">In<span>Ordera</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="InOrdera.html#solution">Platform</a></li>
+      <li><a href="InOrdera.html#features">Features</a></li>
+      <li><a href="InOrdera.html#roi">ROI</a></li>
+      <li><a href="InOrdera.html#pricing">Plans</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <a href="InOrdera.html#cta" class="btn-nav">Book a Demo</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>Cookie Policy</h1>
+  <p>How InOrdera uses cookies and similar technologies</p>
+  <div class="updated">Last updated: 23 April 2026 &nbsp;·&nbsp; InOrdera Ltd</div>
+</div>
+
+<div class="policy-wrap">
+
+  <div class="highlight-box">
+    <p><strong>In short:</strong> We use strictly necessary cookies to operate the site, and optional analytics cookies to improve it. You can manage your cookie preferences at any time.</p>
+  </div>
+
+  <h2>1. What Are Cookies?</h2>
+  <p>Cookies are small text files that are stored on your device when you visit a website. They allow websites to recognise your device on subsequent visits, remember your preferences, and understand how you use the site.</p>
+  <p>Similar technologies include local storage, session storage, and web beacons. This policy covers all of these.</p>
+
+  <h2>2. Cookies We Use</h2>
+
+  <p><strong>Strictly Necessary Cookies</strong> — these are required for InOrdera to function. You cannot disable them.</p>
+  <table class="cookie-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Purpose</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>io_session</code></td>
+        <td>Maintains your login session in the InOrdera dashboard</td>
+        <td>Session</td>
+      </tr>
+      <tr>
+        <td><code>io_csrf</code></td>
+        <td>Prevents cross-site request forgery attacks</td>
+        <td>Session</td>
+      </tr>
+      <tr>
+        <td><code>io_cookie_consent</code></td>
+        <td>Stores your cookie consent preferences</td>
+        <td>12 months</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Analytics Cookies</strong> — these help us understand how visitors use our site so we can improve it. These are only set with your consent.</p>
+  <table class="cookie-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Provider</th>
+        <th>Purpose</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>_ga</code></td>
+        <td>Google Analytics</td>
+        <td>Distinguishes unique users. Data is anonymised and aggregated.</td>
+        <td>2 years</td>
+      </tr>
+      <tr>
+        <td><code>_ga_*</code></td>
+        <td>Google Analytics</td>
+        <td>Stores session state</td>
+        <td>2 years</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Marketing Cookies</strong> — we currently do not use any marketing or targeting cookies on inordera.com.</p>
+
+  <h2>3. Managing Cookies</h2>
+  <p>You can manage cookies in several ways:</p>
+  <ul>
+    <li><strong>Cookie banner:</strong> When you first visit inordera.com, you can accept or decline optional cookies via our consent banner.</li>
+    <li><strong>Browser settings:</strong> Most browsers let you block or delete cookies. Note that blocking strictly necessary cookies may prevent InOrdera from working correctly.</li>
+    <li><strong>Google Analytics opt-out:</strong> Install the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">Google Analytics Opt-out Browser Add-on</a>.</li>
+  </ul>
+  <p>To change your cookie preferences after your initial visit, clear your browser cookies and revisit the site — the consent banner will reappear.</p>
+
+  <h2>4. Third-Party Cookies</h2>
+  <p>Some of our pages may embed third-party content (such as YouTube videos for demos or LinkedIn social share buttons). These third parties may set their own cookies when you interact with their content. We do not control these cookies and encourage you to review the relevant third-party privacy policies.</p>
+
+  <h2>5. Do Not Track</h2>
+  <p>Some browsers include a "Do Not Track" (DNT) signal. We currently do not respond to DNT signals, as there is no agreed industry standard. Our cookie consent mechanism gives you equivalent control.</p>
+
+  <h2>6. Changes to This Policy</h2>
+  <p>We may update this Cookie Policy from time to time. Changes will be reflected on this page with an updated "Last updated" date. Where we materially change how we use cookies, we will re-request your consent.</p>
+
+  <h2>7. Contact</h2>
+  <p>For any questions about our use of cookies: <a href="mailto:privacy@inordera.com">privacy@inordera.com</a></p>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">In<span>Ordera</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="InOrdera.html#solution">AI Voice Agent</a>
+          <a href="InOrdera.html#solution">AI Chat Ordering</a>
+          <a href="InOrdera.html#features">Features</a>
+          <a href="InOrdera.html#features">Analytics</a>
+          <a href="InOrdera.html#features">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+          <a href="gdpr.html">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+`;
+const gdpr_html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDPR Commitment — InOrdera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --border: rgba(79,70,229,0.10);
+  --border2: rgba(11,31,46,0.14);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,31,46,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:#fff}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+.page-hero{padding:120px 40px 60px;background:var(--ink);text-align:center}
+.page-hero h1{font-family:var(--fd);font-size:clamp(32px,4vw,52px);font-weight:800;letter-spacing:-0.035em;color:#fff;margin-bottom:12px}
+.page-hero p{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.page-hero .updated{font-size:13px;color:rgba(255,255,255,0.3);margin-top:8px}
+
+.policy-wrap{max-width:800px;margin:0 auto;padding:80px 40px}
+.policy-wrap h2{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--ink);margin:40px 0 12px;letter-spacing:-0.02em}
+.policy-wrap h2:first-child{margin-top:0}
+.policy-wrap p{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:14px}
+.policy-wrap ul{margin:0 0 16px 20px}
+.policy-wrap ul li{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:6px}
+.policy-wrap a{color:var(--accent);text-decoration:underline}
+.policy-wrap a:hover{color:var(--accent-hover)}
+.policy-wrap .highlight-box{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:18px 20px;margin:24px 0}
+.policy-wrap .highlight-box p{margin-bottom:0;color:var(--ink)}
+
+.principles-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0 32px}
+.principle-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px}
+.principle-card h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.principle-card p{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:0}
+
+.rights-list{display:flex;flex-direction:column;gap:12px;margin:20px 0 28px}
+.right-item{display:flex;gap:14px;align-items:flex-start}
+.right-icon{width:36px;height:36px;border-radius:10px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;margin-top:2px}
+.right-text h4{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.right-text p{font-size:14px;color:var(--ink2);line-height:1.6;margin-bottom:0}
+
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="InOrdera.html" class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">In<span>Ordera</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="InOrdera.html#solution">Platform</a></li>
+      <li><a href="InOrdera.html#features">Features</a></li>
+      <li><a href="InOrdera.html#roi">ROI</a></li>
+      <li><a href="InOrdera.html#pricing">Plans</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <a href="InOrdera.html#cta" class="btn-nav">Book a Demo</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>GDPR Commitment</h1>
+  <p>Our approach to data protection and your rights under UK GDPR</p>
+  <div class="updated">Last updated: 23 April 2026 &nbsp;·&nbsp; InOrdera Ltd</div>
+</div>
+
+<div class="policy-wrap">
+
+  <div class="highlight-box">
+    <p><strong>Our commitment:</strong> InOrdera is built to be compliant with UK GDPR and the Data Protection Act 2018. We treat data protection as a fundamental responsibility — not an afterthought. This page explains our approach and your rights.</p>
+  </div>
+
+  <h2>Our Data Protection Principles</h2>
+  <p>Everything we do with personal data follows the seven principles of UK GDPR:</p>
+
+  <div class="principles-grid">
+    <div class="principle-card">
+      <h3>Lawfulness, fairness & transparency</h3>
+      <p>We only process data on a lawful basis and are transparent about how we use it.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Purpose limitation</h3>
+      <p>Data is collected for specified, explicit purposes and not processed in ways incompatible with those purposes.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Data minimisation</h3>
+      <p>We collect only what we need. No excessive data collection.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Accuracy</h3>
+      <p>We take reasonable steps to keep data accurate and up to date.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Storage limitation</h3>
+      <p>Data is held only as long as necessary. Our retention schedules are defined and enforced.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Integrity & confidentiality</h3>
+      <p>Appropriate technical and organisational security measures protect all personal data.</p>
+    </div>
+  </div>
+
+  <h2>How We Demonstrate Accountability</h2>
+  <ul>
+    <li>We maintain a Record of Processing Activities (RoPA) as required by UK GDPR Article 30.</li>
+    <li>We conduct Data Protection Impact Assessments (DPIAs) for high-risk processing, including our AI voice and chat systems.</li>
+    <li>We train all staff on data protection obligations.</li>
+    <li>We operate a Data Breach Response Policy and notify the ICO within 72 hours of becoming aware of a notifiable breach.</li>
+    <li>We review and update our data protection practices at least annually.</li>
+  </ul>
+
+  <h2>Your Rights Under UK GDPR</h2>
+  <p>As a data subject, you have the following rights. You can exercise any of them by contacting <a href="mailto:privacy@inordera.com">privacy@inordera.com</a>. We will respond within one calendar month.</p>
+
+  <div class="rights-list">
+    <div class="right-item">
+      <div class="right-icon">👁</div>
+      <div class="right-text">
+        <h4>Right of Access (Subject Access Request)</h4>
+        <p>You can request a copy of all personal data we hold about you, along with information about how we use it.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">✏️</div>
+      <div class="right-text">
+        <h4>Right to Rectification</h4>
+        <p>If data we hold about you is inaccurate or incomplete, you can ask us to correct it.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">🗑</div>
+      <div class="right-text">
+        <h4>Right to Erasure ("Right to be Forgotten")</h4>
+        <p>You can ask us to delete your personal data where we have no legitimate reason to continue holding it. Note that some data must be retained for legal or allergen compliance purposes.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">⏸</div>
+      <div class="right-text">
+        <h4>Right to Restriction of Processing</h4>
+        <p>You can ask us to limit how we process your data in certain circumstances — for example, while you contest its accuracy.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">📦</div>
+      <div class="right-text">
+        <h4>Right to Data Portability</h4>
+        <p>Where processing is based on consent or contractual necessity, you can receive your data in a structured, machine-readable format to transfer to another service.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">🚫</div>
+      <div class="right-text">
+        <h4>Right to Object</h4>
+        <p>You can object to processing based on legitimate interests or direct marketing. We will stop processing unless we have compelling grounds that override your interests.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">🤖</div>
+      <div class="right-text">
+        <h4>Rights Related to Automated Decision-Making</h4>
+        <p>If a decision that significantly affects you is made solely by automated means, you have the right to request human review, express your view, and contest the decision.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Data Processing Agreements</h2>
+  <p>Where InOrdera acts as a <strong>data processor</strong> on behalf of our restaurant customers (for example, processing end-user order data), we enter into a Data Processing Agreement (DPA) that complies with UK GDPR Article 28. Our DPA is available on request for enterprise customers.</p>
+  <p>Where InOrdera acts as a <strong>data controller</strong> (for example, when we hold our customers' account data), we are directly accountable under UK GDPR.</p>
+
+  <h2>Supervisory Authority</h2>
+  <p>The supervisory authority for data protection in the UK is the Information Commissioner's Office (ICO). If you believe we have not handled your personal data in accordance with UK GDPR, you have the right to lodge a complaint with the ICO:</p>
+  <ul>
+    <li><strong>Website:</strong> <a href="https://ico.org.uk" target="_blank">ico.org.uk</a></li>
+    <li><strong>Helpline:</strong> 0303 123 1113</li>
+    <li><strong>Post:</strong> ICO, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF</li>
+  </ul>
+  <p>We would always appreciate the opportunity to address any concerns directly before you contact the ICO. Please email us first at <a href="mailto:privacy@inordera.com">privacy@inordera.com</a>.</p>
+
+  <h2>Contact Our Data Protection Team</h2>
+  <p><strong>Email:</strong> <a href="mailto:privacy@inordera.com">privacy@inordera.com</a><br>
+  <strong>Subject line:</strong> GDPR Request — [your name]</p>
+  <p>We aim to respond to all data subject requests within 30 calendar days. For complex requests we may extend this to 90 days and will notify you accordingly.</p>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">In<span>Ordera</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="InOrdera.html#solution">AI Voice Agent</a>
+          <a href="InOrdera.html#solution">AI Chat Ordering</a>
+          <a href="InOrdera.html#features">Features</a>
+          <a href="InOrdera.html#features">Analytics</a>
+          <a href="InOrdera.html#features">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+          <a href="gdpr.html">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
+`;
+const files = {
+  "InOrdera.html": InOrdera_html,
+  "careers.html": careers_html,
+  "privacy-policy.html": privacy_policy_html,
+  "terms-of-service.html": terms_of_service_html,
+  "cookie-policy.html": cookie_policy_html,
+  "gdpr.html": gdpr_html,
+};
+
+function dl(id) {
+  const fname = Object.keys(files).find(k => k.replace(/[\.\-]/g, "_") === id);
+  const blob = new Blob([files[fname]], {type: "text/html"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = fname;
+  a.click();
+}
+function downloadAll() {
+  Object.keys(files).forEach((fname, i) => {
+    setTimeout(() => {
+      const blob = new Blob([files[fname]], {type: "text/html"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = fname;
+      a.click();
+    }, i * 300);
+  });
+}
+
+</script>
+</body>
+</html>

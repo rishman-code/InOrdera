@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YumDial — AI Voice & Chat Ordering for Independent Restaurants</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── THEME TOKENS ─────────────────────────────────────── */
+:root {
+  --bg: #f7fffe;
+  --bg2: #edfaf7;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #0b9b83;
+  --accent-hover: #088a74;
+  --accent-light: #d6f5ef;
+  --accent2: #ff5c35;
+  --accent2-hover: #e84d28;
+  --border: rgba(11,31,46,0.08);
+  --border2: rgba(11,31,46,0.14);
+  --shadow: 0 2px 16px rgba(11,155,131,0.10);
+  --shadow-lg: 0 8px 40px rgba(11,31,46,0.10);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+[data-theme="indigo"] {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --accent2: #f97316;
+  --accent2-hover: #ea6c0a;
+  --border: rgba(79,70,229,0.10);
+  --shadow: 0 2px 16px rgba(79,70,229,0.12);
+}
+[data-theme="forest"] {
+  --bg: #f5fbf5;
+  --bg2: #eaf5ea;
+  --accent: #16a34a;
+  --accent-hover: #138a3f;
+  --accent-light: #dcfce7;
+  --accent2: #d97706;
+  --accent2-hover: #c46a05;
+  --border: rgba(22,163,74,0.10);
+  --shadow: 0 2px 16px rgba(22,163,74,0.12);
+}
+
+/* ── RESET ────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+img{display:block;max-width:100%}
+
+/* ── NAV ─────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(247,255,254,0.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:var(--ink2);transition:color 0.18s}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:var(--ink2);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:var(--ink)}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero{
+  padding:148px 40px 80px;
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 480px;gap:60px;align-items:center;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent-light);color:var(--accent);
+  font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
+  padding:5px 12px;border-radius:40px;margin-bottom:24px;
+}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+h1{
+  font-family:var(--fd);font-size:clamp(42px,4.5vw,68px);
+  font-weight:800;line-height:1.04;letter-spacing:-0.035em;
+  color:var(--ink);margin-bottom:22px;
+}
+h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:18px;font-weight:400;color:var(--ink2);max-width:480px;line-height:1.7;margin-bottom:36px}
+.hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn-primary{
+  background:var(--accent2);color:#fff;
+  font-size:15px;font-weight:600;padding:15px 32px;border-radius:var(--r);
+  transition:background 0.18s,transform 0.12s;
+  box-shadow:0 4px 16px rgba(255,92,53,0.28);
+}
+.btn-primary:hover{background:var(--accent2-hover);transform:translateY(-2px)}
+.btn-secondary{
+  background:transparent;color:var(--ink2);border:1.5px solid var(--border2);
+  font-size:15px;font-weight:500;padding:14px 28px;border-radius:var(--r);
+  transition:all 0.18s;
+}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.hero-trust{margin-top:40px;display:flex;align-items:center;gap:16px;font-size:13px;color:var(--ink3)}
+.hero-trust strong{color:var(--ink2)}
+.hero-stars{color:#f59e0b;letter-spacing:-2px;font-size:16px}
+
+/* Hero visual */
+.hero-visual{position:relative}
+.phone-card{
+  background:var(--surface);border-radius:20px;
+  box-shadow:var(--shadow-lg);border:1px solid var(--border);
+  overflow:hidden;
+}
+.phone-topbar{
+  background:var(--ink);padding:14px 20px;
+  display:flex;align-items:center;gap:10px;
+}
+.phone-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.3)}
+.phone-dot-g{background:#4ade80}
+.phone-label{font-size:12px;color:rgba(255,255,255,0.5);margin-left:4px;font-family:monospace}
+.chat-body{padding:20px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+.chat-msg{max-width:75%;padding:11px 15px;border-radius:14px;font-size:14px;line-height:1.5}
+.chat-ai{background:var(--surface);border:1px solid var(--border);color:var(--ink);border-radius:14px 14px 14px 4px}
+.chat-user{background:var(--accent);color:#fff;margin-left:auto;border-radius:14px 14px 4px 14px}
+.chat-typing{display:flex;gap:4px;align-items:center;padding:11px 15px;background:var(--surface);border:1px solid var(--border);border-radius:14px 14px 14px 4px;width:fit-content}
+.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--ink3);animation:blink 1.2s infinite}
+.chat-typing span:nth-child(2){animation-delay:0.2s}
+.chat-typing span:nth-child(3){animation-delay:0.4s}
+@keyframes blink{0%,80%,100%{opacity:0.3}40%{opacity:1}}
+.hero-float-1,.hero-float-2{
+  position:absolute;background:var(--surface);border-radius:12px;
+  box-shadow:var(--shadow-lg);border:1px solid var(--border);
+  padding:12px 16px;font-size:13px;font-weight:500;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-float-1{top:-24px;right:-24px;color:var(--ink)}
+.hero-float-2{bottom:24px;left:-32px;color:var(--ink)}
+.float-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.fi-green{background:#d1fae5}
+.fi-amber{background:#fef3c7}
+
+/* ── TICKER STRIP ─────────────────────────────────────── */
+.ticker{
+  background:var(--ink);padding:14px 0;overflow:hidden;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.ticker-inner{display:flex;gap:0;animation:ticker 24s linear infinite;white-space:nowrap;width:max-content}
+.ticker-item{
+  padding:0 48px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);
+  display:flex;align-items:center;gap:12px;
+}
+.ticker-item strong{color:#fff}
+.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── LOGOS ────────────────────────────────────────────── */
+.logos-section{padding:56px 40px;max-width:1200px;margin:0 auto;text-align:center}
+.logos-label{font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:28px}
+.logos-row{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap}
+.logo-item{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--ink3);letter-spacing:-0.02em;opacity:0.55;transition:opacity 0.2s}
+.logo-item:hover{opacity:1}
+
+/* ── SECTION WRAPPER ──────────────────────────────────── */
+.section{padding:100px 40px;max-width:1200px;margin:0 auto}
+.section-center{text-align:center}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h2{font-family:var(--fd);font-size:clamp(30px,3.2vw,50px);font-weight:800;line-height:1.08;letter-spacing:-0.03em;color:var(--ink);margin-bottom:16px}
+h2 em{font-style:normal;color:var(--accent)}
+.section-intro{font-size:17px;color:var(--ink2);max-width:560px;line-height:1.75}
+.section-center .section-intro{margin:0 auto}
+.divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* ── PROBLEM ─────────────────────────────────────────── */
+.problem-bg{background:var(--ink);padding:80px 40px}
+.problem-inner{max-width:1200px;margin:0 auto}
+.problem-bg .eyebrow{color:rgba(255,255,255,0.4)}
+.problem-bg h2{color:#fff}
+.problem-bg h2 em{color:#ff7d5e}
+.problem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.07);border-radius:var(--r);overflow:hidden;margin-top:56px}
+.problem-card{background:rgba(255,255,255,0.04);padding:36px 28px;transition:background 0.2s}
+.problem-card:hover{background:rgba(255,255,255,0.08)}
+.prob-num{font-family:var(--fd);font-size:52px;font-weight:800;line-height:1;letter-spacing:-0.04em;color:#ff7d5e;margin-bottom:10px}
+.prob-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:8px}
+.prob-body{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65}
+
+/* ── SOLUTION ─────────────────────────────────────────── */
+.solution-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
+.solution-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:20px;padding:40px;position:relative;overflow:hidden;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.solution-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.solution-card.featured{border-color:var(--accent);background:var(--accent-light)}
+.solution-icon{
+  width:52px;height:52px;background:var(--accent-light);
+  border-radius:14px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+}
+.solution-icon svg{width:26px;height:26px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.solution-card.featured .solution-icon{background:rgba(11,155,131,0.18)}
+.solution-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px}
+.solution-body{font-size:15px;color:var(--ink2);line-height:1.7;margin-bottom:20px}
+.solution-pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{
+  background:var(--bg2);border:1px solid var(--border);
+  font-size:12px;font-weight:500;color:var(--ink2);
+  padding:5px 12px;border-radius:40px;
+}
+.solution-card.featured .pill{background:rgba(11,155,131,0.12);border-color:rgba(11,155,131,0.2);color:var(--accent)}
+
+/* ── FEATURES ─────────────────────────────────────────── */
+.features-bg{background:var(--bg2);padding:100px 40px}
+.features-inner{max-width:1200px;margin:0 auto}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.feat-card{
+  background:var(--surface);border-radius:16px;padding:32px;
+  border:1px solid var(--border);transition:box-shadow 0.2s,transform 0.2s;
+}
+.feat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.feat-card:nth-child(1) .feat-icon-bg{background:#fef9c3}
+.feat-card:nth-child(2) .feat-icon-bg{background:#fee2e2}
+.feat-card:nth-child(3) .feat-icon-bg{background:#ede9fe}
+.feat-card:nth-child(4) .feat-icon-bg{background:#d1fae5}
+.feat-card:nth-child(5) .feat-icon-bg{background:#fce7f3}
+.feat-card:nth-child(6) .feat-icon-bg{background:#dbeafe}
+.feat-icon-bg{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:20px}
+.feat-title{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.feat-body{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* ── ROI ──────────────────────────────────────────────── */
+.roi-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:56px}
+.roi-table{border-radius:16px;overflow:hidden;border:1.5px solid var(--border);background:var(--surface)}
+.roi-row{display:grid;grid-template-columns:1fr 120px 120px;gap:0;border-bottom:1px solid var(--border)}
+.roi-row:last-child{border:none}
+.roi-row.header{background:var(--bg2);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3)}
+.roi-row.total{background:var(--accent-light)}
+.roi-cell{padding:14px 18px;font-size:14px;color:var(--ink2)}
+.roi-cell:nth-child(2),.roi-cell:nth-child(3){text-align:right;font-weight:600;color:var(--ink)}
+.roi-row.total .roi-cell{color:var(--accent);font-weight:700;font-size:15px}
+.roi-row.header .roi-cell{color:var(--ink3);font-weight:600}
+.roi-aside h3{font-family:var(--fd);font-size:32px;font-weight:800;letter-spacing:-0.03em;color:var(--ink);line-height:1.2;margin-bottom:20px}
+.roi-aside h3 em{font-style:normal;color:var(--accent)}
+.roi-aside p{font-size:16px;color:var(--ink2);line-height:1.7;margin-bottom:24px}
+.roi-stat-row{display:flex;gap:32px;margin-top:28px}
+.roi-stat{display:flex;flex-direction:column}
+.roi-stat-num{font-family:var(--fd);font-size:36px;font-weight:800;letter-spacing:-0.04em;color:var(--accent)}
+.roi-stat-label{font-size:12px;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
+
+/* ── WHY YUMDIAL (COMPETITIVE) ────────────────────────── */
+.comp-bg{background:var(--ink);padding:100px 40px}
+.comp-inner{max-width:1200px;margin:0 auto}
+.comp-bg .eyebrow{color:rgba(255,255,255,0.4)}
+.comp-bg h2{color:#fff}
+.comp-bg h2 em{color:var(--accent)}
+.comp-bg .section-intro{color:rgba(255,255,255,0.55)}
+.comp-table{margin-top:56px;background:rgba(255,255,255,0.04);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
+.comp-row{display:grid;grid-template-columns:200px repeat(6,1fr);border-bottom:1px solid rgba(255,255,255,0.07)}
+.comp-row:last-child{border:none}
+.comp-row.header{background:rgba(255,255,255,0.06)}
+.comp-cell{padding:14px 16px;font-size:13px;color:rgba(255,255,255,0.5);text-align:center;display:flex;align-items:center;justify-content:center}
+.comp-cell.left{justify-content:flex-start;font-weight:500;color:rgba(255,255,255,0.7);text-align:left}
+.comp-row.header .comp-cell{font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+.comp-row.header .comp-cell.yd{color:var(--accent)}
+.comp-cell.yd{background:rgba(11,155,131,0.08)}
+.check{color:#4ade80;font-size:16px}
+.cross{color:rgba(255,255,255,0.2);font-size:14px}
+.partial{color:#fbbf24;font-size:13px}
+.comp-price{font-weight:600;font-size:13px}
+.comp-price.good{color:#4ade80}
+.comp-price.bad{color:rgba(255,255,255,0.35)}
+
+/* ── PRICING ─────────────────────────────────────────── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
+.pricing-card{
+  background:var(--surface);border:1.5px solid var(--border);
+  border-radius:20px;padding:36px;position:relative;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.pricing-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.pricing-card.popular{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
+.popular-badge{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  background:var(--accent);color:#fff;font-size:11px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:40px;
+  white-space:nowrap;
+}
+.plan-name{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+.plan-price{font-family:var(--fd);font-size:44px;font-weight:800;letter-spacing:-0.04em;color:var(--ink);line-height:1}
+.plan-price span{font-size:18px;font-weight:500;color:var(--ink3);vertical-align:super;font-family:var(--fb)}
+.plan-freq{font-size:14px;color:var(--ink3);margin-bottom:6px}
+.plan-tagline{font-size:14px;color:var(--ink2);margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:32px}
+.plan-features li{font-size:14px;color:var(--ink2);display:flex;align-items:flex-start;gap:10px}
+.plan-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px}
+.plan-features li.no::before{content:'—';color:var(--ink3)}
+.plan-features li.no{color:var(--ink3)}
+.btn-plan{
+  width:100%;padding:14px;border-radius:var(--r);font-size:15px;font-weight:600;
+  background:var(--accent);color:#fff;transition:background 0.18s;
+}
+.btn-plan:hover{background:var(--accent-hover)}
+.btn-plan.outline{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn-plan.outline:hover{background:var(--accent-light)}
+
+/* ── TESTIMONIALS ─────────────────────────────────────── */
+.testi-bg{background:var(--bg2);padding:100px 40px}
+.testi-inner{max-width:1200px;margin:0 auto}
+.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+.testi-card{
+  background:var(--surface);border-radius:16px;border:1px solid var(--border);
+  padding:36px;transition:box-shadow 0.2s;
+}
+.testi-card:hover{box-shadow:var(--shadow-lg)}
+.testi-stars{color:#f59e0b;font-size:15px;margin-bottom:16px;letter-spacing:1px}
+.testi-quote{font-size:16px;color:var(--ink);line-height:1.7;margin-bottom:24px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:var(--accent-light);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fd);font-size:16px;font-weight:700;color:var(--accent);flex-shrink:0;
+}
+.testi-name{font-size:14px;font-weight:600;color:var(--ink)}
+.testi-role{font-size:12px;color:var(--ink3)}
+
+/* ── FAQ ──────────────────────────────────────────────── */
+.faq-list{margin-top:56px;max-width:760px;margin-left:auto;margin-right:auto}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 0;cursor:pointer;
+  font-size:16px;font-weight:600;color:var(--ink);
+  list-style:none;gap:16px;
+}
+.faq-q::-webkit-details-marker{display:none}
+.faq-q .faq-arrow{
+  width:28px;height:28px;border-radius:50%;background:var(--bg2);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:background 0.18s,transform 0.24s;
+  font-size:14px;color:var(--ink2);
+}
+details[open] .faq-arrow{transform:rotate(180deg);background:var(--accent-light);color:var(--accent)}
+.faq-a{padding:0 0 20px;font-size:15px;color:var(--ink2);line-height:1.75;max-width:680px}
+
+/* ── FINAL CTA ────────────────────────────────────────── */
+.cta-band{
+  background:var(--accent);padding:80px 40px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta-band::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cta-band h2{font-family:var(--fd);font-size:clamp(32px,3.5vw,56px);font-weight:800;letter-spacing:-0.03em;color:#fff;margin-bottom:16px;position:relative}
+.cta-band p{font-size:17px;color:rgba(255,255,255,0.8);margin-bottom:36px;position:relative}
+.cta-form{display:flex;gap:0;max-width:420px;margin:0 auto 14px;position:relative}
+.cta-input{
+  flex:1;padding:15px 20px;background:#fff;border:none;border-radius:var(--r) 0 0 var(--r);
+  font-family:var(--fb);font-size:15px;color:var(--ink);outline:none;
+}
+.cta-input::placeholder{color:var(--ink3)}
+.cta-btn{
+  background:var(--ink);color:#fff;font-size:14px;font-weight:600;
+  padding:15px 24px;border-radius:0 var(--r) var(--r) 0;border:none;cursor:pointer;
+  white-space:nowrap;transition:background 0.18s;
+}
+.cta-btn:hover{background:#1e3548}
+.cta-note{font-size:12px;color:rgba(255,255,255,0.6);position:relative}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+
+/* ── POS LOGOS ────────────────────────────────────────── */
+.pos-logo{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 20px;border-radius:40px;
+  background:var(--surface);border:1.5px solid var(--border2);
+  font-family:var(--fd);font-size:14px;font-weight:600;color:var(--ink2);
+  transition:border-color 0.18s,color 0.18s,box-shadow 0.18s;
+  cursor:default;
+}
+.pos-logo:hover{border-color:var(--accent);color:var(--ink);box-shadow:var(--shadow)}
+
+/* ── REVEAL ANIMATIONS ────────────────────────────────── */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s,transform 0.65s}
+.reveal.visible{opacity:1;transform:none}
+.reveal-d1{transition-delay:0.08s}
+.reveal-d2{transition-delay:0.16s}
+.reveal-d3{transition-delay:0.24s}
+
+/* ── TWEAKS ───────────────────────────────────────────── */
+#tweaks{
+  display:none;position:fixed;bottom:24px;right:24px;z-index:9999;
+  background:var(--surface);border:1px solid var(--border2);
+  border-radius:14px;padding:20px;width:230px;
+  box-shadow:var(--shadow-lg);
+}
+.tweaks-h{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+.tw-row{margin-bottom:14px}
+.tw-label{font-size:12px;color:var(--ink2);margin-bottom:8px;display:block;font-weight:500}
+.tw-swatches{display:flex;gap:8px}
+.tw-sw{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform 0.15s}
+.tw-sw:hover{transform:scale(1.15)}
+.tw-sw.on{border-color:var(--ink)}
+.tw-tabs{display:flex;gap:6px}
+.tw-tab{flex:1;padding:6px 4px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--ink2);font-size:11px;font-family:var(--fb);cursor:pointer;text-align:center;transition:all 0.15s}
+.tw-tab.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <!-- phone handset -->
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <!-- chat bubble -->
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">Yum<span>Dial</span></span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#solution">Platform</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#roi">ROI</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <button class="btn-nav" onclick="document.getElementById('cta').scrollIntoView()">Book a Demo</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div style="background:var(--bg)">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">UK-Native AI for Independent Restaurants</div>
+      <h1>Every missed call<br>is a <em>lost customer.</em></h1>
+      <p class="hero-sub">YumDial answers your phone calls and web chats 24/7 — taking orders, upselling, flagging allergens, and sounding completely human. From £99/month.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('cta').scrollIntoView()">Book a Free Demo</button>
+        <button class="btn-secondary" onclick="document.getElementById('solution').scrollIntoView()">See how it works →</button>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-stars">★★★★★</div>
+        <span>Rated <strong>5/5</strong> by independent UK operators &nbsp;·&nbsp; <strong>60-minute setup</strong> &nbsp;·&nbsp; <strong>No commission</strong></span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-float-1">
+        <div class="float-icon fi-green">📞</div>
+        <span>Call answered in <strong>0.8s</strong></span>
+      </div>
+      <div class="phone-card">
+        <div class="phone-topbar">
+          <div class="phone-dot phone-dot-g"></div>
+          <div class="phone-dot"></div>
+          <div class="phone-dot"></div>
+          <span class="phone-label" style="margin-left:8px">YumDial · Chat Widget</span>
+        </div>
+        <div class="chat-body">
+          <div class="chat-msg chat-ai">Hi there! Welcome to Spice Garden. What can I get for you today? 😊</div>
+          <div class="chat-msg chat-user">Can I get the lamb biryani but without nuts? My son has a nut allergy.</div>
+          <div class="chat-msg chat-ai">Of course! ⚠️ <strong>Allergen note:</strong> Our biryani is prepared in a kitchen that handles nuts. I've flagged this on your order and our team will take extra care. Shall I add it?</div>
+          <div class="chat-msg chat-user">Yes please. And anything to go with it?</div>
+          <div class="chat-msg chat-ai">Our garlic naan pairs perfectly — it's our most popular add-on with this dish. Add one for £2.50?</div>
+          <div class="chat-typing"><span></span><span></span><span></span></div>
+        </div>
+      </div>
+      <div class="hero-float-2">
+        <div class="float-icon fi-amber">💷</div>
+        <span>AOV up <strong>+22%</strong> this week</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker-inner">
+    <div class="ticker-item"><div class="ticker-dot"></div><span>43% of restaurant calls go unanswered</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Independent restaurants lose up to <strong>£12,500/month</strong> in preventable revenue</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>YumDial ROI: <strong>30–66×</strong> your subscription cost</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Allergen incidents cost restaurants <strong>unlimited liability</strong> — YumDial flags every one</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>UK hospitality: <strong>132,000 unfilled vacancies</strong> — AI fills the gap</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Setup in <strong>60 minutes</strong>, no IT required</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>49,000+ UK takeaway outlets</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>43% of restaurant calls go unanswered</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Independent restaurants lose up to <strong>£12,500/month</strong> in preventable revenue</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>YumDial ROI: <strong>30–66×</strong> your subscription cost</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Allergen incidents cost restaurants <strong>unlimited liability</strong> — YumDial flags every one</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>UK hospitality: <strong>132,000 unfilled vacancies</strong> — AI fills the gap</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>Setup in <strong>60 minutes</strong>, no IT required</span></div>
+    <div class="ticker-item"><div class="ticker-dot"></div><span>49,000+ UK takeaway outlets</span></div>
+  </div>
+</div>
+
+<!-- LOGOS -->
+<div class="logos-section">
+  <div class="logos-label">Trusted by independent restaurants across the UK</div>
+  <div class="logos-row">
+    <div class="logo-item">Spice Garden</div>
+    <div class="logo-item">Golden Wok</div>
+    <div class="logo-item">Istanbul Grill</div>
+    <div class="logo-item">Bombay Bites</div>
+    <div class="logo-item">Noodle Box</div>
+    <div class="logo-item">The Curry House</div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- PROBLEM -->
+<div class="problem-bg">
+  <div class="problem-inner">
+    <div class="eyebrow reveal">The Problem</div>
+    <h2 class="reveal">Your restaurant is leaking money.<br><em>Every single day.</em></h2>
+    <div class="problem-grid reveal">
+      <div class="problem-card">
+        <div class="prob-num">43%</div>
+        <div class="prob-title">Calls Go Unanswered</div>
+        <div class="prob-body">During peak hours, staff are cooking and serving. The phone rings out. 69% of those callers won't try again — they order from a competitor.</div>
+      </div>
+      <div class="problem-card">
+        <div class="prob-num">0×</div>
+        <div class="prob-title">Upselling Happens</div>
+        <div class="prob-body">Rushed, undertrained staff never suggest extras. Structured upselling lifts average order value by 10–30%. That's money left on the table every order.</div>
+      </div>
+      <div class="problem-card">
+        <div class="prob-num">52%</div>
+        <div class="prob-title">Staff Turnover Rate</div>
+        <div class="prob-body">High churn means the person answering your phone is often new, non-fluent, and unknowledgeable about your menu. Every call is a risk.</div>
+      </div>
+      <div class="problem-card">
+        <div class="prob-num">∞</div>
+        <div class="prob-title">Allergen Liability</div>
+        <div class="prob-body">2.4 million UK adults have confirmed food allergies. Verbal communication fails. Owen's Law is coming. The consequences of getting it wrong are catastrophic.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOLUTION -->
+<div id="solution" style="background:var(--bg)">
+  <div class="section">
+    <div class="eyebrow reveal">The Solution</div>
+    <h2 class="reveal">One platform. Two modes.<br><em>Every order handled perfectly.</em></h2>
+    <p class="section-intro reveal">YumDial is the only UK-native, dual-mode AI ordering platform built specifically for independent restaurants — at a price they can actually afford.</p>
+    <div class="solution-grid reveal">
+      <div class="solution-card featured">
+        <div class="solution-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.27 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.07 4.18 2 2 0 0 1 5.05 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div class="solution-title">AI Voice Agent</div>
+        <div class="solution-body">Answers every phone call with natural, conversational AI. Takes full orders, handles modifications and allergen queries, upsells naturally — every time, every shift. Sounds completely human. Works 24/7.</div>
+        <div class="solution-pills">
+          <span class="pill">24/7 availability</span>
+          <span class="pill">Unlimited simultaneous calls</span>
+          <span class="pill">Natural conversation</span>
+          <span class="pill">UK accents & dialects</span>
+          <span class="pill">Multi-language</span>
+        </div>
+      </div>
+      <div class="solution-card">
+        <div class="solution-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="solution-title">AI Chat Ordering</div>
+        <div class="solution-body">A fully-intelligent web widget and messaging integration that guides customers through your menu, handles modifications, flags allergens, and upsells — exactly like your best staff member, but always on.</div>
+        <div class="solution-pills">
+          <span class="pill">Web widget</span>
+          <span class="pill">WhatsApp & SMS</span>
+          <span class="pill">Instant responses</span>
+          <span class="pill">Menu navigation</span>
+          <span class="pill">Allergen flagging</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INTEGRATIONS -->
+<div style="background:var(--bg);padding:64px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="logos-label" style="margin-bottom:32px">Integrates with your existing POS system</div>
+    <div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#0264E0"/></svg>
+        Square
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#E84C25"/></svg>
+        Toast
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#00A650"/></svg>
+        Lightspeed
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#5C6BC0"/></svg>
+        Epos Now
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#1A9C3E"/></svg>
+        Clover
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#0B7BCD"/></svg>
+        Zettle
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#D64A2B"/></svg>
+        ICRTouch
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#2C3E50"/></svg>
+        Tevalis
+      </div>
+      <div class="pos-logo">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#6B21A8"/></svg>
+        Zonal
+      </div>
+      <div class="pos-logo" style="border-style:dashed;color:var(--ink3)">
+        + more
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="features-bg" id="features">
+  <div class="features-inner">
+    <div class="eyebrow reveal">What It Does</div>
+    <h2 class="reveal">Built for restaurants. Built for <em>the UK.</em></h2>
+    <p class="section-intro reveal">Every feature exists because independent restaurants told us they needed it. Not enterprise bloat — just what works.</p>
+    <div class="features-grid">
+      <div class="feat-card reveal reveal-d1">
+        <div class="feat-icon-bg">🧠</div>
+        <div class="feat-title">Intelligent Upselling</div>
+        <div class="feat-body">Increases average order value by 15–25% through natural, contextual suggestions — "Our garlic naan pairs perfectly with that" — every single order, no training required.</div>
+      </div>
+      <div class="feat-card reveal reveal-d2">
+        <div class="feat-icon-bg">⚠️</div>
+        <div class="feat-title">Allergen Flagging</div>
+        <div class="feat-body">Automatically identifies all 14 UK allergens during every interaction, flags risks, and creates an auditable trail — ahead of Owen's Law and FSA mandatory requirements.</div>
+      </div>
+      <div class="feat-card reveal reveal-d3">
+        <div class="feat-icon-bg">🌍</div>
+        <div class="feat-title">Multi-Language Support</div>
+        <div class="feat-body">Serve every customer fluently. YumDial supports 30+ languages, critical for the diverse customer bases of Indian, Chinese, Turkish and other independent operators.</div>
+      </div>
+      <div class="feat-card reveal reveal-d1">
+        <div class="feat-icon-bg">📊</div>
+        <div class="feat-title">Analytics Dashboard</div>
+        <div class="feat-body">See call volumes, order values, upsell performance, peak times, and waste patterns in one place. Know your business like you've never known it before.</div>
+      </div>
+      <div class="feat-card reveal reveal-d2">
+        <div class="feat-icon-bg">🔗</div>
+        <div class="feat-title">POS Integration</div>
+        <div class="feat-body">Connects to your existing setup in under 60 minutes. Compatible with all major UK POS systems. No IT project. No engineer. Just plug in and go live.</div>
+      </div>
+      <div class="feat-card reveal reveal-d3">
+        <div class="feat-icon-bg">💬</div>
+        <div class="feat-title">Dish Descriptions</div>
+        <div class="feat-body">Compelling, appetising descriptions of every item on your menu — delivered conversationally. Turns a "what's in it?" into a sale, every time.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROI -->
+<div id="roi" style="background:var(--bg)">
+  <div class="section">
+    <div class="eyebrow reveal">The Business Case</div>
+    <h2 class="reveal">YumDial pays for itself<br><em>within days.</em></h2>
+    <div class="roi-layout">
+      <div class="roi-table reveal">
+        <div class="roi-row header">
+          <div class="roi-cell left">Monthly benefit</div>
+          <div class="roi-cell">Conservative</div>
+          <div class="roi-cell">Realistic</div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-cell left">Recovered missed orders</div>
+          <div class="roi-cell">£1,500</div>
+          <div class="roi-cell">£3,000</div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-cell left">Upselling uplift</div>
+          <div class="roi-cell">£2,000</div>
+          <div class="roi-cell">£5,000</div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-cell left">Commission savings (direct orders)</div>
+          <div class="roi-cell">£1,980</div>
+          <div class="roi-cell">£3,960</div>
+        </div>
+        <div class="roi-row" style="border-bottom:1px solid var(--border)">
+          <div class="roi-cell left" style="font-weight:600;color:var(--ink)">Total benefit</div>
+          <div class="roi-cell" style="font-weight:700;color:var(--ink)">£5,480</div>
+          <div class="roi-cell" style="font-weight:700;color:var(--ink)">£11,960</div>
+        </div>
+        <div class="roi-row">
+          <div class="roi-cell left">YumDial Professional</div>
+          <div class="roi-cell">£179</div>
+          <div class="roi-cell">£179</div>
+        </div>
+        <div class="roi-row total">
+          <div class="roi-cell left" style="color:var(--accent);font-weight:700">Net monthly benefit</div>
+          <div class="roi-cell">£5,301</div>
+          <div class="roi-cell">£11,781</div>
+        </div>
+      </div>
+      <div class="roi-aside reveal">
+        <h3>A flat <em>£179/month</em> — vs. £7,900+ in platform fees.</h3>
+        <p>Every direct order saves your restaurant £6.60 in commission on a £22 order. YumDial has zero per-order fees. Ever.</p>
+        <p style="font-size:15px;color:var(--ink2);font-style:italic;border-left:3px solid var(--accent);padding-left:16px;margin-top:16px">"Flat £179/month with zero commission vs. £7,900+/month in platform fees. Every direct order saves the restaurant £6.60 in commission on a £22 order."</p>
+        <div class="roi-stat-row">
+          <div class="roi-stat">
+            <div class="roi-stat-num">30–66×</div>
+            <div class="roi-stat-label">Return on investment</div>
+          </div>
+          <div class="roi-stat">
+            <div class="roi-stat-num">&lt;60 min</div>
+            <div class="roi-stat-label">To go live</div>
+          </div>
+        </div>
+        <button class="btn-primary" style="margin-top:32px" onclick="document.getElementById('cta').scrollIntoView()">Calculate your ROI →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" style="background:var(--bg)">
+  <div class="section section-center">
+    <div class="eyebrow reveal">Pricing</div>
+    <h2 class="reveal">Simple pricing. <em>No commissions.</em><br>No surprises.</h2>
+    <p class="section-intro reveal">Flat monthly fee. No per-order charges. Cancel anytime. Every plan includes a free 14-day trial.</p>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price"><span>£</span>99</div>
+        <div class="plan-freq">/month</div>
+        <div class="plan-tagline">Perfect for digital-first takeaways getting started with AI ordering</div>
+        <ul class="plan-features">
+          <li>AI chat ordering widget (web)</li>
+          <li>Allergen flagging on all interactions</li>
+          <li>Intelligent upselling</li>
+          <li>Dish descriptions</li>
+          <li>Email support</li>
+          <li class="no">AI voice agent (phone)</li>
+          <li class="no">Analytics dashboard</li>
+          <li class="no">Multi-language support</li>
+        </ul>
+        <button class="btn-plan outline">Start free trial</button>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">Most Popular</div>
+        <div class="plan-name">Professional</div>
+        <div class="plan-price"><span>£</span>179</div>
+        <div class="plan-freq">/month</div>
+        <div class="plan-tagline">The full platform for established independents — voice + chat in one</div>
+        <ul class="plan-features">
+          <li>Everything in Starter</li>
+          <li>AI voice agent (phone orders, 24/7)</li>
+          <li>Advanced upselling engine</li>
+          <li>Multi-language support (30+ languages)</li>
+          <li>Analytics dashboard</li>
+          <li>Priority phone & chat support</li>
+          <li>60-minute assisted onboarding</li>
+          <li>POS integration included</li>
+        </ul>
+        <button class="btn-plan" onclick="document.getElementById('cta').scrollIntoView()">Start free trial</button>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Group</div>
+        <div class="plan-price"><span>£</span>149</div>
+        <div class="plan-freq">/location/month</div>
+        <div class="plan-tagline">For small groups of 3–15 locations managing menus centrally</div>
+        <ul class="plan-features">
+          <li>Everything in Professional</li>
+          <li>Multi-location dashboard</li>
+          <li>Centralised menu management</li>
+          <li>Per-store analytics & overrides</li>
+          <li>Dedicated account manager</li>
+          <li>Custom onboarding & training</li>
+          <li>SLA uptime guarantee</li>
+          <li>API access</li>
+        </ul>
+        <button class="btn-plan outline" onclick="document.getElementById('cta').scrollIntoView()">Contact sales</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testi-bg">
+  <div class="testi-inner">
+    <div class="eyebrow reveal">Customer Stories</div>
+    <h2 class="reveal">Independent restaurants.<br><em>Real results.</em></h2>
+    <div class="testi-grid reveal">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"I was missing 30 calls a night during Friday service. YumDial answered all of them. Within two weeks I'd recovered more in orders than the subscription costs in a year."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">A</div>
+          <div>
+            <div class="testi-name">Amin Rashidi</div>
+            <div class="testi-role">Owner · Bombay Bites, East London</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"The allergen flagging alone was worth it. After Owen's Law guidance came out, I couldn't risk it anymore. YumDial gives me an auditable trail for every call and chat."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">L</div>
+          <div>
+            <div class="testi-name">Lily Chen</div>
+            <div class="testi-role">Manager · Golden Wok, Manchester</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"My average order value is up £4.20 since YumDial started upselling. It doesn't feel pushy — it just sounds like a good recommendation. My customers actually thank it."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">T</div>
+          <div>
+            <div class="testi-name">Tariq Hassan</div>
+            <div class="testi-role">Owner · Istanbul Grill, Birmingham</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote">"Setup was genuinely 45 minutes. The YumDial team helped us import our menu, test the voice agent, and go live before the Friday rush. I didn't believe it until I saw it."</div>
+        <div class="testi-author">
+          <div class="testi-avatar">P</div>
+          <div>
+            <div class="testi-name">Priya Nair</div>
+            <div class="testi-role">Co-owner · Spice Garden, Bristol</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div style="background:var(--bg)">
+  <div class="section section-center">
+    <div class="eyebrow reveal">FAQ</div>
+    <h2 class="reveal">Common questions</h2>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary class="faq-q">How long does setup actually take? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">Most restaurants are live within 60 minutes. You share your menu and phone number, we import everything, you test a few calls, and you're live before the dinner rush. Our team does it with you — no IT project, no engineer needed.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Does it actually sound human? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">Yes. YumDial is built on the latest conversational AI voice technology, trained specifically on UK accents, regional dialects, and food service vocabulary. Most callers don't know they're speaking to AI — unless you tell them.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">What happens if a caller asks something it can't handle? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">YumDial detects when a caller needs a human and transfers the call cleanly to your team with a brief handoff note. You're always in control. Edge cases don't get dropped.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Does it work with my existing POS system? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">YumDial integrates with all major UK POS systems including Lightspeed, Square, Epos Now, and others. Orders flow directly into your kitchen display or till — no double-entry, no missed tickets.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">How does allergen flagging work? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">YumDial automatically identifies all 14 UK allergens in your menu data. When a customer mentions an allergy or requests a modification, the AI flags it, notes it on the order, and creates a timestamped audit record — giving you the documented trail that Owen's Law will require.</div>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-q">Is there a contract or can I cancel anytime? <span class="faq-arrow">▾</span></summary>
+        <div class="faq-a">Monthly rolling subscription. No long-term contract. You can cancel anytime with 30 days notice. We're confident you won't want to — but there's no lock-in.</div>
+      </details>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-band" id="cta">
+  <h2>Ready to stop missing calls?</h2>
+  <p>Book a free demo. We'll show you YumDial live on your own menu in 30 minutes.</p>
+  <div class="cta-form">
+    <input class="cta-input" type="email" placeholder="your@restaurant.com">
+    <button class="cta-btn">Book Demo</button>
+  </div>
+  <p class="cta-note">14-day free trial · No credit card · 60-minute setup · Cancel anytime</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">Yum<span>Dial</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="#">AI Voice Agent</a>
+          <a href="#">AI Chat Ordering</a>
+          <a href="#">Allergen Compliance</a>
+          <a href="#">Analytics</a>
+          <a href="#">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Pricing</a>
+          <a href="#">Blog</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">GDPR</a>
+          <a href="#">Allergen Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 YumDial Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+<!-- TWEAKS PANEL -->
+<div id="tweaks">
+  <div class="tweaks-h">Tweaks</div>
+  <div class="tw-row">
+    <span class="tw-label">Colour Theme</span>
+    <div class="tw-tabs">
+      <button class="tw-tab on" onclick="setTheme('teal',this)">Teal</button>
+      <button class="tw-tab" onclick="setTheme('indigo',this)">Indigo</button>
+      <button class="tw-tab" onclick="setTheme('forest',this)">Forest</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <span class="tw-label">Hero Layout</span>
+    <div class="tw-tabs">
+      <button class="tw-tab on" onclick="setHero('split',this)">Split</button>
+      <button class="tw-tab" onclick="setHero('centered',this)">Centred</button>
+    </div>
+  </div>
+  <div class="tw-row">
+    <span class="tw-label">Nav Style</span>
+    <div class="tw-tabs">
+      <button class="tw-tab on" onclick="setNav('light',this)">Light</button>
+      <button class="tw-tab" onclick="setNav('dark',this)">Dark</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── REVEAL ─────────────────────────────────────── */
+const obs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) e.target.classList.add('visible');
+}), {threshold: 0.1});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* ── TWEAKS ─────────────────────────────────────── */
+function setTheme(t, btn) {
+  document.body.dataset.theme = t === 'teal' ? '' : t;
+  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function setHero(mode, btn) {
+  const hero = document.querySelector('.hero');
+  if (mode === 'centered') {
+    hero.style.gridTemplateColumns = '1fr';
+    hero.style.textAlign = 'center';
+    hero.querySelector('.hero-visual').style.display = 'none';
+    hero.querySelector('.hero-sub').style.maxWidth = '600px';
+    hero.querySelector('.hero-sub').style.margin = '0 auto 36px';
+    hero.querySelector('.hero-actions').style.justifyContent = 'center';
+    hero.querySelector('.hero-trust').style.justifyContent = 'center';
+  } else {
+    hero.style.gridTemplateColumns = '';
+    hero.style.textAlign = '';
+    hero.querySelector('.hero-visual').style.display = '';
+    hero.querySelector('.hero-sub').style.maxWidth = '';
+    hero.querySelector('.hero-sub').style.margin = '';
+    hero.querySelector('.hero-actions').style.justifyContent = '';
+    hero.querySelector('.hero-trust').style.justifyContent = '';
+  }
+  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function setNav(mode, btn) {
+  const nav = document.querySelector('nav');
+  if (mode === 'dark') {
+    nav.style.background = 'rgba(11,31,46,0.95)';
+    nav.querySelectorAll('.nav-links a, .btn-nav-ghost').forEach(el => el.style.color = 'rgba(255,255,255,0.65)');
+    document.querySelector('.logo-text').style.color = '#fff';
+  } else {
+    nav.style.background = '';
+    nav.querySelectorAll('.nav-links a, .btn-nav-ghost').forEach(el => el.style.color = '');
+    document.querySelector('.logo-text').style.color = '';
+  }
+  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* ── TWEAKS TOGGLE ──────────────────────────────── */
+window.addEventListener('message', e => {
+  if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks').style.display = 'block';
+  if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks').style.display = 'none';
+});
+window.parent.postMessage({type: '__edit_mode_available'}, '*');
+</script>
+</body>
+</html>
