@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GDPR Commitment — InOrdera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --border: rgba(79,70,229,0.10);
+  --border2: rgba(11,31,46,0.14);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,31,46,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:#fff}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+.page-hero{padding:120px 40px 60px;background:var(--ink);text-align:center}
+.page-hero h1{font-family:var(--fd);font-size:clamp(32px,4vw,52px);font-weight:800;letter-spacing:-0.035em;color:#fff;margin-bottom:12px}
+.page-hero p{font-size:16px;color:rgba(255,255,255,0.5);margin-bottom:8px}
+.page-hero .updated{font-size:13px;color:rgba(255,255,255,0.3);margin-top:8px}
+
+.policy-wrap{max-width:800px;margin:0 auto;padding:80px 40px}
+.policy-wrap h2{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--ink);margin:40px 0 12px;letter-spacing:-0.02em}
+.policy-wrap h2:first-child{margin-top:0}
+.policy-wrap p{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:14px}
+.policy-wrap ul{margin:0 0 16px 20px}
+.policy-wrap ul li{font-size:15px;color:var(--ink2);line-height:1.8;margin-bottom:6px}
+.policy-wrap a{color:var(--accent);text-decoration:underline}
+.policy-wrap a:hover{color:var(--accent-hover)}
+.policy-wrap .highlight-box{background:var(--accent-light);border-left:4px solid var(--accent);border-radius:0 var(--r) var(--r) 0;padding:18px 20px;margin:24px 0}
+.policy-wrap .highlight-box p{margin-bottom:0;color:var(--ink)}
+
+.principles-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0 32px}
+.principle-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 22px}
+.principle-card h3{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.principle-card p{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:0}
+
+.rights-list{display:flex;flex-direction:column;gap:12px;margin:20px 0 28px}
+.right-item{display:flex;gap:14px;align-items:flex-start}
+.right-icon{width:36px;height:36px;border-radius:10px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;margin-top:2px}
+.right-text h4{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.right-text p{font-size:14px;color:var(--ink2);line-height:1.6;margin-bottom:0}
+
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="InOrdera.html" class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">In<span>Ordera</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="InOrdera.html#solution">Platform</a></li>
+      <li><a href="InOrdera.html#features">Features</a></li>
+      <li><a href="InOrdera.html#roi">ROI</a></li>
+      <li><a href="InOrdera.html#pricing">Plans</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <a href="InOrdera.html#cta" class="btn-nav">Book a Demo</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>GDPR Commitment</h1>
+  <p>Our approach to data protection and your rights under UK GDPR</p>
+  <div class="updated">Last updated: 23 April 2026 &nbsp;·&nbsp; InOrdera Ltd</div>
+</div>
+
+<div class="policy-wrap">
+
+  <div class="highlight-box">
+    <p><strong>Our commitment:</strong> InOrdera is built to be compliant with UK GDPR and the Data Protection Act 2018. We treat data protection as a fundamental responsibility — not an afterthought. This page explains our approach and your rights.</p>
+  </div>
+
+  <h2>Our Data Protection Principles</h2>
+  <p>Everything we do with personal data follows the seven principles of UK GDPR:</p>
+
+  <div class="principles-grid">
+    <div class="principle-card">
+      <h3>Lawfulness, fairness & transparency</h3>
+      <p>We only process data on a lawful basis and are transparent about how we use it.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Purpose limitation</h3>
+      <p>Data is collected for specified, explicit purposes and not processed in ways incompatible with those purposes.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Data minimisation</h3>
+      <p>We collect only what we need. No excessive data collection.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Accuracy</h3>
+      <p>We take reasonable steps to keep data accurate and up to date.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Storage limitation</h3>
+      <p>Data is held only as long as necessary. Our retention schedules are defined and enforced.</p>
+    </div>
+    <div class="principle-card">
+      <h3>Integrity & confidentiality</h3>
+      <p>Appropriate technical and organisational security measures protect all personal data.</p>
+    </div>
+  </div>
+
+  <h2>How We Demonstrate Accountability</h2>
+  <ul>
+    <li>We maintain a Record of Processing Activities (RoPA) as required by UK GDPR Article 30.</li>
+    <li>We conduct Data Protection Impact Assessments (DPIAs) for high-risk processing, including our AI voice and chat systems.</li>
+    <li>We train all staff on data protection obligations.</li>
+    <li>We operate a Data Breach Response Policy and notify the ICO within 72 hours of becoming aware of a notifiable breach.</li>
+    <li>We review and update our data protection practices at least annually.</li>
+  </ul>
+
+  <h2>Your Rights Under UK GDPR</h2>
+  <p>As a data subject, you have the following rights. You can exercise any of them by contacting <a href="mailto:privacy@inordera.com">privacy@inordera.com</a>. We will respond within one calendar month.</p>
+
+  <div class="rights-list">
+    <div class="right-item">
+      <div class="right-icon">👁</div>
+      <div class="right-text">
+        <h4>Right of Access (Subject Access Request)</h4>
+        <p>You can request a copy of all personal data we hold about you, along with information about how we use it.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">✏️</div>
+      <div class="right-text">
+        <h4>Right to Rectification</h4>
+        <p>If data we hold about you is inaccurate or incomplete, you can ask us to correct it.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">🗑</div>
+      <div class="right-text">
+        <h4>Right to Erasure ("Right to be Forgotten")</h4>
+        <p>You can ask us to delete your personal data where we have no legitimate reason to continue holding it. Note that some data must be retained for legal or allergen compliance purposes.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">⏸</div>
+      <div class="right-text">
+        <h4>Right to Restriction of Processing</h4>
+        <p>You can ask us to limit how we process your data in certain circumstances — for example, while you contest its accuracy.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">📦</div>
+      <div class="right-text">
+        <h4>Right to Data Portability</h4>
+        <p>Where processing is based on consent or contractual necessity, you can receive your data in a structured, machine-readable format to transfer to another service.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">🚫</div>
+      <div class="right-text">
+        <h4>Right to Object</h4>
+        <p>You can object to processing based on legitimate interests or direct marketing. We will stop processing unless we have compelling grounds that override your interests.</p>
+      </div>
+    </div>
+    <div class="right-item">
+      <div class="right-icon">🤖</div>
+      <div class="right-text">
+        <h4>Rights Related to Automated Decision-Making</h4>
+        <p>If a decision that significantly affects you is made solely by automated means, you have the right to request human review, express your view, and contest the decision.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Data Processing Agreements</h2>
+  <p>Where InOrdera acts as a <strong>data processor</strong> on behalf of our restaurant customers (for example, processing end-user order data), we enter into a Data Processing Agreement (DPA) that complies with UK GDPR Article 28. Our DPA is available on request for enterprise customers.</p>
+  <p>Where InOrdera acts as a <strong>data controller</strong> (for example, when we hold our customers' account data), we are directly accountable under UK GDPR.</p>
+
+  <h2>Supervisory Authority</h2>
+  <p>The supervisory authority for data protection in the UK is the Information Commissioner's Office (ICO). If you believe we have not handled your personal data in accordance with UK GDPR, you have the right to lodge a complaint with the ICO:</p>
+  <ul>
+    <li><strong>Website:</strong> <a href="https://ico.org.uk" target="_blank">ico.org.uk</a></li>
+    <li><strong>Helpline:</strong> 0303 123 1113</li>
+    <li><strong>Post:</strong> ICO, Wycliffe House, Water Lane, Wilmslow, Cheshire, SK9 5AF</li>
+  </ul>
+  <p>We would always appreciate the opportunity to address any concerns directly before you contact the ICO. Please email us first at <a href="mailto:privacy@inordera.com">privacy@inordera.com</a>.</p>
+
+  <h2>Contact Our Data Protection Team</h2>
+  <p><strong>Email:</strong> <a href="mailto:privacy@inordera.com">privacy@inordera.com</a><br>
+  <strong>Subject line:</strong> GDPR Request — [your name]</p>
+  <p>We aim to respond to all data subject requests within 30 calendar days. For complex requests we may extend this to 90 days and will notify you accordingly.</p>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">In<span>Ordera</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="InOrdera.html#solution">AI Voice Agent</a>
+          <a href="InOrdera.html#solution">AI Chat Ordering</a>
+          <a href="InOrdera.html#features">Features</a>
+          <a href="InOrdera.html#features">Analytics</a>
+          <a href="InOrdera.html#features">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+          <a href="gdpr.html">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

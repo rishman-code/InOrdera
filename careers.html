@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers — InOrdera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f6ff;
+  --bg2: #eceeff;
+  --surface: #ffffff;
+  --ink: #0b1f2e;
+  --ink2: #3d5a6e;
+  --ink3: #8aa5b5;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #e0e7ff;
+  --accent2: #f97316;
+  --accent2-hover: #ea6c0a;
+  --border: rgba(79,70,229,0.10);
+  --border2: rgba(11,31,46,0.14);
+  --shadow: 0 2px 16px rgba(79,70,229,0.12);
+  --shadow-lg: 0 8px 40px rgba(11,31,46,0.10);
+  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
+  --fb: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;font-family:var(--fb);border:none;background:none}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,31,46,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
+.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo svg{width:34px;height:34px}
+.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
+.btn-nav-ghost:hover{color:#fff}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+
+/* ── HERO ── */
+.careers-hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 40px 80px;
+  background:var(--ink);
+  position:relative;overflow:hidden;
+}
+.careers-hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 40%, rgba(79,70,229,0.18) 0%, transparent 70%);
+  pointer-events:none;
+}
+.careers-hero-inner{position:relative;max-width:700px}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(79,70,229,0.18);color:var(--accent);
+  font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  padding:5px 14px;border-radius:40px;margin-bottom:28px;
+  border:1px solid rgba(79,70,229,0.25);
+}
+.careers-hero h1{
+  font-family:var(--fd);
+  font-size:clamp(44px,6vw,80px);
+  font-weight:800;line-height:1.04;letter-spacing:-0.04em;
+  color:#fff;margin-bottom:24px;
+}
+.careers-hero h1 em{font-style:normal;color:var(--accent)}
+.careers-hero p{
+  font-size:18px;color:rgba(255,255,255,0.6);
+  line-height:1.75;max-width:520px;margin:0 auto 44px;
+}
+.btn-apply{
+  background:var(--accent2);color:#fff;
+  font-size:16px;font-weight:600;padding:16px 36px;border-radius:var(--r);
+  display:inline-block;
+  box-shadow:0 4px 20px rgba(249,115,22,0.35);
+  transition:background 0.18s,transform 0.14s,box-shadow 0.18s;
+}
+.btn-apply:hover{background:var(--accent2-hover);transform:translateY(-2px);box-shadow:0 8px 28px rgba(249,115,22,0.4)}
+
+/* ── VALUES STRIP ── */
+.values-strip{padding:80px 40px;background:var(--bg)}
+.values-inner{max-width:1000px;margin:0 auto;text-align:center}
+.values-inner .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.values-inner h2{font-family:var(--fd);font-size:clamp(26px,3vw,40px);font-weight:800;letter-spacing:-0.03em;color:var(--ink);margin-bottom:48px}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.value-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:left}
+.value-icon{font-size:26px;margin-bottom:14px}
+.value-title{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.value-body{font-size:14px;color:var(--ink2);line-height:1.65}
+
+/* ── MODAL ── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(11,31,46,0.7);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal{
+  background:var(--surface);border-radius:20px;
+  box-shadow:var(--shadow-lg);width:100%;max-width:480px;
+  padding:40px;position:relative;
+  animation:modal-in 0.25s ease;
+}
+@keyframes modal-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  background:var(--bg2);color:var(--ink2);
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s;
+}
+.modal-close:hover{background:var(--border2)}
+.modal h2{font-family:var(--fd);font-size:24px;font-weight:800;letter-spacing:-0.02em;color:var(--ink);margin-bottom:6px}
+.modal p{font-size:14px;color:var(--ink2);margin-bottom:24px}
+.form-row{margin-bottom:16px}
+.form-row label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.form-row input,.form-row textarea,.form-row select{
+  width:100%;padding:12px 14px;
+  background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);
+  font-family:var(--fb);font-size:14px;color:var(--ink);
+  outline:none;transition:border-color 0.18s;
+  resize:vertical;
+}
+.form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--accent)}
+.form-row textarea{min-height:100px}
+.btn-submit{
+  width:100%;padding:14px;border-radius:var(--r);
+  background:var(--accent);color:#fff;font-size:15px;font-weight:600;
+  transition:background 0.18s;margin-top:6px;
+}
+.btn-submit:hover{background:var(--accent-hover)}
+.form-note{font-size:12px;color:var(--ink3);text-align:center;margin-top:12px}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:60px 40px 40px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
+.footer-logo-text span{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="InOrdera.html" class="logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="logo-text">In<span>Ordera</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="InOrdera.html#solution">Platform</a></li>
+      <li><a href="InOrdera.html#features">Features</a></li>
+      <li><a href="InOrdera.html#roi">ROI</a></li>
+      <li><a href="InOrdera.html#pricing">Plans</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-nav-ghost">Sign in</button>
+      <a href="InOrdera.html#cta" class="btn-nav">Book a Demo</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="careers-hero">
+  <div class="careers-hero-inner">
+    <div class="hero-eyebrow">We're hiring</div>
+    <h1>Help us build<br>the <em>future</em> of<br>restaurants.</h1>
+    <p>InOrdera is a small team with a big mission — giving every independent restaurant an AI team member that works harder than anyone on staff. Want in?</p>
+    <button class="btn-apply" onclick="openModal()">Get in touch</button>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="values-strip">
+  <div class="values-inner">
+    <div class="eyebrow">Why InOrdera</div>
+    <h2>What it's like to work here</h2>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🚀</div>
+        <div class="value-title">Early and impactful</div>
+        <div class="value-body">We're early stage. What you build this month goes live next month. You'll see your work used by real restaurants, every day.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🇬🇧</div>
+        <div class="value-title">Built for Britain</div>
+        <div class="value-body">We're solving real problems for UK independent restaurants — a £23.6bn market that's underserved and over-charged by big platforms.</div>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">Small team, big trust</div>
+        <div class="value-body">No layers, no bureaucracy. You'll work directly with the founders, own your area, and have real say in how the product evolves.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPLICATION MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    <h2 id="modal-title">Get in touch</h2>
+    <p>Tell us a bit about yourself and we'll get back to you.</p>
+    <form id="apply-form" onsubmit="submitForm(event)">
+      <div class="form-row">
+        <label for="name">Your name</label>
+        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+      </div>
+      <div class="form-row">
+        <label for="email">Your email</label>
+        <input type="email" id="email" name="email" placeholder="jane@example.com" required>
+      </div>
+      <div class="form-row">
+        <label for="role">What kind of role interests you?</label>
+        <select id="role" name="role" required>
+          <option value="" disabled selected>Select an area</option>
+          <option>Engineering / AI</option>
+          <option>Product</option>
+          <option>Sales & Partnerships</option>
+          <option>Operations</option>
+          <option>Marketing</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="message">Tell us about yourself</label>
+        <textarea id="message" name="message" placeholder="A few lines about your background and why InOrdera interests you…" required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send application</button>
+      <p class="form-note">We read every message and reply to all serious enquiries.</p>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo-text">In<span>Ordera</span></div>
+        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+      </div>
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <div class="footer-col-title">Platform</div>
+          <a href="InOrdera.html#solution">AI Voice Agent</a>
+          <a href="InOrdera.html#solution">AI Chat Ordering</a>
+          <a href="InOrdera.html#features">Features</a>
+          <a href="InOrdera.html#features">Analytics</a>
+          <a href="InOrdera.html#features">Integrations</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Company</div>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="careers.html">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Legal</div>
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+          <a href="gdpr.html">GDPR</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+function submitForm(e) {
+  e.preventDefault();
+  const name    = document.getElementById('name').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const role    = document.getElementById('role').value;
+  const message = document.getElementById('message').value.trim();
+
+  const subject = encodeURIComponent(`InOrdera Career Enquiry — ${role} — ${name}`);
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\nRole interest: ${role}\n\n${message}`
+  );
+
+  window.location.href = `mailto:rishi.shinn@hotmail.co.uk?subject=${subject}&body=${body}`;
+}
+</script>
+</body>
+</html>
