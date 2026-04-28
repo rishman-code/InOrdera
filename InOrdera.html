@@ -6,6 +6,7 @@
 <title>InOrdera — AI Voice & Chat Ordering for Independent Restaurants</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ── THEME TOKENS ─────────────────────────────────────── */
 :root {
@@ -486,6 +487,68 @@ footer{background:var(--ink);padding:60px 40px 40px}
 .tw-tabs{display:flex;gap:6px}
 .tw-tab{flex:1;padding:6px 4px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--ink2);font-size:11px;font-family:var(--fb);cursor:pointer;text-align:center;transition:all 0.15s}
 .tw-tab.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+
+/* ── DEMO MODAL ───────────────────────────────────────── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(11,31,46,0.75);backdrop-filter:blur(8px);
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:var(--surface);border-radius:20px;
+  box-shadow:0 24px 80px rgba(11,31,46,0.25);
+  width:100%;max-width:520px;padding:44px;position:relative;
+  animation:modal-in 0.25s ease;
+}
+@keyframes modal-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.modal-close{
+  position:absolute;top:16px;right:16px;width:32px;height:32px;
+  border-radius:50%;background:var(--bg2);color:var(--ink2);
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s;cursor:pointer;border:none;
+}
+.modal-close:hover{background:var(--border2)}
+.modal-logo{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.modal-logo svg{width:28px;height:28px}
+.modal-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-0.02em}
+.modal-logo-text span{color:var(--accent)}
+.modal-box h2{font-family:var(--fd);font-size:26px;font-weight:800;letter-spacing:-0.03em;color:var(--ink);margin-bottom:6px}
+.modal-box .modal-sub{font-size:14px;color:var(--ink2);margin-bottom:28px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid .span-2{grid-column:1/-1}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px;letter-spacing:0.02em}
+.field input,.field select{
+  width:100%;padding:11px 14px;
+  background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);
+  font-family:var(--fb);font-size:14px;color:var(--ink);
+  outline:none;transition:border-color 0.18s;
+  appearance:none;-webkit-appearance:none;
+}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.phone-wrap{display:flex;gap:0}
+.phone-prefix{
+  padding:11px 12px;background:var(--bg2);
+  border:1.5px solid var(--border2);border-right:none;
+  border-radius:var(--r) 0 0 var(--r);
+  font-size:14px;color:var(--ink2);white-space:nowrap;display:flex;align-items:center;gap:6px;
+}
+.phone-wrap input{border-radius:0 var(--r) var(--r) 0}
+.btn-modal-submit{
+  width:100%;padding:15px;border-radius:var(--r);
+  background:var(--accent);color:#fff;font-size:15px;font-weight:600;
+  transition:background 0.18s;margin-top:6px;border:none;cursor:pointer;
+  font-family:var(--fb);
+}
+.btn-modal-submit:hover{background:var(--accent-hover)}
+.btn-modal-submit:disabled{opacity:0.6;cursor:not-allowed}
+.modal-consent{font-size:11px;color:var(--ink3);text-align:center;margin-top:12px;line-height:1.6}
+.modal-consent a{color:var(--accent);text-decoration:underline}
+.modal-success{display:none;text-align:center;padding:20px 0}
+.modal-success .success-icon{font-size:48px;margin-bottom:16px}
+.modal-success h3{font-family:var(--fd);font-size:22px;font-weight:800;color:var(--ink);margin-bottom:8px}
+.modal-success p{font-size:15px;color:var(--ink2);line-height:1.7}
+.modal-error{display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:var(--r);padding:12px 16px;font-size:13px;color:#b91c1c;margin-bottom:14px}
 </style>
 </head>
 <body>
@@ -515,7 +578,7 @@ footer{background:var(--ink);padding:60px 40px 40px}
     </ul>
     <div class="nav-right">
       <button class="btn-nav-ghost">Sign in</button>
-      <button class="btn-nav" onclick="document.getElementById('cta').scrollIntoView()">Book a Demo</button>
+      <button class="btn-nav" onclick="openDemoModal()">Book a Demo</button>
     </div>
   </div>
 </nav>
@@ -528,7 +591,7 @@ footer{background:var(--ink);padding:60px 40px 40px}
       <h1>The team member who handles<br><em class="rotating-word">every call.</em></h1>
       <p class="hero-sub">InOrdera is your always-on AI team member — answering every call, taking every order, upselling on every interaction, and flagging every allergen. 24/7, in any language.</p>
       <div class="hero-actions">
-        <button class="btn-primary" onclick="document.getElementById('cta').scrollIntoView()">Book a Free Demo</button>
+        <button class="btn-primary" onclick="openDemoModal()">Book a Free Demo</button>
         <button class="btn-secondary" onclick="document.getElementById('solution').scrollIntoView()">See how it works →</button>
       </div>
       <div class="hero-trust">
@@ -837,7 +900,7 @@ footer{background:var(--ink);padding:60px 40px 40px}
             <div class="roi-stat-label">To go live</div>
           </div>
         </div>
-        <button class="btn-primary" style="margin-top:32px" onclick="document.getElementById('cta').scrollIntoView()">Calculate your ROI →</button>
+        <button class="btn-primary" style="margin-top:32px" onclick="openDemoModal()">Calculate your ROI →</button>
       </div>
     </div>
   </div>
@@ -864,7 +927,7 @@ footer{background:var(--ink);padding:60px 40px 40px}
           <li>Up to 5 concurrent calls</li>
           <li>Email support</li>
         </ul>
-        <button class="btn-plan outline" onclick="document.getElementById('cta').scrollIntoView()">Get a quote</button>
+        <button class="btn-plan outline" onclick="openDemoModal()">Get a quote</button>
       </div>
       <div class="pricing-card popular">
         <div class="popular-badge">Most Popular</div>
@@ -882,7 +945,7 @@ footer{background:var(--ink);padding:60px 40px 40px}
           <li>Assisted onboarding</li>
           <li>POS integration included</li>
         </ul>
-        <button class="btn-plan" onclick="document.getElementById('cta').scrollIntoView()">Get a quote</button>
+        <button class="btn-plan" onclick="openDemoModal()">Get a quote</button>
       </div>
       <div class="pricing-card">
         <div class="plan-name">Group</div>
@@ -898,7 +961,7 @@ footer{background:var(--ink);padding:60px 40px 40px}
           <li>SLA uptime guarantee</li>
           <li>API access</li>
         </ul>
-        <button class="btn-plan outline" onclick="document.getElementById('cta').scrollIntoView()">Contact sales</button>
+        <button class="btn-plan outline" onclick="openDemoModal()">Contact sales</button>
       </div>
     </div>
   </div>
@@ -992,16 +1055,8 @@ footer{background:var(--ink);padding:60px 40px 40px}
 <div class="cta-band" id="cta">
   <h2>Meet your new<br>AI team member.</h2>
   <p>Book a free demo. We'll show InOrdera live on your own menu in 30 minutes — answering calls, upselling, and flagging allergens.</p>
-  <form class="cta-form" name="book-demo" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="demo-form">
-    <input type="hidden" name="form-name" value="book-demo">
-    <input type="hidden" name="bot-field">
-    <input class="cta-input" type="email" name="email" placeholder="your@restaurant.com" required>
-    <button type="submit" class="cta-btn">Book Demo</button>
-  </form>
-  <div id="form-success" style="display:none;background:rgba(255,255,255,0.15);border-radius:var(--r);padding:16px 24px;max-width:420px;margin:0 auto;font-size:15px;color:#fff;position:relative">
-    Thanks! We'll be in touch shortly.
-  </div>
-  <p class="cta-note">Free 14-day trial · No credit card required · quick setup</p>
+  <button class="btn-primary" style="font-size:17px;padding:18px 40px" onclick="openDemoModal()">Book a Free Demo</button>
+  <p class="cta-note" style="margin-top:16px">No commitment · We'll show InOrdera live on your own menu</p>
 </div>
 
 <!-- FOOTER -->
@@ -1043,6 +1098,74 @@ footer{background:var(--ink);padding:60px 40px 40px}
     </div>
   </div>
 </footer>
+
+<!-- DEMO MODAL -->
+<div class="modal-overlay" id="demo-modal" onclick="handleModalOverlay(event)">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" onclick="closeDemoModal()" aria-label="Close">✕</button>
+    <div class="modal-logo">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+        <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
+        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
+        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
+      </svg>
+      <span class="modal-logo-text">In<span>Ordera</span></span>
+    </div>
+    <h2 id="modal-title">Book a Demo</h2>
+    <p class="modal-sub">We'll show InOrdera live on your own menu in 30 minutes.</p>
+    <div class="modal-error" id="modal-error"></div>
+    <form id="demo-form" onsubmit="submitDemoForm(event)">
+      <div class="form-grid">
+        <div class="field">
+          <label>First name *</label>
+          <input type="text" name="first_name" placeholder="Jane" required>
+        </div>
+        <div class="field">
+          <label>Last name *</label>
+          <input type="text" name="last_name" placeholder="Smith" required>
+        </div>
+        <div class="field span-2">
+          <label>Business email *</label>
+          <input type="email" name="email" placeholder="jane@myrestaurant.com" required>
+        </div>
+        <div class="field span-2">
+          <label>Restaurant name *</label>
+          <input type="text" name="restaurant_name" placeholder="e.g. Spice Garden" required>
+        </div>
+        <div class="field span-2">
+          <label>Phone number *</label>
+          <div class="phone-wrap">
+            <div class="phone-prefix">🇬🇧 +44</div>
+            <input type="tel" name="phone" placeholder="7700 900000" required>
+          </div>
+        </div>
+        <div class="field span-2">
+          <label>Number of locations *</label>
+          <select name="locations" required>
+            <option value="" disabled selected>Select…</option>
+            <option value="1">1 location</option>
+            <option value="2-5">2–5 locations</option>
+            <option value="6-10">6–10 locations</option>
+            <option value="10+">10+ locations</option>
+          </select>
+        </div>
+        <div class="span-2">
+          <button type="submit" class="btn-modal-submit" id="submit-btn">Book Demo</button>
+          <p class="modal-consent">By submitting you agree to our <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms-of-service.html">Terms of Service</a>.</p>
+        </div>
+      </div>
+    </form>
+    <div class="modal-success" id="modal-success">
+      <div class="success-icon">✅</div>
+      <h3>You're booked in!</h3>
+      <p>We'll be in touch within one business day to confirm your demo time.<br>Looking forward to showing you InOrdera.</p>
+    </div>
+  </div>
+</div>
 
 <!-- TWEAKS PANEL -->
 <div id="tweaks">
@@ -1139,21 +1262,56 @@ function rotateWord() {
 }
 setInterval(rotateWord, 2400);
 
-/* ── DEMO FORM ──────────────────────────────────── */
-document.getElementById('demo-form').addEventListener('submit', function(e) {
+/* ── SUPABASE + DEMO MODAL ──────────────────────── */
+const { createClient } = supabase;
+const sb = createClient(
+  'https://xhdiktojegdmpqycerha.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhoZGlrdG9qZWdkbXBxeWNlcmhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczOTY1MDQsImV4cCI6MjA5Mjk3MjUwNH0.esC8hpiTRFZLfKLAaP-Ehk0JCyEPrrhKKm_2uwJTTb8'
+);
+
+function openDemoModal() {
+  document.getElementById('demo-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeDemoModal() {
+  document.getElementById('demo-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleModalOverlay(e) {
+  if (e.target === document.getElementById('demo-modal')) closeDemoModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemoModal(); });
+
+async function submitDemoForm(e) {
   e.preventDefault();
-  const form = this;
-  fetch('/', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: new URLSearchParams(new FormData(form)).toString()
-  }).then(() => {
-    form.style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
-  }).catch(() => {
-    form.submit();
-  });
-});
+  const btn = document.getElementById('submit-btn');
+  const errEl = document.getElementById('modal-error');
+  errEl.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Submitting…';
+
+  const fd = new FormData(e.target);
+  const payload = {
+    first_name:      fd.get('first_name').trim(),
+    last_name:       fd.get('last_name').trim(),
+    email:           fd.get('email').trim(),
+    restaurant_name: fd.get('restaurant_name').trim(),
+    phone:           '+44 ' + fd.get('phone').trim(),
+    locations:       fd.get('locations')
+  };
+
+  const { error } = await sb.from('leads').insert(payload);
+
+  if (error) {
+    errEl.textContent = 'Something went wrong — please try again or email us directly.';
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Book Demo';
+  } else {
+    document.getElementById('demo-form').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+  }
+}
 
 /* ── TWEAKS TOGGLE ──────────────────────────────── */
 window.addEventListener('message', e => {
