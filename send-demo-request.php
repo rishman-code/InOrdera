@@ -38,7 +38,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-$to = 'sales@inordera.com';
+$to = 'rishi.shinn@hotmail.co.uk';
 $subject = 'New demo request: ' . $restaurantName;
 
 $body = "New demo request from the InOrdera website:\n\n"
