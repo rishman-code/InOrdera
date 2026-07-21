@@ -1300,16 +1300,17 @@ async function submitDemoForm(e) {
     locations:       fd.get('locations')
   };
 
-  const { error } = await sb.from('leads').insert(payload);
-
-  if (error) {
+  try {
+    const { error } = await sb.from('leads').insert(payload);
+    if (error) throw error;
+    document.getElementById('demo-form').style.display = 'none';
+    document.getElementById('modal-success').style.display = 'block';
+  } catch (err) {
+    console.error('Demo form submission failed:', err);
     errEl.textContent = 'Something went wrong — please try again or email us directly.';
     errEl.style.display = 'block';
     btn.disabled = false;
     btn.textContent = 'Book Demo';
-  } else {
-    document.getElementById('demo-form').style.display = 'none';
-    document.getElementById('modal-success').style.display = 'block';
   }
 }
 
