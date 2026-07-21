@@ -6,7 +6,6 @@
 <title>InOrdera — AI Voice & Chat Ordering for Independent Restaurants</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 /* ── THEME TOKENS ─────────────────────────────────────── */
 :root {
@@ -1262,13 +1261,7 @@ function rotateWord() {
 }
 setInterval(rotateWord, 2400);
 
-/* ── SUPABASE + DEMO MODAL ──────────────────────── */
-const { createClient } = supabase;
-const sb = createClient(
-  'https://xhdiktojegdmpqycerha.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhoZGlrdG9qZWdkbXBxeWNlcmhhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczOTY1MDQsImV4cCI6MjA5Mjk3MjUwNH0.esC8hpiTRFZLfKLAaP-Ehk0JCyEPrrhKKm_2uwJTTb8'
-);
-
+/* ── DEMO MODAL ──────────────────────────────────── */
 function openDemoModal() {
   document.getElementById('demo-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1291,18 +1284,22 @@ async function submitDemoForm(e) {
   btn.textContent = 'Submitting…';
 
   const fd = new FormData(e.target);
-  const payload = {
+  const payload = new URLSearchParams({
     first_name:      fd.get('first_name').trim(),
     last_name:       fd.get('last_name').trim(),
     email:           fd.get('email').trim(),
     restaurant_name: fd.get('restaurant_name').trim(),
     phone:           '+44 ' + fd.get('phone').trim(),
     locations:       fd.get('locations')
-  };
+  });
 
   try {
-    const { error } = await sb.from('leads').insert(payload);
-    if (error) throw error;
+    const res = await fetch('send-demo-request.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: payload
+    });
+    if (!res.ok) throw new Error(`Server responded with ${res.status}`);
     document.getElementById('demo-form').style.display = 'none';
     document.getElementById('modal-success').style.display = 'block';
   } catch (err) {
