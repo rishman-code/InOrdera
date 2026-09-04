@@ -3,1148 +3,1206 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>InOrdera — AI Voice & Chat Ordering for Independent Restaurants</title>
+<title>AI Restaurant Ordering &amp; Phone Answering | InOrdera</title>
+<meta name="description" content="InOrdera answers restaurant calls, takes orders, recommends extras and helps your team serve more customers — without adding staff.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ── THEME TOKENS ─────────────────────────────────────── */
-:root {
-  --bg: #f5f6ff;
-  --bg2: #eceeff;
-  --surface: #ffffff;
-  --ink: #0b1f2e;
-  --ink2: #3d5a6e;
-  --ink3: #8aa5b5;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  --accent-light: #e0e7ff;
-  --accent2: #f97316;
-  --accent2-hover: #ea6c0a;
-  --border: rgba(79,70,229,0.10);
-  --border2: rgba(11,31,46,0.14);
-  --shadow: 0 2px 16px rgba(79,70,229,0.12);
-  --shadow-lg: 0 8px 40px rgba(11,31,46,0.10);
-  --fd: 'Bricolage Grotesque', system-ui, sans-serif;
-  --fb: 'DM Sans', system-ui, sans-serif;
-  --r: 10px;
+/* ══════════════════════ THEME TOKENS ══════════════════════ */
+:root{
+  --bg:#faf8f5;
+  --bg2:#f2ede6;
+  --surface:#ffffff;
+  --navy:#14171f;
+  --navy2:#1c2029;
+  --ink:#181b22;
+  --ink2:#52565f;
+  --ink3:#8b8f98;
+  --accent:#c1440e;
+  --accent-hover:#a53a0c;
+  --accent-light:#fbe6da;
+  --good:#15803d;
+  --good-light:#dcf5e3;
+  --amber:#b45309;
+  --amber-light:#fef3c7;
+  --line:#e7e2d9;
+  --line2:rgba(24,27,34,0.14);
+  --shadow:0 2px 14px rgba(24,27,34,0.07);
+  --shadow-lg:0 16px 48px rgba(24,27,34,0.14);
+  --fd:'Bricolage Grotesque', system-ui, sans-serif;
+  --fb:'DM Sans', system-ui, sans-serif;
+  --r:12px;
+  --maxw:1240px;
 }
-[data-theme="indigo"] {
-  --bg: #f5f6ff;
-  --bg2: #eceeff;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  --accent-light: #e0e7ff;
-  --accent2: #f97316;
-  --accent2-hover: #ea6c0a;
-  --border: rgba(79,70,229,0.10);
-  --shadow: 0 2px 16px rgba(79,70,229,0.12);
-}
-[data-theme="forest"] {
-  --bg: #f5fbf5;
-  --bg2: #eaf5ea;
-  --accent: #16a34a;
-  --accent-hover: #138a3f;
-  --accent-light: #dcfce7;
-  --accent2: #d97706;
-  --accent2-hover: #c46a05;
-  --border: rgba(22,163,74,0.10);
-  --shadow: 0 2px 16px rgba(22,163,74,0.12);
-}
-
-/* ── RESET ────────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font-family:var(--fb);font-size:16px;line-height:1.6;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 button{cursor:pointer;font-family:var(--fb);border:none;background:none}
 img{display:block;max-width:100%}
+ul{list-style:none}
+h1,h2,h3{font-family:var(--fd);letter-spacing:-0.03em;color:var(--ink)}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-/* ── NAV ─────────────────────────────────────────────── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  background:rgba(11,31,46,0.95);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:40px}
-.logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
-.logo svg{width:34px;height:34px}
-.logo-text{font-family:var(--fd);font-size:20px;font-weight:700;color:#fff;letter-spacing:-0.03em}
-.logo-text span{color:var(--accent)}
-.nav-links{display:flex;gap:28px;list-style:none;margin-left:12px}
-.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
-.nav-links a:hover{color:#fff}
-.nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
-.btn-nav-ghost{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);padding:8px 18px;border-radius:var(--r);transition:color 0.18s}
-.btn-nav-ghost:hover{color:#fff}
-.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:600;padding:10px 22px;border-radius:var(--r);transition:background 0.18s,transform 0.12s}
-.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
-
-/* ── HERO ─────────────────────────────────────────────── */
-.hero{
-  padding:148px 40px 80px;
-  max-width:1200px;margin:0 auto;
-  display:grid;grid-template-columns:1fr;gap:60px;align-items:center;
-  text-align:center;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:var(--accent-light);color:var(--accent);
-  font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
-  padding:5px 12px;border-radius:40px;margin-bottom:24px;
-}
-.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
-h1{
-  font-family:var(--fd);font-size:clamp(42px,4.5vw,68px);
-  font-weight:800;line-height:1.04;letter-spacing:-0.035em;
-  color:var(--ink);margin-bottom:22px;
-}
-h1 em{font-style:normal;color:var(--accent)}
-.hero-sub{font-size:18px;font-weight:400;color:var(--ink2);max-width:600px;line-height:1.7;margin-bottom:36px;margin-left:auto;margin-right:auto}
-.hero-actions{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center}
-.btn-primary{
-  background:var(--accent2);color:#fff;
-  font-size:15px;font-weight:600;padding:15px 32px;border-radius:var(--r);
-  transition:background 0.18s,transform 0.12s;
-  box-shadow:0 4px 16px rgba(255,92,53,0.28);
-}
-.btn-primary:hover{background:var(--accent2-hover);transform:translateY(-2px)}
-.btn-secondary{
-  background:transparent;color:var(--ink2);border:1.5px solid var(--border2);
-  font-size:15px;font-weight:500;padding:14px 28px;border-radius:var(--r);
-  transition:all 0.18s;
-}
-.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
-.hero-trust{margin-top:40px;display:flex;align-items:center;gap:16px;font-size:13px;color:var(--ink3);justify-content:center}
-.hero-trust strong{color:var(--ink2)}
-.hero-stars{color:#f59e0b;letter-spacing:-2px;font-size:16px}
-
-/* Hero visual */
-.hero-visual{position:relative}
-.phone-card{
-  background:var(--surface);border-radius:20px;
-  box-shadow:var(--shadow-lg);border:1px solid var(--border);
-  overflow:hidden;
-}
-.phone-topbar{
-  background:var(--ink);padding:14px 20px;
-  display:flex;align-items:center;gap:10px;
-}
-.phone-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.3)}
-.phone-dot-g{background:#4ade80}
-.phone-label{font-size:12px;color:rgba(255,255,255,0.5);margin-left:4px;font-family:monospace}
-.chat-body{padding:20px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
-.chat-msg{max-width:75%;padding:11px 15px;border-radius:14px;font-size:14px;line-height:1.5}
-.chat-ai{background:var(--surface);border:1px solid var(--border);color:var(--ink);border-radius:14px 14px 14px 4px}
-.chat-user{background:var(--accent);color:#fff;margin-left:auto;border-radius:14px 14px 4px 14px}
-.chat-typing{display:flex;gap:4px;align-items:center;padding:11px 15px;background:var(--surface);border:1px solid var(--border);border-radius:14px 14px 14px 4px;width:fit-content}
-.chat-typing span{width:6px;height:6px;border-radius:50%;background:var(--ink3);animation:blink 1.2s infinite}
-.chat-typing span:nth-child(2){animation-delay:0.2s}
-.chat-typing span:nth-child(3){animation-delay:0.4s}
-@keyframes blink{0%,80%,100%{opacity:0.3}40%{opacity:1}}
-.hero-float-1,.hero-float-2{
-  position:absolute;background:var(--surface);border-radius:12px;
-  box-shadow:var(--shadow-lg);border:1px solid var(--border);
-  padding:12px 16px;font-size:13px;font-weight:500;
-  display:flex;align-items:center;gap:8px;
-}
-.hero-float-1{top:-24px;right:-24px;color:var(--ink)}
-.hero-float-2{bottom:24px;left:-32px;color:var(--ink)}
-.float-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
-.fi-green{background:#d1fae5}
-.fi-amber{background:#fef3c7}
-
-/* ── TICKER STRIP ─────────────────────────────────────── */
-.ticker{
-  background:var(--ink);padding:14px 0;overflow:hidden;
-  border-top:1px solid rgba(255,255,255,0.06);
-}
-.ticker-inner{display:flex;gap:0;animation:ticker 24s linear infinite;white-space:nowrap;width:max-content}
-.ticker-item{
-  padding:0 48px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);
-  display:flex;align-items:center;gap:12px;
-}
-.ticker-item strong{color:#fff}
-.ticker-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-/* ── LOGOS ────────────────────────────────────────────── */
-.logos-section{padding:56px 40px;max-width:1200px;margin:0 auto;text-align:center}
-.logos-label{font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:28px}
-.logos-row{display:flex;justify-content:center;align-items:center;gap:48px;flex-wrap:wrap}
-.logo-item{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--ink3);letter-spacing:-0.02em;opacity:0.55;transition:opacity 0.2s}
-.logo-item:hover{opacity:1}
-
-/* ── SECTION WRAPPER ──────────────────────────────────── */
-.section{padding:100px 40px;max-width:1200px;margin:0 auto}
+/* ══════════════════════ LAYOUT HELPERS ══════════════════════ */
+.section{padding:96px 40px;max-width:var(--maxw);margin:0 auto}
+.section-tight{padding:72px 40px;max-width:var(--maxw);margin:0 auto}
 .section-center{text-align:center}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
-h2{font-family:var(--fd);font-size:clamp(30px,3.2vw,50px);font-weight:800;line-height:1.08;letter-spacing:-0.03em;color:var(--ink);margin-bottom:16px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px}
+.eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+h2{font-size:clamp(28px,3.4vw,44px);font-weight:800;line-height:1.1;margin-bottom:16px}
 h2 em{font-style:normal;color:var(--accent)}
-.section-intro{font-size:17px;color:var(--ink2);max-width:560px;line-height:1.75}
+.section-intro{font-size:17px;color:var(--ink2);max-width:580px;line-height:1.7}
 .section-center .section-intro{margin:0 auto}
-.divider{border:none;border-top:1px solid var(--border);margin:0}
+.on-dark{color:#fff}
+.on-dark .section-intro{color:rgba(255,255,255,0.62)}
+.on-dark .eyebrow{color:#ff9466}
+.on-dark h2{color:#fff}
+.on-dark h2 em{color:#ff9466}
+.divider{border:none;border-top:1px solid var(--line);max-width:var(--maxw);margin:0 auto}
 
-/* ── PROBLEM ─────────────────────────────────────────── */
-.problem-bg{background:var(--ink);padding:80px 40px}
-.problem-inner{max-width:1200px;margin:0 auto}
-.problem-bg .eyebrow{color:rgba(255,255,255,0.4)}
-.problem-bg h2{color:#fff}
-.problem-bg h2 em{color:#ff7d5e}
-.problem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,0.07);border-radius:var(--r);overflow:hidden;margin-top:56px}
-.problem-card{background:rgba(255,255,255,0.04);padding:36px 28px;transition:background 0.2s}
-.problem-card:hover{background:rgba(255,255,255,0.08)}
-.prob-num{font-family:var(--fd);font-size:52px;font-weight:800;line-height:1;letter-spacing:-0.04em;color:#ff7d5e;margin-bottom:10px}
-.prob-title{font-size:16px;font-weight:600;color:#fff;margin-bottom:8px}
-.prob-body{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65}
-
-/* ── SOLUTION ─────────────────────────────────────────── */
-.solution-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:56px}
-.solution-card{
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:20px;padding:40px;position:relative;overflow:hidden;
-  transition:box-shadow 0.2s,transform 0.2s;
-}
-.solution-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
-.solution-card.featured{border-color:var(--accent);background:var(--accent-light)}
-.solution-icon{
-  width:52px;height:52px;background:var(--accent-light);
-  border-radius:14px;display:flex;align-items:center;justify-content:center;
-  margin-bottom:24px;
-}
-.solution-icon svg{width:26px;height:26px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.solution-card.featured .solution-icon{background:rgba(11,155,131,0.18)}
-.solution-title{font-family:var(--fd);font-size:22px;font-weight:700;color:var(--ink);margin-bottom:10px}
-.solution-body{font-size:15px;color:var(--ink2);line-height:1.7;margin-bottom:20px}
-.solution-pills{display:flex;flex-wrap:wrap;gap:8px}
-.pill{
-  background:var(--bg2);border:1px solid var(--border);
-  font-size:12px;font-weight:500;color:var(--ink2);
-  padding:5px 12px;border-radius:40px;
-}
-.solution-card.featured .pill{background:rgba(11,155,131,0.12);border-color:rgba(11,155,131,0.2);color:var(--accent)}
-
-/* ── FEATURES ─────────────────────────────────────────── */
-.features-bg{background:var(--bg2);padding:100px 40px}
-.features-inner{max-width:1200px;margin:0 auto}
-.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
-.feat-card{
-  background:var(--surface);border-radius:16px;padding:32px;
-  border:1px solid var(--border);transition:box-shadow 0.2s,transform 0.2s;
-}
-.feat-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
-.feat-card:nth-child(1) .feat-icon-bg{background:#fef9c3}
-.feat-card:nth-child(2) .feat-icon-bg{background:#fee2e2}
-.feat-card:nth-child(3) .feat-icon-bg{background:#ede9fe}
-.feat-card:nth-child(4) .feat-icon-bg{background:#d1fae5}
-.feat-card:nth-child(5) .feat-icon-bg{background:#fce7f3}
-.feat-card:nth-child(6) .feat-icon-bg{background:#dbeafe}
-.feat-icon-bg{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:20px}
-.feat-title{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px}
-.feat-body{font-size:14px;color:var(--ink2);line-height:1.65}
-
-/* ── ROI ──────────────────────────────────────────────── */
-.roi-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:56px}
-.roi-table{border-radius:16px;overflow:hidden;border:1.5px solid var(--border);background:var(--surface)}
-.roi-row{display:grid;grid-template-columns:1fr 120px;gap:0;border-bottom:1px solid var(--border)}
-.roi-row:last-child{border:none}
-.roi-row.header{background:var(--bg2);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3)}
-.roi-row.total{background:var(--accent-light)}
-.roi-cell{padding:14px 18px;font-size:14px;color:var(--ink2)}
-.roi-cell:nth-child(2),.roi-cell:nth-child(3){text-align:right;font-weight:600;color:var(--ink)}
-.roi-row.total .roi-cell{color:var(--accent);font-weight:700;font-size:15px}
-.roi-row.header .roi-cell{color:var(--ink3);font-weight:600}
-.roi-aside h3{font-family:var(--fd);font-size:32px;font-weight:800;letter-spacing:-0.03em;color:var(--ink);line-height:1.2;margin-bottom:20px}
-.roi-aside h3 em{font-style:normal;color:var(--accent)}
-.roi-aside p{font-size:16px;color:var(--ink2);line-height:1.7;margin-bottom:24px}
-.roi-stat-row{display:flex;gap:32px;margin-top:28px}
-.roi-stat{display:flex;flex-direction:column}
-.roi-stat-num{font-family:var(--fd);font-size:36px;font-weight:800;letter-spacing:-0.04em;color:var(--accent)}
-.roi-stat-label{font-size:12px;color:var(--ink3);text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
-
-/* ── WHY inordera (COMPETITIVE) ────────────────────────── */
-.comp-bg{background:var(--ink);padding:100px 40px}
-.comp-inner{max-width:1200px;margin:0 auto}
-.comp-bg .eyebrow{color:rgba(255,255,255,0.4)}
-.comp-bg h2{color:#fff}
-.comp-bg h2 em{color:var(--accent)}
-.comp-bg .section-intro{color:rgba(255,255,255,0.55)}
-.comp-table{margin-top:56px;background:rgba(255,255,255,0.04);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)}
-.comp-row{display:grid;grid-template-columns:200px repeat(6,1fr);border-bottom:1px solid rgba(255,255,255,0.07)}
-.comp-row:last-child{border:none}
-.comp-row.header{background:rgba(255,255,255,0.06)}
-.comp-cell{padding:14px 16px;font-size:13px;color:rgba(255,255,255,0.5);text-align:center;display:flex;align-items:center;justify-content:center}
-.comp-cell.left{justify-content:flex-start;font-weight:500;color:rgba(255,255,255,0.7);text-align:left}
-.comp-row.header .comp-cell{font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.4)}
-.comp-row.header .comp-cell.yd{color:var(--accent)}
-.comp-cell.yd{background:rgba(11,155,131,0.08)}
-.check{color:#4ade80;font-size:16px}
-.cross{color:rgba(255,255,255,0.2);font-size:14px}
-.partial{color:#fbbf24;font-size:13px}
-.comp-price{font-weight:600;font-size:13px}
-.comp-price.good{color:#4ade80}
-.comp-price.bad{color:rgba(255,255,255,0.35)}
-
-/* ── PRICING ─────────────────────────────────────────── */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px}
-.pricing-card{
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:20px;padding:36px;position:relative;
-  transition:box-shadow 0.2s,transform 0.2s;
-}
-.pricing-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
-.pricing-card.popular{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
-.popular-badge{
-  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
-  background:var(--accent);color:#fff;font-size:11px;font-weight:700;
-  letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:40px;
+.btn-primary{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--accent);color:#fff;
+  font-size:15.5px;font-weight:700;padding:16px 30px;border-radius:var(--r);
+  transition:background 0.18s,transform 0.12s;
+  box-shadow:0 6px 20px rgba(193,68,14,0.28);
   white-space:nowrap;
 }
-.plan-name{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
-.plan-price{font-family:var(--fd);font-size:44px;font-weight:800;letter-spacing:-0.04em;color:var(--ink);line-height:1}
-.plan-price span{font-size:18px;font-weight:500;color:var(--ink3);vertical-align:super;font-family:var(--fb)}
-.plan-freq{font-size:14px;color:var(--ink3);margin-bottom:6px}
-.plan-tagline{font-size:14px;color:var(--ink2);margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--border)}
-.plan-features{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:32px}
-.plan-features li{font-size:14px;color:var(--ink2);display:flex;align-items:flex-start;gap:10px}
-.plan-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px}
-.plan-features li.no::before{content:'—';color:var(--ink3)}
-.plan-features li.no{color:var(--ink3)}
-.btn-plan{
-  width:100%;padding:14px;border-radius:var(--r);font-size:15px;font-weight:600;
-  background:var(--accent);color:#fff;transition:background 0.18s;
+.btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px)}
+.btn-secondary{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:transparent;color:var(--ink);border:1.5px solid var(--line2);
+  font-size:15.5px;font-weight:600;padding:14.5px 26px;border-radius:var(--r);
+  transition:all 0.18s;white-space:nowrap;
 }
-.btn-plan:hover{background:var(--accent-hover)}
-.btn-plan.outline{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
-.btn-plan.outline:hover{background:var(--accent-light)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+.btn-ghost-dark{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:rgba(255,255,255,0.08);color:#fff;border:1.5px solid rgba(255,255,255,0.18);
+  font-size:15px;font-weight:600;padding:13px 24px;border-radius:var(--r);
+  transition:all 0.18s;
+}
+.btn-ghost-dark:hover{background:rgba(255,255,255,0.15)}
 
-/* ── TESTIMONIALS ─────────────────────────────────────── */
-.testi-bg{background:var(--bg2);padding:100px 40px}
-.testi-inner{max-width:1200px;margin:0 auto}
-.testi-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
-.testi-card{
-  background:var(--surface);border-radius:16px;border:1px solid var(--border);
-  padding:36px;transition:box-shadow 0.2s;
-}
-.testi-card:hover{box-shadow:var(--shadow-lg)}
-.testi-stars{color:#f59e0b;font-size:15px;margin-bottom:16px;letter-spacing:1px}
-.testi-quote{font-size:16px;color:var(--ink);line-height:1.7;margin-bottom:24px;font-style:italic}
-.testi-author{display:flex;align-items:center;gap:12px}
-.testi-avatar{
-  width:42px;height:42px;border-radius:50%;
-  background:var(--accent-light);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--fd);font-size:16px;font-weight:700;color:var(--accent);flex-shrink:0;
-}
-.testi-name{font-size:14px;font-weight:600;color:var(--ink)}
-.testi-role{font-size:12px;color:var(--ink3)}
+.pill{background:var(--bg2);border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--ink2);padding:5px 13px;border-radius:40px}
 
-/* ── FAQ ──────────────────────────────────────────────── */
-.faq-list{margin-top:56px;max-width:760px;margin-left:auto;margin-right:auto}
-.faq-item{border-bottom:1px solid var(--border)}
-.faq-q{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:20px 0;cursor:pointer;
-  font-size:16px;font-weight:600;color:var(--ink);
-  list-style:none;gap:16px;
-}
-.faq-q::-webkit-details-marker{display:none}
-.faq-q .faq-arrow{
-  width:28px;height:28px;border-radius:50%;background:var(--bg2);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:background 0.18s,transform 0.24s;
-  font-size:14px;color:var(--ink2);
-}
-details[open] .faq-arrow{transform:rotate(180deg);background:var(--accent-light);color:var(--accent)}
-.faq-a{padding:0 0 20px;font-size:15px;color:var(--ink2);line-height:1.75;max-width:680px}
-
-/* ── FINAL CTA ────────────────────────────────────────── */
-.cta-band{
-  background:var(--accent);padding:80px 40px;text-align:center;
-  position:relative;overflow:hidden;
-}
-.cta-band::before{
-  content:'';position:absolute;inset:0;
-  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.cta-band h2{font-family:var(--fd);font-size:clamp(32px,3.5vw,56px);font-weight:800;letter-spacing:-0.03em;color:#fff;margin-bottom:16px;position:relative}
-.cta-band p{font-size:17px;color:rgba(255,255,255,0.8);margin-bottom:36px;position:relative}
-.cta-form{display:flex;gap:0;max-width:420px;margin:0 auto 14px;position:relative}
-.cta-input{
-  flex:1;padding:15px 20px;background:#fff;border:none;border-radius:var(--r) 0 0 var(--r);
-  font-family:var(--fb);font-size:15px;color:var(--ink);outline:none;
-}
-.cta-input::placeholder{color:var(--ink3)}
-.cta-btn{
-  background:var(--ink);color:#fff;font-size:14px;font-weight:600;
-  padding:15px 24px;border-radius:0 var(--r) var(--r) 0;border:none;cursor:pointer;
-  white-space:nowrap;transition:background 0.18s;
-}
-.cta-btn:hover{background:#1e3548}
-.cta-note{font-size:12px;color:rgba(255,255,255,0.6);position:relative}
-
-/* ── FOOTER ───────────────────────────────────────────── */
-footer{background:var(--ink);padding:60px 40px 40px}
-.footer-inner{max-width:1200px;margin:0 auto}
-.footer-top{display:grid;grid-template-columns:220px 1fr;gap:80px;margin-bottom:48px}
-.footer-brand p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.7;margin-top:12px}
-.footer-links-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
-.footer-col-title{font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
-.footer-col a{display:block;font-size:14px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
-.footer-col a:hover{color:rgba(255,255,255,0.9)}
-.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
-.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
-.footer-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff}
-.footer-logo-text span{color:var(--accent)}
-
-/* ── ROTATING WORD ───────────────────────────────────── */
-.rotating-word {
-  display: inline-block;
-  position: relative;
-  min-width: 280px;
-  transition: opacity 0.35s, transform 0.35s;
-}
-.rotating-word.fade-out { opacity: 0; transform: translateY(-10px); }
-.rotating-word.fade-in  { opacity: 0; transform: translateY(12px); }
-
-/* ── STAT CARDS ───────────────────────────────────────── */
-.stats-band {
-  background: var(--ink);
-  padding: 80px 40px;
-}
-.stats-inner { max-width: 1200px; margin: 0 auto; }
-.stats-band .eyebrow { color: rgba(255,255,255,0.4); margin-bottom: 40px; text-align: center; }
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-.stat-card {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px;
-  padding: 32px 28px;
-  transition: background 0.2s, transform 0.2s;
-}
-.stat-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-3px); }
-.stat-card-num {
-  font-family: var(--fd);
-  font-size: 48px; font-weight: 800; line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--accent);
-  margin-bottom: 8px;
-}
-.stat-card-label {
-  font-size: 15px; font-weight: 600;
-  color: #fff; margin-bottom: 8px;
-}
-.stat-card-desc {
-  font-size: 13px; color: rgba(255,255,255,0.45);
-  line-height: 1.6;
-}
-.stat-card-source {
-  display: inline-block; margin-top: 16px;
-  font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.25);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding-top: 12px; width: 100%;
-}
-
-/* ── POS LOGOS ────────────────────────────────────────── */
-.pos-logo{
-  display:flex;align-items:center;gap:8px;
-  padding:10px 20px;border-radius:40px;
-  background:var(--surface);border:1.5px solid var(--border2);
-  font-family:var(--fd);font-size:14px;font-weight:600;color:var(--ink2);
-  transition:border-color 0.18s,color 0.18s,box-shadow 0.18s;
-  cursor:default;
-}
-.pos-logo:hover{border-color:var(--accent);color:var(--ink);box-shadow:var(--shadow)}
-
-/* ── REVEAL ANIMATIONS ────────────────────────────────── */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s,transform 0.65s}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s,transform 0.6s}
 .reveal.visible{opacity:1;transform:none}
 .reveal-d1{transition-delay:0.08s}
 .reveal-d2{transition-delay:0.16s}
 .reveal-d3{transition-delay:0.24s}
+.reveal-d4{transition-delay:0.32s}
 
-/* ── TWEAKS ───────────────────────────────────────────── */
-#tweaks{
-  display:none;position:fixed;bottom:24px;right:24px;z-index:9999;
-  background:var(--surface);border:1px solid var(--border2);
-  border-radius:14px;padding:20px;width:230px;
-  box-shadow:var(--shadow-lg);
+.placeholder-flag{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--amber-light);color:var(--amber);
+  font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  padding:4px 10px;border-radius:6px;
 }
-.tweaks-h{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-.tw-row{margin-bottom:14px}
-.tw-label{font-size:12px;color:var(--ink2);margin-bottom:8px;display:block;font-weight:500}
-.tw-swatches{display:flex;gap:8px}
-.tw-sw{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform 0.15s}
-.tw-sw:hover{transform:scale(1.15)}
-.tw-sw.on{border-color:var(--ink)}
-.tw-tabs{display:flex;gap:6px}
-.tw-tab{flex:1;padding:6px 4px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);color:var(--ink2);font-size:11px;font-family:var(--fb);cursor:pointer;text-align:center;transition:all 0.15s}
-.tw-tab.on{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
 
-/* ── DEMO MODAL ───────────────────────────────────────── */
-.modal-overlay{
-  display:none;position:fixed;inset:0;z-index:500;
-  background:rgba(11,31,46,0.75);backdrop-filter:blur(8px);
-  align-items:center;justify-content:center;padding:20px;
+/* ══════════════════════ NAV ══════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;background:rgba(20,23,31,0.94);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.08)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;gap:36px}
+.logo{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.logo svg{width:32px;height:32px}
+.logo-text{font-family:var(--fd);font-size:19px;font-weight:700;color:#fff;letter-spacing:-0.03em}
+.logo-text span{color:#ff9466}
+.nav-links{display:flex;gap:26px;margin-left:8px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.18s}
+.nav-links a:hover{color:#fff}
+.nav-right{display:flex;align-items:center;gap:14px;margin-left:auto}
+.btn-nav{background:var(--accent);color:#fff;font-size:14px;font-weight:700;padding:10px 20px;border-radius:9px;transition:background 0.18s,transform 0.12s;white-space:nowrap}
+.btn-nav:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.nav-burger{display:none;width:38px;height:38px;border-radius:8px;align-items:center;justify-content:center;background:rgba(255,255,255,0.08);color:#fff;flex-shrink:0}
+.nav-burger svg{width:19px;height:19px}
+.mobile-panel{display:none;position:fixed;top:68px;left:0;right:0;bottom:0;z-index:290;background:var(--navy);padding:28px 24px;overflow-y:auto}
+.mobile-panel.open{display:block}
+.mobile-panel a{display:block;font-size:19px;font-weight:600;color:#fff;padding:14px 0;border-bottom:1px solid rgba(255,255,255,0.08)}
+.mobile-panel .btn-primary{width:100%;margin-top:24px}
+
+/* ══════════════════════ HERO ══════════════════════ */
+.hero{padding:150px 40px 64px;max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--accent-light);color:var(--accent);font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:6px 14px;border-radius:40px;margin-bottom:22px}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.hero-lead{font-size:clamp(19px,2vw,23px);font-weight:600;color:var(--ink2);line-height:1.4;margin-bottom:14px}
+h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spacing:-0.035em;margin-bottom:20px}
+.hero-sub{font-size:17.5px;color:var(--ink2);max-width:520px;line-height:1.7;margin-bottom:32px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.hero-actions .btn-primary{font-size:16px;padding:17px 30px}
+.hero-trust{font-size:13.5px;color:var(--ink3);display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.hero-trust b{color:var(--ink2);font-weight:600}
+.hero-trust .sep{color:var(--line2)}
+
+/* Hero visual: two-panel product mockup */
+.hero-visual{position:relative}
+.mock-shell{background:var(--navy);border-radius:22px;padding:8px;box-shadow:var(--shadow-lg)}
+.mock-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:8px;border-radius:16px;overflow:hidden}
+.mock-call{background:#1c2029;padding:22px 18px;display:flex;flex-direction:column;gap:16px}
+.mock-call-top{display:flex;align-items:center;gap:10px}
+.mock-ring-icon{width:38px;height:38px;border-radius:50%;background:var(--good);display:flex;align-items:center;justify-content:center;font-size:16px;animation:ring 1.4s infinite}
+@keyframes ring{0%,100%{transform:rotate(0)}10%{transform:rotate(-12deg)}20%{transform:rotate(10deg)}30%{transform:rotate(-8deg)}40%{transform:rotate(6deg)}50%{transform:rotate(0)}}
+.mock-call-meta p{font-size:11px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em}
+.mock-call-meta strong{font-size:14px;color:#fff;font-weight:600;display:block;margin-top:2px}
+.mock-wave{display:flex;align-items:flex-end;gap:3px;height:34px;margin:6px 0}
+.mock-wave span{width:3px;background:var(--accent);border-radius:2px;animation:wave 1.1s ease-in-out infinite}
+.mock-wave span:nth-child(1){height:40%;animation-delay:0s}
+.mock-wave span:nth-child(2){height:70%;animation-delay:0.1s}
+.mock-wave span:nth-child(3){height:100%;animation-delay:0.2s}
+.mock-wave span:nth-child(4){height:55%;animation-delay:0.3s}
+.mock-wave span:nth-child(5){height:85%;animation-delay:0.4s}
+.mock-wave span:nth-child(6){height:35%;animation-delay:0.5s}
+.mock-wave span:nth-child(7){height:65%;animation-delay:0.6s}
+@keyframes wave{0%,100%{transform:scaleY(0.4)}50%{transform:scaleY(1)}}
+.mock-call-status{margin-top:auto;display:flex;align-items:center;gap:8px;font-size:12.5px;color:rgba(255,255,255,0.55)}
+.mock-status-dot{width:7px;height:7px;border-radius:50%;background:var(--good)}
+.mock-order{background:var(--surface);padding:22px;display:flex;flex-direction:column;gap:12px}
+.mock-order-topbar{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);padding-bottom:10px;border-bottom:1px solid var(--line)}
+.mock-msg{max-width:88%;padding:10px 13px;border-radius:12px;font-size:13.5px;line-height:1.45}
+.mock-msg.cust{background:var(--bg2);color:var(--ink);border-radius:12px 12px 12px 3px}
+.mock-msg.ai{background:var(--accent-light);color:var(--ink);border-radius:12px 12px 3px 12px;margin-left:auto}
+.mock-order-lines{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:4px}
+.mock-order-line{display:flex;justify-content:space-between;font-size:13px;color:var(--ink2);padding:4px 0}
+.mock-order-line.total{border-top:1px solid var(--line);margin-top:6px;padding-top:8px;font-weight:700;color:var(--ink);font-size:14px}
+.mock-order-confirm{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--good);margin-top:2px}
+
+/* ══════════════════════ LIVE DEMO STRIP ══════════════════════ */
+.livedemo-bg{background:var(--navy);padding:56px 40px}
+.livedemo-inner{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:center}
+.livedemo-inner h2{color:#fff;font-size:clamp(24px,2.8vw,34px);margin-bottom:10px}
+.livedemo-inner .section-intro{color:rgba(255,255,255,0.6);margin-bottom:0}
+.livedemo-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:16px;padding:24px}
+.demo-number-row{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.demo-number{font-family:var(--fd);font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.01em}
+.demo-number.tbc{font-size:14px;color:rgba(255,255,255,0.5);font-family:var(--fb);font-weight:500;font-style:italic}
+.livedemo-card .btn-primary{width:100%;margin-bottom:14px}
+.livedemo-alt{font-size:13px;color:rgba(255,255,255,0.55);border-top:1px solid rgba(255,255,255,0.12);padding-top:14px;margin-top:2px}
+.livedemo-alt-form{display:flex;gap:8px;margin-top:10px}
+.livedemo-alt-form input{flex:1;padding:11px 13px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#fff;font-family:var(--fb);font-size:13.5px;outline:none}
+.livedemo-alt-form input::placeholder{color:rgba(255,255,255,0.4)}
+.livedemo-alt-form input:focus{border-color:var(--accent)}
+.livedemo-alt-form button{background:rgba(255,255,255,0.14);color:#fff;font-size:13px;font-weight:600;padding:0 16px;border-radius:8px;white-space:nowrap;transition:background 0.18s}
+.livedemo-alt-form button:hover{background:rgba(255,255,255,0.24)}
+
+/* ══════════════════════ PROBLEM SEQUENCE ══════════════════════ */
+.problem-bg{background:var(--surface);padding:96px 40px}
+.problem-inner{max-width:var(--maxw);margin:0 auto}
+.seq-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.seq-arrow{display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:20px}
+.seq-card{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:26px 22px;text-align:center}
+.seq-icon{font-size:30px;margin-bottom:14px}
+.seq-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.seq-body{font-size:13.5px;color:var(--ink2);line-height:1.55}
+.seq-card.bad{border-color:rgba(193,68,14,0.35);background:var(--accent-light)}
+.seq-divider-row{display:flex;align-items:center;gap:16px;margin:56px 0 8px}
+.seq-divider-row hr{flex:1;border:none;border-top:1px solid var(--line)}
+.seq-divider-row span{font-family:var(--fd);font-size:15px;font-weight:700;color:var(--good);white-space:nowrap}
+.seq-row.good .seq-card{border-color:rgba(21,128,61,0.28);background:var(--good-light)}
+.seq-closing{text-align:center;font-size:19px;font-weight:600;color:var(--ink);margin-top:48px;font-family:var(--fd)}
+
+/* ══════════════════════ BENEFITS 4-CARD ══════════════════════ */
+.benefits-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px}
+.benefit-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 26px;transition:box-shadow 0.2s,transform 0.2s}
+.benefit-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.benefit-num{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--accent);margin-bottom:14px}
+.benefit-title{font-family:var(--fd);font-size:18px;font-weight:700;margin-bottom:10px}
+.benefit-body{font-size:14px;color:var(--ink2);line-height:1.65;margin-bottom:14px}
+.benefit-example{font-size:12.5px;color:var(--ink2);background:var(--bg2);border-radius:8px;padding:9px 11px;margin-bottom:14px;font-style:italic}
+.benefit-link{font-size:13.5px;font-weight:700;color:var(--accent);display:inline-flex;align-items:center;gap:5px}
+
+/* ══════════════════════ ROI CALCULATOR ══════════════════════ */
+.roi-bg{background:var(--bg2);padding:96px 40px}
+.roi-inner{max-width:var(--maxw);margin:0 auto}
+.roi-layout{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;margin-top:48px}
+.roi-form{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:32px}
+.roi-field{margin-bottom:22px}
+.roi-field:last-child{margin-bottom:0}
+.roi-field-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.roi-field label{font-size:14px;font-weight:600;color:var(--ink)}
+.roi-field-val{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--accent)}
+.roi-field input[type=range]{
+  width:100%;height:8px;border-radius:6px;background:var(--line);
+  -webkit-appearance:none;appearance:none;outline:none;cursor:pointer;
 }
+.roi-field input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;
+  background:var(--accent);border:4px solid #fff;box-shadow:0 2px 8px rgba(24,27,34,0.25);cursor:pointer;
+}
+.roi-field input[type=range]::-moz-range-thumb{
+  width:26px;height:26px;border-radius:50%;background:var(--accent);border:4px solid #fff;
+  box-shadow:0 2px 8px rgba(24,27,34,0.25);cursor:pointer;
+}
+.roi-result{background:var(--navy);border-radius:18px;padding:36px;color:#fff}
+.roi-result-label{font-size:13px;font-weight:600;letter-spacing:0.04em;color:rgba(255,255,255,0.55);margin-bottom:10px;text-transform:uppercase}
+.roi-result-num{font-family:var(--fd);font-size:clamp(40px,4.4vw,56px);font-weight:800;letter-spacing:-0.03em;color:#ff9466;line-height:1}
+.roi-result-sub{font-size:15px;color:rgba(255,255,255,0.7);margin-top:14px;line-height:1.6}
+.roi-result-year{font-family:var(--fd);font-size:18px;font-weight:700;color:#fff;margin-top:6px}
+.roi-result .btn-primary{margin-top:26px;width:100%}
+.roi-disclaimer{font-size:12px;color:rgba(255,255,255,0.4);margin-top:16px;line-height:1.6}
+
+/* ══════════════════════ HOW IT WORKS ══════════════════════ */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;position:relative}
+.step-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:32px 28px}
+.step-num{width:38px;height:38px;border-radius:10px;background:var(--accent-light);color:var(--accent);font-family:var(--fd);font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.step-title{font-family:var(--fd);font-size:19px;font-weight:700;margin-bottom:10px}
+.step-body{font-size:14.5px;color:var(--ink2);line-height:1.7}
+.steps-closing{text-align:center;margin-top:44px}
+.steps-closing strong{display:block;font-family:var(--fd);font-size:19px;font-weight:700;margin-bottom:6px}
+.steps-closing span{font-size:14.5px;color:var(--ink2)}
+
+/* ══════════════════════ PHONE DEMO (conversation) ══════════════════════ */
+.phonedemo-bg{background:var(--surface);padding:96px 40px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.phonedemo-inner{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+.phonedemo-copy .btn-secondary{margin-top:26px}
+.convo-card{background:var(--navy);border-radius:20px;padding:10px;box-shadow:var(--shadow-lg)}
+.convo-inner{background:var(--surface);border-radius:14px;padding:24px;min-height:340px;display:flex;flex-direction:column;gap:10px}
+.convo-topbar{display:flex;align-items:center;gap:8px;padding-bottom:14px;margin-bottom:4px;border-bottom:1px solid var(--line);font-size:12px;color:var(--ink3);font-weight:600}
+.convo-dot{width:7px;height:7px;border-radius:50%;background:var(--good)}
+.convo-msg{max-width:82%;padding:11px 15px;border-radius:14px;font-size:14px;line-height:1.5;opacity:0;transform:translateY(8px);transition:opacity 0.4s,transform 0.4s}
+.convo-msg.shown{opacity:1;transform:none}
+.convo-msg.cust{background:var(--bg2);border-radius:14px 14px 14px 3px}
+.convo-msg.ai{background:var(--accent-light);border-radius:14px 14px 3px 14px;margin-left:auto}
+.convo-confirm{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--good);font-size:14px;margin-top:6px;opacity:0;transition:opacity 0.4s}
+.convo-confirm.shown{opacity:1}
+.convo-replay{align-self:flex-end;margin-top:auto;font-size:12.5px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:5px}
+
+/* ══════════════════════ UPSELL ══════════════════════ */
+.upsell-bg{background:var(--bg2);padding:96px 40px}
+.upsell-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:48px}
+.upsell-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px}
+.upsell-order-track{display:flex;align-items:center;gap:16px;margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+.upsell-order-val{font-family:var(--fd);font-size:26px;font-weight:800;color:var(--ink3)}
+.upsell-order-arrow{color:var(--ink3);font-size:20px}
+.upsell-order-val.new{color:var(--good)}
+.upsell-closing{font-size:15px;color:var(--ink2);line-height:1.7;margin-top:22px}
+
+/* ══════════════════════ WEBSITE ORDERING ══════════════════════ */
+.webord-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:48px}
+.feat-list{display:flex;flex-direction:column;gap:14px;margin:24px 0 28px}
+.feat-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--ink2)}
+.feat-list li::before{content:'✓';color:var(--accent);font-weight:800;flex-shrink:0}
+.webmock{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);padding:6px}
+.webmock-top{background:var(--bg2);border-radius:12px 12px 0 0;padding:12px 16px;display:flex;gap:6px}
+.webmock-dot{width:8px;height:8px;border-radius:50%;background:var(--line2)}
+.webmock-body{padding:22px;display:flex;flex-direction:column;gap:10px}
+.webmock-msg{max-width:85%;padding:10px 13px;border-radius:12px;font-size:13.5px}
+.webmock-msg.ai{background:var(--accent-light);border-radius:12px 12px 12px 3px}
+.webmock-msg.cust{background:var(--bg2);border-radius:12px 12px 3px 12px;margin-left:auto}
+
+/* ══════════════════════ POS / INTEGRATIONS ══════════════════════ */
+.pos-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:44px;justify-content:center}
+.pos-logo{display:flex;align-items:center;gap:9px;padding:11px 20px;border-radius:40px;background:var(--surface);border:1.5px solid var(--line);font-family:var(--fd);font-size:14px;font-weight:600;color:var(--ink2);position:relative}
+.pos-soon{font-size:9.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:var(--amber-light);color:var(--amber);padding:2px 7px;border-radius:5px;margin-left:2px}
+.pos-note{text-align:center;font-size:13.5px;color:var(--ink3);margin-top:24px;max-width:520px;margin-left:auto;margin-right:auto}
+
+/* ══════════════════════ ALLERGEN ══════════════════════ */
+.allergen-bg{background:var(--surface);padding:96px 40px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.allergen-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:48px}
+.allergen-card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:28px}
+.allergen-row{display:flex;gap:14px;margin-bottom:18px}
+.allergen-row:last-child{margin-bottom:0}
+.allergen-icon{width:36px;height:36px;border-radius:10px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.allergen-row-title{font-size:14.5px;font-weight:700;margin-bottom:3px}
+.allergen-row-body{font-size:13.5px;color:var(--ink2);line-height:1.6}
+.allergen-disclaimer{font-size:12.5px;color:var(--ink3);border-top:1px solid var(--line);margin-top:20px;padding-top:16px;line-height:1.7}
+
+/* ══════════════════════ MULTILINGUAL ══════════════════════ */
+.lang-bg{background:var(--bg2);padding:88px 40px}
+.lang-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:760px;margin:44px auto 0}
+.lang-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.lang-flag{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px}
+.lang-quote{font-size:15.5px;color:var(--ink);line-height:1.6}
+
+/* ══════════════════════ ANALYTICS ══════════════════════ */
+.analytics-bg{background:var(--navy);padding:96px 40px}
+.analytics-inner{max-width:var(--maxw);margin:0 auto}
+.analytics-dash{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:32px;margin-top:48px}
+.dash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px}
+.dash-top-label{font-size:13px;font-weight:600;color:rgba(255,255,255,0.5)}
+.dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.dash-tile{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:22px 20px}
+.dash-tile-num{font-family:var(--fd);font-size:30px;font-weight:800;color:#fff;letter-spacing:-0.02em}
+.dash-tile-label{font-size:12.5px;color:rgba(255,255,255,0.5);margin-top:6px}
+.dash-example-tag{font-size:11px;color:rgba(255,255,255,0.35);margin-top:24px;text-align:center}
+
+/* ══════════════════════ RESULTS / FOUNDING ══════════════════════ */
+.results-bg{background:var(--surface);padding:96px 40px}
+.founding-card{
+  max-width:720px;margin:48px auto 0;
+  background:var(--navy);border-radius:20px;padding:48px;text-align:center;
+}
+.founding-card h3{font-family:var(--fd);color:#fff;font-size:26px;font-weight:800;margin-bottom:12px}
+.founding-card p{color:rgba(255,255,255,0.65);font-size:15.5px;line-height:1.7;max-width:520px;margin:0 auto 24px}
+.founding-list{display:inline-grid;grid-template-columns:1fr 1fr;gap:10px 28px;text-align:left;margin:0 auto 28px}
+.founding-list li{font-size:13.5px;color:rgba(255,255,255,0.75);display:flex;align-items:center;gap:8px}
+.founding-list li::before{content:'✓';color:#ff9466;font-weight:800}
+
+.founding-standalone{background:var(--bg2);padding:96px 40px}
+
+/* ══════════════════════ PRICING ══════════════════════ */
+.pricing-bg{background:var(--surface);padding:96px 40px}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.pricing-card{background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:34px;position:relative;transition:box-shadow 0.2s,transform 0.2s}
+.pricing-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.pricing-card.popular{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
+.popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:40px;white-space:nowrap}
+.plan-name{font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+.plan-price{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-0.03em;line-height:1}
+.plan-price span{font-size:15px;font-weight:500;color:var(--ink3);font-family:var(--fb)}
+.plan-tagline{font-size:13.5px;color:var(--ink2);margin:12px 0 24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+.plan-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.plan-features li{font-size:13.5px;color:var(--ink2);display:flex;align-items:flex-start;gap:9px}
+.plan-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0}
+.btn-plan{width:100%;padding:14px;border-radius:var(--r);font-size:14.5px;font-weight:700;background:var(--accent);color:#fff;transition:background 0.18s}
+.btn-plan:hover{background:var(--accent-hover)}
+.btn-plan.outline{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.btn-plan.outline:hover{background:var(--accent-light)}
+.pricing-disclaimer{text-align:center;font-size:12.5px;color:var(--ink3);max-width:600px;margin:32px auto 0;line-height:1.7}
+.price-anchor{max-width:640px;margin:56px auto 0;text-align:center;background:var(--bg2);border-radius:16px;padding:32px}
+.price-anchor strong{display:block;font-family:var(--fd);font-size:19px;font-weight:700;margin-bottom:8px}
+.price-anchor p{font-size:14.5px;color:var(--ink2);line-height:1.6;margin-bottom:16px}
+.price-anchor a{font-size:14px;font-weight:700;color:var(--accent)}
+
+/* ══════════════════════ TRIAL ══════════════════════ */
+.trial-bg{background:var(--navy);padding:96px 40px}
+.trial-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:8px}
+.trial-steps{display:flex;flex-direction:column;gap:16px;margin:26px 0 30px}
+.trial-step{display:flex;gap:14px;align-items:flex-start}
+.trial-step-num{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.1);color:#fff;font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.trial-step p{font-size:14.5px;color:rgba(255,255,255,0.7);line-height:1.6}
+.trial-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:32px;text-align:center}
+.trial-card .btn-primary{width:100%;margin-top:18px}
+
+/* ══════════════════════ FAQ ══════════════════════ */
+.faq-list{margin-top:48px;max-width:760px;margin-left:auto;margin-right:auto}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;font-size:16px;font-weight:600;list-style:none;gap:16px}
+.faq-q::-webkit-details-marker{display:none}
+.faq-arrow{width:28px;height:28px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.18s,transform 0.24s;font-size:13px;color:var(--ink2)}
+details[open] .faq-arrow{transform:rotate(180deg);background:var(--accent-light);color:var(--accent)}
+.faq-a{padding:0 0 20px;font-size:15px;color:var(--ink2);line-height:1.75;max-width:680px}
+
+/* ══════════════════════ FINAL CTA ══════════════════════ */
+.cta-band{background:var(--accent);padding:88px 40px;text-align:center}
+.cta-band h2{color:#fff;margin-bottom:14px}
+.cta-band p{font-size:17px;color:rgba(255,255,255,0.85);margin-bottom:34px}
+.cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cta-actions .btn-primary{background:var(--navy);box-shadow:none}
+.cta-actions .btn-primary:hover{background:#0c0e13}
+.cta-actions .btn-ghost-dark{background:rgba(255,255,255,0.14)}
+.cta-note{font-size:12.5px;color:rgba(255,255,255,0.65);margin-top:26px}
+
+/* ══════════════════════ FOOTER ══════════════════════ */
+footer{background:var(--navy);padding:60px 40px 32px}
+.footer-inner{max-width:var(--maxw);margin:0 auto}
+.footer-top{display:grid;grid-template-columns:220px 1fr;gap:64px;margin-bottom:44px}
+.footer-brand p{font-size:13.5px;color:rgba(255,255,255,0.4);line-height:1.7;margin-top:10px}
+.footer-links-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.footer-col-title{font-size:11.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:14px}
+.footer-col a{display:block;font-size:13.5px;color:rgba(255,255,255,0.5);margin-bottom:9px;transition:color 0.18s}
+.footer-col a:hover{color:rgba(255,255,255,0.9)}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.08);padding-top:22px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-copy{font-size:12.5px;color:rgba(255,255,255,0.3)}
+
+/* ══════════════════════ MODAL ══════════════════════ */
+.modal-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(20,23,31,0.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
 .modal-overlay.open{display:flex}
-.modal-box{
-  background:var(--surface);border-radius:20px;
-  box-shadow:0 24px 80px rgba(11,31,46,0.25);
-  width:100%;max-width:520px;padding:44px;position:relative;
-  animation:modal-in 0.25s ease;
-}
-@keyframes modal-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
-.modal-close{
-  position:absolute;top:16px;right:16px;width:32px;height:32px;
-  border-radius:50%;background:var(--bg2);color:var(--ink2);
-  font-size:16px;display:flex;align-items:center;justify-content:center;
-  transition:background 0.15s;cursor:pointer;border:none;
-}
-.modal-close:hover{background:var(--border2)}
-.modal-logo{display:flex;align-items:center;gap:8px;margin-bottom:20px}
-.modal-logo svg{width:28px;height:28px}
-.modal-logo-text{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-0.02em}
+.modal-box{background:var(--surface);border-radius:20px;box-shadow:0 24px 80px rgba(20,23,31,0.3);width:100%;max-width:520px;padding:40px;position:relative;max-height:92vh;overflow-y:auto}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:var(--bg2);color:var(--ink2);font-size:16px;display:flex;align-items:center;justify-content:center;transition:background 0.15s}
+.modal-close:hover{background:var(--line2)}
+.modal-logo{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.modal-logo svg{width:26px;height:26px}
+.modal-logo-text{font-family:var(--fd);font-size:16px;font-weight:700;letter-spacing:-0.02em}
 .modal-logo-text span{color:var(--accent)}
-.modal-box h2{font-family:var(--fd);font-size:26px;font-weight:800;letter-spacing:-0.03em;color:var(--ink);margin-bottom:6px}
-.modal-box .modal-sub{font-size:14px;color:var(--ink2);margin-bottom:28px}
+.modal-box h2{font-size:23px;font-weight:800;margin-bottom:6px}
+.modal-sub{font-size:14px;color:var(--ink2);margin-bottom:26px}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .form-grid .span-2{grid-column:1/-1}
-.field label{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px;letter-spacing:0.02em}
-.field input,.field select{
-  width:100%;padding:11px 14px;
-  background:var(--bg);border:1.5px solid var(--border2);border-radius:var(--r);
-  font-family:var(--fb);font-size:14px;color:var(--ink);
-  outline:none;transition:border-color 0.18s;
-  appearance:none;-webkit-appearance:none;
-}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.field input,.field select{width:100%;padding:11px 14px;background:var(--bg);border:1.5px solid var(--line2);border-radius:var(--r);font-family:var(--fb);font-size:14px;color:var(--ink);outline:none;transition:border-color 0.18s;appearance:none}
 .field input:focus,.field select:focus{border-color:var(--accent)}
-.phone-wrap{display:flex;gap:0}
-.phone-prefix{
-  padding:11px 12px;background:var(--bg2);
-  border:1.5px solid var(--border2);border-right:none;
-  border-radius:var(--r) 0 0 var(--r);
-  font-size:14px;color:var(--ink2);white-space:nowrap;display:flex;align-items:center;gap:6px;
-}
+.phone-wrap{display:flex}
+.phone-prefix{padding:11px 12px;background:var(--bg2);border:1.5px solid var(--line2);border-right:none;border-radius:var(--r) 0 0 var(--r);font-size:14px;color:var(--ink2);white-space:nowrap;display:flex;align-items:center;gap:6px}
 .phone-wrap input{border-radius:0 var(--r) var(--r) 0}
-.btn-modal-submit{
-  width:100%;padding:15px;border-radius:var(--r);
-  background:var(--accent);color:#fff;font-size:15px;font-weight:600;
-  transition:background 0.18s;margin-top:6px;border:none;cursor:pointer;
-  font-family:var(--fb);
-}
+.btn-modal-submit{width:100%;padding:15px;border-radius:var(--r);background:var(--accent);color:#fff;font-size:15px;font-weight:700;transition:background 0.18s;margin-top:6px}
 .btn-modal-submit:hover{background:var(--accent-hover)}
 .btn-modal-submit:disabled{opacity:0.6;cursor:not-allowed}
 .modal-consent{font-size:11px;color:var(--ink3);text-align:center;margin-top:12px;line-height:1.6}
 .modal-consent a{color:var(--accent);text-decoration:underline}
-.modal-success{display:none;text-align:center;padding:20px 0}
-.modal-success .success-icon{font-size:48px;margin-bottom:16px}
-.modal-success h3{font-family:var(--fd);font-size:22px;font-weight:800;color:var(--ink);margin-bottom:8px}
-.modal-success p{font-size:15px;color:var(--ink2);line-height:1.7}
+.modal-success{display:none;text-align:center;padding:16px 0}
+.modal-success .success-icon{font-size:44px;margin-bottom:14px}
+.modal-success h3{font-size:20px;font-weight:800;margin-bottom:8px}
+.modal-success p{font-size:14.5px;color:var(--ink2);line-height:1.7}
 .modal-error{display:none;background:#fee2e2;border:1px solid #fca5a5;border-radius:var(--r);padding:12px 16px;font-size:13px;color:#b91c1c;margin-bottom:14px}
+
+/* ══════════════════════ STICKY MOBILE CTA ══════════════════════ */
+.sticky-cta{display:none;position:fixed;left:0;right:0;bottom:0;z-index:250;padding:12px 16px;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -4px 20px rgba(24,27,34,0.1)}
+.sticky-cta .btn-primary{width:100%;font-size:15px;padding:15px}
+
+/* ══════════════════════ RESPONSIVE ══════════════════════ */
+@media (max-width:980px){
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  .hero{grid-template-columns:1fr;text-align:center;padding-top:130px}
+  .hero-sub{margin-left:auto;margin-right:auto}
+  .hero-actions{justify-content:center}
+  .hero-trust{justify-content:center}
+  .hero-visual{max-width:460px;margin:0 auto}
+  .livedemo-inner,.phonedemo-inner,.upsell-layout,.webord-layout,.allergen-layout,.trial-layout{grid-template-columns:1fr;text-align:center}
+  .phonedemo-copy .btn-secondary{margin-left:auto;margin-right:auto}
+  .roi-layout{grid-template-columns:1fr}
+  .benefits-grid{grid-template-columns:1fr 1fr}
+  .seq-row{grid-template-columns:1fr 1fr}
+  .seq-arrow{display:none}
+  .steps-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .dash-grid{grid-template-columns:1fr 1fr}
+  .footer-top{grid-template-columns:1fr}
+  .footer-links-grid{grid-template-columns:1fr 1fr}
+  .founding-list{grid-template-columns:1fr}
+  .lang-cards{grid-template-columns:1fr}
+  body{padding-bottom:64px}
+  .sticky-cta{display:block}
+}
+@media (max-width:640px){
+  .section,.section-tight{padding:64px 24px}
+  .hero{padding:120px 20px 48px}
+  .benefits-grid{grid-template-columns:1fr}
+  .seq-row{grid-template-columns:1fr}
+  .dash-grid{grid-template-columns:1fr 1fr}
+  .form-grid{grid-template-columns:1fr}
+  .mock-grid{grid-template-columns:1fr}
+  h1{font-size:clamp(32px,8vw,42px)}
+  .nav-inner{padding:0 20px}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ══════════════════════ NAV ══════════════════════ -->
 <nav>
   <div class="nav-inner">
-    <div class="logo">
-      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
-        <!-- phone handset -->
+    <a class="logo" href="#top" aria-label="InOrdera home">
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="34" height="34" rx="9" fill="#c1440e"/>
         <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
-        <!-- chat bubble -->
-        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
-        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
-        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
-        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
-        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
       </svg>
       <span class="logo-text">In<span>Ordera</span></span>
-    </div>
+    </a>
     <ul class="nav-links">
-      <li><a href="#solution">Platform</a></li>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#roi">ROI</a></li>
-      <li><a href="#pricing">Plans</a></li>
+      <li><a href="#how-it-works" data-event="nav_click">How It Works</a></li>
+      <li><a href="#features" data-event="nav_click">Features</a></li>
+      <li><a href="#pricing" data-event="nav_click">Pricing</a></li>
+      <li><a href="#results" data-event="nav_click">Results</a></li>
+      <li><a href="#faq" data-event="nav_click">FAQ</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn-nav-ghost">Sign in</button>
-      <button class="btn-nav" onclick="openDemoModal()">Book a Demo</button>
+      <button class="btn-nav" onclick="trackEvent('hero_cta_click',{loc:'nav'});scrollTo('live-demo')">Hear It Live</button>
     </div>
+    <button class="nav-burger" onclick="toggleMobileNav()" aria-label="Open menu" aria-expanded="false" id="burger-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
   </div>
 </nav>
+<div class="mobile-panel" id="mobile-panel">
+  <a href="#how-it-works" onclick="toggleMobileNav()">How It Works</a>
+  <a href="#features" onclick="toggleMobileNav()">Features</a>
+  <a href="#pricing" onclick="toggleMobileNav()">Pricing</a>
+  <a href="#results" onclick="toggleMobileNav()">Results</a>
+  <a href="#faq" onclick="toggleMobileNav()">FAQ</a>
+  <button class="btn-primary" onclick="toggleMobileNav();trackEvent('hero_cta_click',{loc:'mobile_nav'});scrollTo('live-demo')">☎ Try It</button>
+</div>
 
-<!-- HERO -->
-<div style="background:var(--bg)">
-  <div class="hero">
-    <div class="hero-left">
-      <div class="hero-badge">Your AI Team Member for Independent Restaurants</div>
-      <h1>The team member who handles<br><em class="rotating-word">every call.</em></h1>
-      <p class="hero-sub">InOrdera is your always-on AI team member — answering every call, taking every order, upselling on every interaction, and flagging every allergen. 24/7, in any language.</p>
-      <div class="hero-actions">
-        <button class="btn-primary" onclick="openDemoModal()">Book a Free Demo</button>
-        <button class="btn-secondary" onclick="document.getElementById('solution').scrollIntoView()">See how it works →</button>
-      </div>
-      <div class="hero-trust">
-        <div class="hero-stars">★★★★★</div>
-        <span>Rated <strong>5/5</strong> by independent UK operators &nbsp;·&nbsp; <strong>quick setup</strong> &nbsp;·&nbsp; <strong>Zero commission</strong></span>
-      </div>
+<div id="top"></div>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">AI Ordering for Restaurants</div>
+    <p class="hero-lead">Your phone is ringing.<br>Your staff are too busy to answer it.</p>
+    <h1>Never miss an order again.</h1>
+    <p class="hero-sub">InOrdera answers your restaurant's calls, takes orders, recommends extras and sends them straight to your team — even when your staff are busy.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="trackEvent('hero_cta_click',{loc:'hero_primary'});scrollTo('live-demo')">☎ Hear InOrdera Take an Order</button>
+      <button class="btn-secondary" onclick="trackEvent('roi_calculator_started',{loc:'hero_secondary'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
     </div>
-    <div class="hero-visual" style="display:none">
-      <div class="hero-float-1">
-        <div class="float-icon fi-green">📞</div>
-        <span>Call answered in <strong>0.8s</strong></span>
-      </div>
-      <div class="phone-card">
-        <div class="phone-topbar">
-          <div class="phone-dot phone-dot-g"></div>
-          <div class="phone-dot"></div>
-          <div class="phone-dot"></div>
-          <span class="phone-label" style="margin-left:8px">InOrdera · Chat Widget</span>
+    <p class="hero-trust"><b>No new staff</b><span class="sep">·</span><b>Zero commission</b><span class="sep">·</span><b>Works with your existing setup</b></p>
+  </div>
+
+  <div class="hero-visual" aria-hidden="true">
+    <div class="mock-shell">
+      <div class="mock-grid">
+        <div class="mock-call">
+          <div class="mock-call-top">
+            <div class="mock-ring-icon">📞</div>
+            <div class="mock-call-meta">
+              <p>Incoming call</p>
+              <strong>Customer: Sarah</strong>
+            </div>
+          </div>
+          <div class="mock-wave"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="mock-call-status"><span class="mock-status-dot"></span> Order in progress</div>
         </div>
-        <div class="chat-body">
-          <div class="chat-msg chat-ai">Hi there! Welcome to Spice Garden. What can I get for you today? 😊</div>
-          <div class="chat-msg chat-user">Can I get the lamb biryani but without nuts? My son has a nut allergy.</div>
-          <div class="chat-msg chat-ai">Of course! ⚠️ <strong>Allergen note:</strong> Our biryani is prepared in a kitchen that handles nuts. I've flagged this on your order and our team will take extra care. Shall I add it?</div>
-          <div class="chat-msg chat-user">Yes please. And anything to go with it?</div>
-          <div class="chat-msg chat-ai">Our garlic naan pairs perfectly — it's our most popular add-on with this dish. Add one for £2.50?</div>
-          <div class="chat-typing"><span></span><span></span><span></span></div>
+        <div class="mock-order">
+          <div class="mock-order-topbar">InOrdera · Live order</div>
+          <div class="mock-msg cust">Can I get a chicken tikka masala, medium?</div>
+          <div class="mock-msg ai">Absolutely. Would you like rice or naan with that?</div>
+          <div class="mock-order-lines">
+            <div class="mock-order-line"><span>Chicken Tikka Masala</span><span>£12.95</span></div>
+            <div class="mock-order-line"><span>Garlic Naan</span><span>£3.50</span></div>
+            <div class="mock-order-line"><span>Pilau Rice</span><span>£3.50</span></div>
+            <div class="mock-order-line total"><span>Total</span><span>£19.95</span></div>
+          </div>
+          <div class="mock-order-confirm">✓ Order confirmed</div>
         </div>
       </div>
-      <div class="hero-float-2">
-        <div class="float-icon fi-amber">💷</div>
-        <span>AOV up <strong>+22%</strong> this week</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ LIVE DEMO ══════════════════════ -->
+<div class="livedemo-bg" id="live-demo">
+  <div class="livedemo-inner">
+    <div class="reveal">
+      <div class="eyebrow on-dark">Try It Yourself</div>
+      <h2>Call your restaurant's AI assistant.</h2>
+      <p class="section-intro">Don't read about it. Try it.<br>Hear how InOrdera handles a real restaurant order.</p>
+    </div>
+    <div class="livedemo-card reveal reveal-d1">
+      <div class="demo-number-row">
+        <span class="demo-number tbc" id="demo-number-display">Demo line — number to be added</span>
+      </div>
+      <a class="btn-primary" id="demo-call-link" href="#live-demo" onclick="trackEvent('live_demo_click',{});return handleDemoCallClick(event)" style="width:100%">Call the Demo →</a>
+      <div class="livedemo-alt">
+        Prefer a demo? Enter your number and we'll show you how it works.
+        <form class="livedemo-alt-form" onsubmit="return submitCallbackRequest(event)">
+          <label for="callback-phone" class="sr-only">Your phone number</label>
+          <input type="tel" id="callback-phone" placeholder="Your phone number" required>
+          <button type="submit">Request call</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner" id="ticker-inner">
-    <div class="ticker-item"><div class="ticker-dot"></div><span>43% of restaurant calls go unanswered</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>Independent restaurants lose up to <strong>£15,180/month</strong> in preventable revenue</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>InOrdera ROI: <strong>88×</strong> your subscription cost</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>Allergen incidents cost restaurants <strong>unlimited liability</strong> — InOrdera flags every one</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>UK hospitality: <strong>132,000 unfilled vacancies</strong> — AI fills the gap</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>Fast, assisted setup — no IT required</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>50,000+ UK takeaway outlets</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>43% of restaurant calls go unanswered</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>Independent restaurants lose up to <strong>£15,180/month</strong> in preventable revenue</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>InOrdera ROI: <strong>88×</strong> your subscription cost</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>Allergen incidents cost restaurants <strong>unlimited liability</strong> — InOrdera flags every one</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>UK hospitality: <strong>132,000 unfilled vacancies</strong> — AI fills the gap</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>Fast, assisted setup — no IT required</span></div>
-    <div class="ticker-item"><div class="ticker-dot"></div><span>50,000+ UK takeaway outlets</span></div>
-  </div>
-</div>
-
-<!-- STAT CARDS -->
-<div class="stats-band">
-  <div class="stats-inner">
-    <div class="eyebrow reveal">The numbers that matter</div>
-    <div class="stats-grid reveal">
-      <div class="stat-card">
-        <div class="stat-card-num">43%</div>
-        <div class="stat-card-label">of inbound calls go unanswered</div>
-        <div class="stat-card-desc">During peak service, staff are cooking and serving. 69% of those callers won't try again — they order from a competitor.</div>
-        <span class="stat-card-source">Industry research</span>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-num">£17,490</div>
-        <div class="stat-card-label">recoverable monthly per restaurant</div>
-        <div class="stat-card-desc">In missed orders, upsell revenue, commission savings and reduced errors — for a typical independent processing 100 orders/day.</div>
-        <span class="stat-card-source">InOrdera analysis</span>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-num">88×</div>
-        <div class="stat-card-label">return on investment</div>
-        <div class="stat-card-desc">InOrdera pays for itself from day one. Every recovered call, every upsell, every direct order compounds the return.</div>
-        <span class="stat-card-source">InOrdera analysis</span>
-      </div>
-      <div class="stat-card">
-        <div class="stat-card-num">2.4M</div>
-        <div class="stat-card-label">UK adults with food allergies</div>
-        <div class="stat-card-desc">Owen's Law will mandate written allergen records. InOrdera flags all 14 UK allergens automatically and creates an auditable trail.</div>
-        <span class="stat-card-source">FSA, 2024</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- LOGOS -->
-<div class="logos-section">
-  <div class="logos-label">Trusted by independent restaurants across the UK</div>
-  <div class="logos-row">
-    <div class="logo-item">Spice Garden</div>
-    <div class="logo-item">Golden Wok</div>
-    <div class="logo-item">Istanbul Grill</div>
-    <div class="logo-item">Bombay Bites</div>
-    <div class="logo-item">Noodle Box</div>
-    <div class="logo-item">The Curry House</div>
-  </div>
-</div>
-
-<hr class="divider">
-
-<!-- PROBLEM -->
-<div class="problem-bg">
+<!-- ══════════════════════ PROBLEM: FRIDAY NIGHT ══════════════════════ -->
+<div class="problem-bg" id="problem">
   <div class="problem-inner">
     <div class="eyebrow reveal">The Problem</div>
-    <h2 class="reveal">Your restaurant is leaking money.<br><em>Every single day.</em></h2>
-    <div class="problem-grid reveal">
-      <div class="problem-card">
-        <div class="prob-num">43%</div>
-        <div class="prob-title">Calls Go Unanswered</div>
-        <div class="prob-body">During peak hours, staff are cooking and serving. The phone rings out. 69% of those callers won't try again — they order from a competitor.</div>
+    <h2 class="reveal">Friday night. 7:14pm.</h2>
+    <div class="seq-row reveal reveal-d1">
+      <div class="seq-card">
+        <div class="seq-icon">☎️</div>
+        <div class="seq-title">Customer calls</div>
+        <div class="seq-body">Phone rings.</div>
       </div>
-      <div class="problem-card">
-        <div class="prob-num">0×</div>
-        <div class="prob-title">Upselling Happens</div>
-        <div class="prob-body">Rushed, undertrained staff never suggest extras. Structured upselling lifts average order value by 10–30%. That's money left on the table every order.</div>
+      <div class="seq-card">
+        <div class="seq-icon">👨‍🍳</div>
+        <div class="seq-title">Your chef is cooking</div>
+        <div class="seq-body">Staff are busy.</div>
       </div>
-      <div class="problem-card">
-        <div class="prob-num">52%</div>
-        <div class="prob-title">Staff Turnover Rate</div>
-        <div class="prob-body">High churn means the person answering your phone is often new, non-fluent, and unknowledgeable about your menu. Every call is a risk.</div>
+      <div class="seq-card">
+        <div class="seq-icon">👥</div>
+        <div class="seq-title">Front-of-house are serving</div>
+        <div class="seq-body">Nobody gets to the phone.</div>
       </div>
-      <div class="problem-card">
-        <div class="prob-num">2.4M</div>
-        <div class="prob-title">Allergen Liability</div>
-        <div class="prob-body">2.4 million UK adults have confirmed food allergies. Owen's Law will mandate written allergen records. Verbal communication fails. The consequences of getting it wrong are catastrophic.</div>
+      <div class="seq-card bad">
+        <div class="seq-icon">❌</div>
+        <div class="seq-title">The customer hangs up</div>
+        <div class="seq-body">Order lost.</div>
       </div>
+    </div>
+
+    <div class="seq-divider-row reveal">
+      <hr><span>InOrdera answers instead</span><hr>
+    </div>
+
+    <div class="seq-row good reveal reveal-d2">
+      <div class="seq-card">
+        <div class="seq-icon">☎️</div>
+        <div class="seq-title">Call answered</div>
+        <div class="seq-body">Every time, even at peak.</div>
+      </div>
+      <div class="seq-card">
+        <div class="seq-icon">🗣️</div>
+        <div class="seq-title">Order taken</div>
+        <div class="seq-body">Naturally, conversationally.</div>
+      </div>
+      <div class="seq-card">
+        <div class="seq-icon">🍟</div>
+        <div class="seq-title">Extras suggested</div>
+        <div class="seq-body">Relevant, not pushy.</div>
+      </div>
+      <div class="seq-card">
+        <div class="seq-icon">✓</div>
+        <div class="seq-title">Order confirmed</div>
+        <div class="seq-body">Sent straight to your team.</div>
+      </div>
+    </div>
+
+    <p class="seq-closing reveal">Your staff keep serving. Your customers keep ordering.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════ 4 BUSINESS BENEFITS ══════════════════════ -->
+<div class="section" id="features">
+  <div class="eyebrow reveal">Why It Pays For Itself</div>
+  <h2 class="reveal">One AI assistant.<br><em>Four ways it pays for itself.</em></h2>
+
+  <div class="benefits-grid">
+    <div class="benefit-card reveal reveal-d1">
+      <div class="benefit-num">01</div>
+      <div class="benefit-title">Recover missed orders</div>
+      <p class="benefit-body">Every call gets an answer, even during the busiest periods. No more losing customers because your team couldn't get to the phone.</p>
+      <a class="benefit-link" href="#roi-calculator" onclick="trackEvent('roi_calculator_started',{loc:'benefit_card'})">Recover more orders →</a>
+    </div>
+    <div class="benefit-card reveal reveal-d2">
+      <div class="benefit-num">02</div>
+      <div class="benefit-title">Increase every order</div>
+      <p class="benefit-body">InOrdera can recommend relevant extras during the conversation, without adding pressure on staff.</p>
+      <p class="benefit-example">"Would you like to add garlic naan for £2.50?"</p>
+      <a class="benefit-link" href="#upsell">See how upselling works →</a>
+    </div>
+    <div class="benefit-card reveal reveal-d3">
+      <div class="benefit-num">03</div>
+      <div class="benefit-title">Reduce staff interruptions</div>
+      <p class="benefit-body">Your team can focus on customers in front of them instead of stopping to answer repetitive phone calls.</p>
+      <a class="benefit-link" href="#how-it-works">See how it works →</a>
+    </div>
+    <div class="benefit-card reveal reveal-d4">
+      <div class="benefit-num">04</div>
+      <div class="benefit-title">Keep orders flowing</div>
+      <p class="benefit-body">Where supported, InOrdera can send orders into your existing restaurant systems so your team doesn't have to re-enter them manually.</p>
+      <a class="benefit-link" href="#pos" onclick="trackEvent('integration_viewed',{loc:'benefit_card'})">See integrations →</a>
     </div>
   </div>
 </div>
 
-<!-- SOLUTION -->
-<div id="solution" style="background:var(--bg)">
-  <div class="section">
-    <div class="eyebrow reveal">The Solution</div>
-    <h2 class="reveal">Your AI team member.<br><em>Always on. Always perfect.</em></h2>
-    <p class="section-intro reveal">InOrdera gives your restaurant an AI team member that answers every call, handles every chat, upsells on every interaction, and never gets the allergens wrong — at a price independent operators can actually afford.</p>
-    <div class="solution-grid reveal">
-      <div class="solution-card featured">
-        <div class="solution-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.27 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 3.07 4.18 2 2 0 0 1 5.05 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L9.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <div class="solution-title">AI Voice Agent</div>
-        <div class="solution-body">Your AI team member answers every call naturally and conversationally. Takes full orders, handles modifications and allergen queries, upsells contextually — every time, every shift. Indistinguishable from a human. Works 24/7 including after hours.</div>
-        <div class="solution-pills">
-          <span class="pill">24/7 availability</span>
-          <span class="pill">Unlimited simultaneous calls</span>
-          <span class="pill">Natural conversation</span>
-          <span class="pill">UK accents & dialects</span>
-          <span class="pill">Multi-language</span>
-        </div>
-      </div>
-      <div class="solution-card">
-        <div class="solution-icon">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div class="solution-title">AI Chat Ordering</div>
-        <div class="solution-body">Your AI team member embedded on your website, WhatsApp, Instagram and Messenger — guiding customers through your menu, handling modifications, flagging allergens, and upselling intelligently. Same intelligence as the voice agent, everywhere customers chat.</div>
-        <div class="solution-pills">
-          <span class="pill">Web widget</span>
-          <span class="pill">WhatsApp & SMS</span>
-          <span class="pill">Instant responses</span>
-          <span class="pill">Menu navigation</span>
-          <span class="pill">Allergen flagging</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- INTEGRATIONS -->
-<div style="background:var(--bg);padding:64px 40px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div style="max-width:1200px;margin:0 auto">
-    <div class="logos-label" style="margin-bottom:32px">Integrates with your existing POS system</div>
-    <div style="display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap">
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#0264E0"/></svg>
-        Square
-      </div>
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#E84C25"/></svg>
-        Toast
-      </div>
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#00A650"/></svg>
-        Lightspeed
-      </div>
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#5C6BC0"/></svg>
-        Epos Now
-      </div>
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#1A9C3E"/></svg>
-        Clover
-      </div>
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#0B7BCD"/></svg>
-        Zettle
-      </div>
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#D64A2B"/></svg>
-        ICRTouch
-      </div>
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#2C3E50"/></svg>
-        Tevalis
-      </div>
-      <div class="pos-logo">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect width="16" height="16" rx="3" fill="#6B21A8"/></svg>
-        Zonal
-      </div>
-      <div class="pos-logo" style="border-style:dashed;color:var(--ink3)">
-        + more
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- FEATURES -->
-<div class="features-bg" id="features">
-  <div class="features-inner">
-    <div class="eyebrow reveal">What It Does</div>
-    <h2 class="reveal">Built for restaurants. Built for <em>the UK.</em></h2>
-    <p class="section-intro reveal">Every feature exists because independent restaurants told us they needed it. Not enterprise bloat — just what works.</p>
-    <div class="features-grid">
-      <div class="feat-card reveal reveal-d1">
-        <div class="feat-icon-bg">🧠</div>
-        <div class="feat-title">Intelligent Upselling</div>
-        <div class="feat-body">Increases average order value by 15–25% through natural, contextual suggestions — "Our garlic naan pairs perfectly with that" — every single order, no training required.</div>
-      </div>
-      <div class="feat-card reveal reveal-d2">
-        <div class="feat-icon-bg">⚠️</div>
-        <div class="feat-title">Allergen Flagging</div>
-        <div class="feat-body">Automatically identifies all 14 UK allergens during every interaction, flags risks, and creates an auditable trail — ahead of Owen's Law and FSA mandatory requirements.</div>
-      </div>
-      <div class="feat-card reveal reveal-d3">
-        <div class="feat-icon-bg">🌍</div>
-        <div class="feat-title">Multi-Language Support</div>
-        <div class="feat-body">Serve every customer fluently. InOrdera supports 30+ languages, critical for the diverse customer bases of Indian, Chinese, Turkish and other independent operators.</div>
-      </div>
-      <div class="feat-card reveal reveal-d1">
-        <div class="feat-icon-bg">📊</div>
-        <div class="feat-title">Analytics Dashboard</div>
-        <div class="feat-body">See call volumes, order values, upsell performance, peak times, and waste patterns in one place. Know your business like you've never known it before.</div>
-      </div>
-      <div class="feat-card reveal reveal-d2">
-        <div class="feat-icon-bg">🔗</div>
-        <div class="feat-title">POS Integration</div>
-        <div class="feat-body">Connects to your existing setup quickly. Compatible with all major UK POS systems. No IT project. No engineer. Just plug in and go live.</div>
-      </div>
-      <div class="feat-card reveal reveal-d3">
-        <div class="feat-icon-bg">💬</div>
-        <div class="feat-title">Dish Descriptions</div>
-        <div class="feat-body">Compelling, appetising descriptions of every item on your menu — delivered conversationally. Turns a "what's in it?" into a sale, every time.</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ROI -->
-<div id="roi" style="background:var(--bg)">
-  <div class="section">
+<!-- ══════════════════════ ROI CALCULATOR ══════════════════════ -->
+<div class="roi-bg" id="roi-calculator">
+  <div class="roi-inner">
     <div class="eyebrow reveal">The Business Case</div>
-    <h2 class="reveal">Your AI team member<br><em>pays for itself in days.</em></h2>
+    <h2 class="reveal">How much revenue could your restaurant be losing?</h2>
+    <p class="section-intro reveal">Even a handful of missed calls can add up quickly. Estimate what those missed orders could be worth.</p>
+
     <div class="roi-layout">
-      <div class="roi-table reveal">
-        <div class="roi-row header">
-          <div class="roi-cell left">Monthly benefit</div>
-          <div class="roi-cell">Value</div>
+      <div class="roi-form reveal">
+        <div class="roi-field">
+          <div class="roi-field-top"><label for="roi-calls">Calls received per day</label><span class="roi-field-val" id="roi-calls-val">40</span></div>
+          <input type="range" id="roi-calls" min="5" max="150" value="40" step="1" oninput="calcROI()">
         </div>
-        <div class="roi-row">
-          <div class="roi-cell left">Recovered missed orders</div>
-          <div class="roi-cell">£1,980</div>
+        <div class="roi-field">
+          <div class="roi-field-top"><label for="roi-missed">Percentage of calls missed</label><span class="roi-field-val" id="roi-missed-val">20%</span></div>
+          <input type="range" id="roi-missed" min="0" max="80" value="20" step="1" oninput="calcROI()">
         </div>
-        <div class="roi-row">
-          <div class="roi-cell left">Upsell revenue uplift</div>
-          <div class="roi-cell">£9,900</div>
+        <div class="roi-field">
+          <div class="roi-field-top"><label for="roi-aov">Average order value</label><span class="roi-field-val" id="roi-aov-val">£25</span></div>
+          <input type="range" id="roi-aov" min="8" max="60" value="25" step="1" oninput="calcROI()">
         </div>
-        <div class="roi-row">
-          <div class="roi-cell left">Commission savings (direct orders)</div>
-          <div class="roi-cell">£4,950</div>
-        </div>
-        <div class="roi-row">
-          <div class="roi-cell left">Reduced errors &amp; refunds</div>
-          <div class="roi-cell">£660</div>
-        </div>
-        <div class="roi-row" style="border-bottom:1px solid var(--border)">
-          <div class="roi-cell left" style="font-weight:600;color:var(--ink)">Total benefit</div>
-          <div class="roi-cell" style="font-weight:700;color:var(--ink)">£17,490</div>
+        <div class="roi-field">
+          <div class="roi-field-top"><label for="roi-days">Days open per month</label><span class="roi-field-val" id="roi-days-val">26</span></div>
+          <input type="range" id="roi-days" min="10" max="31" value="26" step="1" oninput="calcROI()">
         </div>
       </div>
-      <div class="roi-aside reveal">
-        <h3>Your AI team member<br><em>returns £17,490/month.</em></h3>
-        <p>Every direct order saves £6.60 in commission on a £22 order. InOrdera charges zero per-order fees. Ever. Your AI team member works every shift, never calls in sick, and upsells every single time.</p>
-        <p style="font-size:15px;color:var(--ink2);font-style:italic;border-left:3px solid var(--accent);padding-left:16px;margin-top:16px">"Zero commission vs. £10,000+/month in platform fees. Every direct order saves the restaurant £6.60 in commission on a £22 order."</p>
-        <div class="roi-stat-row">
-          <div class="roi-stat">
-            <div class="roi-stat-num">88×</div>
-            <div class="roi-stat-label">Return on investment</div>
-          </div>
-          <div class="roi-stat">
-            <div class="roi-stat-num">&lt;60 min</div>
-            <div class="roi-stat-label">To go live</div>
-          </div>
-        </div>
-        <button class="btn-primary" style="margin-top:32px" onclick="openDemoModal()">Calculate your ROI →</button>
+
+      <div class="roi-result reveal reveal-d1">
+        <div class="roi-result-label">Estimated potential revenue</div>
+        <div class="roi-result-num" id="roi-result-monthly">£5,200<span style="font-size:22px;font-weight:600;">/month</span></div>
+        <p class="roi-result-sub">That's <strong id="roi-result-yearly" style="color:#fff">£62,400/year</strong> in potential orders, based on <span id="roi-missed-calls-desc">8 missed calls/day</span>.</p>
+        <button class="btn-primary" onclick="trackEvent('roi_calculator_completed',{});openModal('roi')">See what InOrdera could recover</button>
+        <p class="roi-disclaimer">These figures are estimates based on the information you enter and are not a guarantee of revenue.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PRICING -->
-<div id="pricing" style="background:var(--bg)">
-  <div class="section section-center">
+<!-- ══════════════════════ HOW IT WORKS ══════════════════════ -->
+<div class="section" id="how-it-works">
+  <div class="eyebrow reveal">How It Works</div>
+  <h2 class="reveal">From phone call to order in three steps.</h2>
+
+  <div class="steps-grid">
+    <div class="step-card reveal reveal-d1">
+      <div class="step-num">1</div>
+      <div class="step-title">We learn your restaurant.</div>
+      <p class="step-body">We configure InOrdera around your menu, prices, opening hours, ordering rules and other relevant information.</p>
+    </div>
+    <div class="step-card reveal reveal-d2">
+      <div class="step-num">2</div>
+      <div class="step-title">Connect your phone.</div>
+      <p class="step-body">Keep your existing number where supported. InOrdera handles calls according to your setup.</p>
+    </div>
+    <div class="step-card reveal reveal-d3">
+      <div class="step-num">3</div>
+      <div class="step-title">Go live.</div>
+      <p class="step-body">Customers can call, order, ask questions and receive recommendations while your team gets on with running the restaurant.</p>
+    </div>
+  </div>
+
+  <div class="steps-closing reveal">
+    <strong>That's it.</strong>
+    <span>No complicated software rollout. No new hardware. No lengthy staff training.</span>
+  </div>
+</div>
+
+<!-- ══════════════════════ PHONE ORDERING DEMONSTRATION ══════════════════════ -->
+<div class="phonedemo-bg">
+  <div class="phonedemo-inner">
+    <div class="phonedemo-copy reveal">
+      <div class="eyebrow">Hear The Difference</div>
+      <h2>Your busiest phone call is now handled.</h2>
+      <p class="section-intro">InOrdera answers customers when your team is busy, takes the order and handles routine questions — so staff can focus on the restaurant. It's designed to understand natural conversation, not rigid commands.</p>
+      <button class="btn-secondary" onclick="trackEvent('live_demo_click',{loc:'phone_demo'});scrollTo('live-demo')">Try InOrdera yourself →</button>
+    </div>
+    <div class="convo-card reveal reveal-d1">
+      <div class="convo-inner" id="convo-inner">
+        <div class="convo-topbar"><span class="convo-dot"></span> Taking orders</div>
+        <div class="convo-msg cust" data-line="1">Hi, can I order a chicken tikka masala?</div>
+        <div class="convo-msg ai" data-line="2">Of course. Would you like that mild, medium or hot?</div>
+        <div class="convo-msg cust" data-line="3">Medium.</div>
+        <div class="convo-msg ai" data-line="4">Perfect. Would you like to add a garlic naan for £2.50?</div>
+        <div class="convo-msg cust" data-line="5">Yes please.</div>
+        <div class="convo-msg ai" data-line="6">Great. Anything else for you today?</div>
+        <div class="convo-confirm" id="convo-confirm">✓ Order confirmed</div>
+        <button class="convo-replay" onclick="playConvo()">↻ Replay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ UPSELLING ══════════════════════ -->
+<div class="upsell-bg" id="upsell">
+  <div class="section-tight">
+    <div class="upsell-layout">
+      <div class="reveal">
+        <div class="eyebrow">Upselling</div>
+        <h2>Every order is an opportunity.</h2>
+        <p class="section-intro">Your staff don't always have time to upsell. InOrdera never forgets.</p>
+      </div>
+      <div class="upsell-card reveal reveal-d1">
+        <div class="mock-msg cust" style="max-width:100%;margin-bottom:10px">I'll have a chicken burger.</div>
+        <div class="mock-msg ai" style="max-width:100%;margin-left:0">Absolutely. Would you like to make that a meal with fries and a drink for £3.50 extra?</div>
+        <div class="upsell-order-track">
+          <span class="upsell-order-val">£11.95</span>
+          <span class="upsell-order-arrow">→</span>
+          <span class="upsell-order-val new">£15.45</span>
+        </div>
+        <p class="upsell-closing">Small increases in average order value can make a meaningful difference across hundreds of orders.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ WEBSITE ORDERING ══════════════════════ -->
+<div class="section">
+  <div class="webord-layout">
+    <div class="reveal">
+      <div class="eyebrow">Website Ordering</div>
+      <h2>Your website should take orders, not just display your menu.</h2>
+      <p class="section-intro">Give customers a natural way to browse, ask questions and place orders without waiting for your team.</p>
+      <ul class="feat-list">
+        <li>Natural-language ordering</li>
+        <li>Menu questions</li>
+        <li>Recommendations</li>
+        <li>Order confirmation</li>
+        <li>Mobile-friendly experience</li>
+        <li>Human handoff when required</li>
+      </ul>
+      <button class="btn-secondary" onclick="trackEvent('hero_cta_click',{loc:'website_ordering'});openModal('website_ordering')">See Website Ordering →</button>
+    </div>
+    <div class="webmock reveal reveal-d1">
+      <div class="webmock-top"><span class="webmock-dot"></span><span class="webmock-dot"></span><span class="webmock-dot"></span></div>
+      <div class="webmock-body">
+        <div class="webmock-msg ai">Hi! Looking for something spicy tonight, or your usual order?</div>
+        <div class="webmock-msg cust">What's in the lamb biryani?</div>
+        <div class="webmock-msg ai">Slow-cooked lamb, basmati rice, saffron and warming spices. Would you like to order one?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ POS / INTEGRATIONS ══════════════════════ -->
+<div class="section-tight" id="pos" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="section-center">
+    <div class="eyebrow reveal">Integrations</div>
+    <h2 class="reveal">Works with the systems you already use.</h2>
+    <p class="section-intro reveal">Where supported, InOrdera connects with your existing restaurant technology so orders can move through your operation without unnecessary manual work.</p>
+  </div>
+  <div class="pos-grid reveal">
+    <div class="pos-logo">Square <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">Toast <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">Lightspeed <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">Epos Now <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">Clover <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">Zettle <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">ICRTouch <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">Tevalis <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">Zonal <span class="pos-soon">Coming soon</span></div>
+  </div>
+  <p class="pos-note reveal">Integration availability varies by restaurant and system. <a href="#" style="color:var(--accent);font-weight:600" onclick="trackEvent('integration_viewed',{});openModal('integrations');return false">Contact us</a> to confirm compatibility with your setup.</p>
+</div>
+
+<!-- ══════════════════════ ALLERGEN ══════════════════════ -->
+<div class="allergen-bg">
+  <div class="allergen-layout">
+    <div class="reveal">
+      <div class="eyebrow">Allergen Handling</div>
+      <h2>Built with allergen handling in mind.</h2>
+      <p class="section-intro">InOrdera can identify allergen-related questions and follow the restaurant's configured rules and escalation process.</p>
+    </div>
+    <div class="allergen-card reveal reveal-d1">
+      <div class="allergen-row">
+        <div class="allergen-icon">💬</div>
+        <div>
+          <div class="allergen-row-title">Recognises allergen questions</div>
+          <div class="allergen-row-body">InOrdera can flag when a customer mentions an allergy or intolerance during the conversation.</div>
+        </div>
+      </div>
+      <div class="allergen-row">
+        <div class="allergen-icon">👥</div>
+        <div>
+          <div class="allergen-row-title">Transfers when uncertain</div>
+          <div class="allergen-row-body">Where uncertainty exists, customers can be transferred to your team rather than receiving an unsupported answer.</div>
+        </div>
+      </div>
+      <div class="allergen-disclaimer">Restaurant operators remain responsible for maintaining accurate ingredient and allergen information and for their legal compliance obligations.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ MULTILINGUAL ══════════════════════ -->
+<div class="lang-bg">
+  <div class="section-center" style="max-width:var(--maxw);margin:0 auto;padding:0 40px">
+    <div class="eyebrow reveal">Multilingual</div>
+    <h2 class="reveal">Serve more customers in more languages.</h2>
+    <p class="section-intro reveal">Give customers the option to communicate naturally in supported languages without needing additional staff. InOrdera supports multiple languages.</p>
+  </div>
+  <div class="lang-cards reveal">
+    <div class="lang-card">
+      <div class="lang-flag">English</div>
+      <div class="lang-quote">"Can I get two chicken tikka masalas?"</div>
+    </div>
+    <div class="lang-card">
+      <div class="lang-flag">Spanish</div>
+      <div class="lang-quote">"¿Puedo pedir dos chicken tikka masalas?"</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ ANALYTICS ══════════════════════ -->
+<div class="analytics-bg">
+  <div class="analytics-inner">
+    <div class="eyebrow on-dark reveal">Analytics</div>
+    <h2 class="on-dark reveal">Know exactly what your AI assistant is doing.</h2>
+    <p class="section-intro on-dark reveal">Calls answered, orders taken, revenue generated, average order value, upsells, human transfers and peak call times — all in one dashboard.</p>
+
+    <div class="analytics-dash reveal reveal-d1">
+      <div class="dash-top">
+        <span class="dash-top-label">This week</span>
+        <span class="placeholder-flag">Example data</span>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-tile">
+          <div class="dash-tile-num">1,284</div>
+          <div class="dash-tile-label">Calls answered</div>
+        </div>
+        <div class="dash-tile">
+          <div class="dash-tile-num">342</div>
+          <div class="dash-tile-label">Orders taken</div>
+        </div>
+        <div class="dash-tile">
+          <div class="dash-tile-num">£27.40</div>
+          <div class="dash-tile-label">Average order</div>
+        </div>
+        <div class="dash-tile">
+          <div class="dash-tile-num">£1,146</div>
+          <div class="dash-tile-label">Upsell revenue</div>
+        </div>
+      </div>
+      <p class="dash-example-tag">Illustrative example data — not results from a live customer.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ RESULTS ══════════════════════ -->
+<div class="results-bg" id="results">
+  <div class="section-center" style="max-width:var(--maxw);margin:0 auto;padding:0 40px">
+    <div class="eyebrow reveal">Real Customer Results</div>
+    <h2 class="reveal">Built for restaurants. Proven in the real world.</h2>
+  </div>
+
+  <div class="founding-card reveal">
+    <h3>Be one of the first.</h3>
+    <p>We're working with a small group of independent restaurants to bring AI ordering into everyday service. As real results come in, we'll publish them here — with real restaurant names, real numbers and real quotes.</p>
+    <button class="btn-primary" onclick="trackEvent('trial_started',{loc:'results'});openModal('founding')">Join the Founding Restaurant Programme →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════ FOUNDING RESTAURANT PROGRAMME ══════════════════════ -->
+<div class="founding-standalone">
+  <div class="founding-card reveal" style="background:var(--surface);border:1px solid var(--line)">
+    <div class="placeholder-flag" style="margin-bottom:14px">Capacity to be confirmed</div>
+    <h3 style="color:var(--ink)">We're looking for 25 restaurants.</h3>
+    <p style="color:var(--ink2)">We're inviting independent UK restaurants to become founding InOrdera customers.</p>
+    <ul class="founding-list" style="color:var(--ink2)">
+      <li style="color:var(--ink2)">Assisted setup</li>
+      <li style="color:var(--ink2)">Full menu configuration</li>
+      <li style="color:var(--ink2)">AI phone assistant</li>
+      <li style="color:var(--ink2)">Website ordering</li>
+      <li style="color:var(--ink2)">Performance tracking</li>
+      <li style="color:var(--ink2)">Direct access to the InOrdera team</li>
+      <li style="color:var(--ink2)">Preferential founding pricing</li>
+    </ul>
+    <div>
+      <button class="btn-primary" onclick="trackEvent('trial_started',{loc:'founding_programme'});openModal('founding')">Apply for the Founding Restaurant Programme →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ PRICING ══════════════════════ -->
+<div class="pricing-bg" id="pricing">
+  <div class="section-center" style="max-width:var(--maxw);margin:0 auto;padding:0 40px">
     <div class="eyebrow reveal">Plans</div>
-    <h2 class="reveal">Transparent plans.<br><em>No commissions. Ever.</em></h2>
-    <p class="section-intro reveal">Every plan is a flat monthly fee with zero per-order charges. Pricing is tailored to your restaurant — call us to discuss.</p>
-    <div class="pricing-grid reveal">
-      <div class="pricing-card">
-        <div class="plan-name">Starter</div>
-        <div class="plan-price-hidden"></div>
-        <div class="plan-tagline">Perfect for digital-first takeaways getting started with AI ordering</div>
-        <ul class="plan-features">
-          <li class="no">AI Voice Agent (phone orders)</li>
-          <li>AI Chatbot (web, WhatsApp, Messenger)</li>
-          <li>Allergen flagging &amp; auditable trail</li>
-          <li>Contextual upselling</li>
-          <li>2 languages</li>
-          <li>Basic analytics</li>
-          <li>Up to 5 concurrent calls</li>
-          <li>Email support</li>
-        </ul>
-        <button class="btn-plan outline" onclick="openDemoModal()">Get a quote</button>
+    <h2 class="reveal">Simple, transparent pricing.</h2>
+    <p class="section-intro reveal">Every plan is a flat monthly fee with zero per-order commission.</p>
+  </div>
+
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">£149<span>/month</span></div>
+      <div class="plan-tagline">For smaller restaurants.</div>
+      <ul class="plan-features">
+        <li>AI phone answering</li>
+        <li>AI ordering</li>
+        <li>Website ordering</li>
+        <li>Basic upselling</li>
+        <li>Allergen-aware workflows</li>
+        <li>Basic analytics</li>
+        <li>Standard support</li>
+        <li>£0 commission</li>
+      </ul>
+      <button class="btn-plan outline" onclick="trackEvent('pricing_cta_clicked',{plan:'starter'});openModal('trial')">Start Free Trial →</button>
+    </div>
+    <div class="pricing-card popular">
+      <div class="popular-badge">Most Popular</div>
+      <div class="plan-name">Professional</div>
+      <div class="plan-price">£299<span>/month</span></div>
+      <div class="plan-tagline">Everything in Starter, plus more.</div>
+      <ul class="plan-features">
+        <li>Everything in Starter</li>
+        <li>Advanced analytics</li>
+        <li>POS integrations where supported</li>
+        <li>Advanced upselling</li>
+        <li>Multiple languages</li>
+        <li>Custom AI configuration</li>
+        <li>Priority support</li>
+        <li>Assisted setup</li>
+        <li>£0 commission</li>
+      </ul>
+      <button class="btn-plan" onclick="trackEvent('pricing_cta_clicked',{plan:'professional'});openModal('trial')">Start Free Trial →</button>
+    </div>
+    <div class="pricing-card">
+      <div class="plan-name">Multi-Site</div>
+      <div class="plan-price">From £499<span>/month</span></div>
+      <div class="plan-tagline">For restaurant groups.</div>
+      <ul class="plan-features">
+        <li>Multiple locations</li>
+        <li>Central management</li>
+        <li>Advanced reporting</li>
+        <li>Custom integrations</li>
+        <li>Dedicated support</li>
+      </ul>
+      <button class="btn-plan outline" onclick="trackEvent('pricing_cta_clicked',{plan:'multi_site'});openModal('sales')">Talk to Sales →</button>
+    </div>
+  </div>
+
+  <p class="pricing-disclaimer reveal">Prices shown are proposed plans and may be updated before launch. <span class="placeholder-flag">To be confirmed</span></p>
+
+  <div class="price-anchor reveal">
+    <strong>One extra order a day could cover the cost.</strong>
+    <p>Depending on your average order value and plan, recovering even a small number of missed orders can make InOrdera commercially worthwhile.</p>
+    <a href="#roi-calculator" onclick="trackEvent('roi_calculator_started',{loc:'pricing_anchor'})">Calculate your restaurant's numbers →</a>
+  </div>
+</div>
+
+<!-- ══════════════════════ FREE TRIAL ══════════════════════ -->
+<div class="trial-bg" id="trial">
+  <div class="trial-layout" style="max-width:var(--maxw);margin:0 auto">
+    <div class="reveal">
+      <div class="eyebrow on-dark">Free Trial</div>
+      <h2 class="on-dark">Let InOrdera work your busiest week.</h2>
+      <p class="section-intro on-dark">Don't take our word for it. Try it with your own menu and see what happens.</p>
+      <div class="trial-steps">
+        <div class="trial-step"><span class="trial-step-num">1</span><p>We configure your menu</p></div>
+        <div class="trial-step"><span class="trial-step-num">2</span><p>Connect your phone</p></div>
+        <div class="trial-step"><span class="trial-step-num">3</span><p>You test it</p></div>
+        <div class="trial-step"><span class="trial-step-num">4</span><p>InOrdera handles real calls</p></div>
+        <div class="trial-step"><span class="trial-step-num">5</span><p>You review the results</p></div>
       </div>
-      <div class="pricing-card popular">
-        <div class="popular-badge">Most Popular</div>
-        <div class="plan-name">Professional</div>
-        <div class="plan-price-hidden"></div>
-        <div class="plan-tagline">The full AI team member experience for established independents — voice + chat in one</div>
-        <ul class="plan-features">
-          <li>Everything in Starter</li>
-          <li>AI Voice Agent (phone orders, 24/7)</li>
-          <li>Unlimited concurrent calls</li>
-          <li>Unlimited languages (30+)</li>
-          <li>Advanced analytics dashboard</li>
-          <li>Custom voice & brand personality</li>
-          <li>Priority phone & chat support</li>
-          <li>Assisted onboarding</li>
-          <li>POS integration included</li>
-        </ul>
-        <button class="btn-plan" onclick="openDemoModal()">Get a quote</button>
-      </div>
-      <div class="pricing-card">
-        <div class="plan-name">Group</div>
-        <div class="plan-price-hidden"></div>
-        <div class="plan-tagline">For multi-site restaurant groups — with volume pricing</div>
-        <ul class="plan-features">
-          <li>Everything in Professional</li>
-          <li>Multi-location dashboard</li>
-          <li>Centralised menu management</li>
-          <li>Per-store analytics & overrides</li>
-          <li>Dedicated account manager</li>
-          <li>Custom onboarding & training</li>
-          <li>SLA uptime guarantee</li>
-          <li>API access</li>
-        </ul>
-        <button class="btn-plan outline" onclick="openDemoModal()">Contact sales</button>
-      </div>
+    </div>
+    <div class="trial-card reveal reveal-d1">
+      <span class="placeholder-flag">Trial length to be confirmed</span>
+      <p style="color:rgba(255,255,255,0.7);font-size:14.5px;margin-top:14px;line-height:1.6">We'll confirm your trial length when we set up your account.</p>
+      <button class="btn-primary" onclick="trackEvent('trial_started',{loc:'trial_section'});openModal('trial')">Start My Trial →</button>
     </div>
   </div>
 </div>
 
-<!-- TESTIMONIALS -->
-<div class="testi-bg">
-  <div class="testi-inner">
-    <div class="eyebrow reveal">Customer Stories</div>
-    <h2 class="reveal">Independent restaurants.<br><em>Real results.</em></h2>
-    <div class="testi-grid reveal">
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-quote">"I was missing 30 calls a night during Friday service. InOrdera answered all of them. Within two weeks I'd recovered more in orders than the annual fee. It just works."</div>
-        <div class="testi-author">
-          <div class="testi-avatar">A</div>
-          <div>
-            <div class="testi-name">Amin Rashidi</div>
-            <div class="testi-role">Owner · Bombay Bites, East London</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-quote">"The allergen flagging alone was worth it. After Owen's Law guidance came out, I couldn't risk it anymore. InOrdera gives me an auditable trail for every call and chat."</div>
-        <div class="testi-author">
-          <div class="testi-avatar">L</div>
-          <div>
-            <div class="testi-name">Lily Chen</div>
-            <div class="testi-role">Manager · Golden Wok, Manchester</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-quote">"My average order value is up £4.20 since InOrdera started upselling. It doesn't feel pushy — it just sounds like a good recommendation. My customers actually thank it."</div>
-        <div class="testi-author">
-          <div class="testi-avatar">T</div>
-          <div>
-            <div class="testi-name">Tariq Hassan</div>
-            <div class="testi-role">Owner · Istanbul Grill, Birmingham</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card">
-        <div class="testi-stars">★★★★★</div>
-        <div class="testi-quote">"Setup was genuinely 45 minutes. The InOrdera team helped us import our menu, test the voice agent, and go live before the Friday rush. I didn't believe it until I saw it."</div>
-        <div class="testi-author">
-          <div class="testi-avatar">P</div>
-          <div>
-            <div class="testi-name">Priya Nair</div>
-            <div class="testi-role">Co-owner · Spice Garden, Bristol</div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- ══════════════════════ FAQ ══════════════════════ -->
+<div class="section section-center" id="faq">
+  <div class="eyebrow reveal">FAQ</div>
+  <h2 class="reveal">You probably have questions.</h2>
+  <div class="faq-list reveal">
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'ai_disclosure'})">
+      <summary class="faq-q">Will customers know they're talking to AI? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">InOrdera is designed to sound natural and conversational. We recommend being transparent with customers where appropriate and following applicable requirements.</div>
+    </details>
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'cant_understand'})">
+      <summary class="faq-q">What happens if InOrdera doesn't understand something? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">If the system encounters a situation it cannot confidently handle, your configured escalation process can transfer the interaction to your team.</div>
+    </details>
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'phone_number'})">
+      <summary class="faq-q">Will I have to change my phone number? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">The answer depends on your current phone setup. InOrdera can be configured around supported phone arrangements so that you can keep disruption to a minimum.</div>
+    </details>
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'pos'})">
+      <summary class="faq-q">Does it work with my POS? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">InOrdera supports selected integrations. <a href="#pos" style="color:var(--accent);font-weight:600">View the integrations section</a> or contact us to confirm compatibility with your system.</div>
+    </details>
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'technical'})">
+      <summary class="faq-q">Do I need technical knowledge? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">No. Our team handles the initial configuration and helps you get set up.</div>
+    </details>
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'complex_orders'})">
+      <summary class="faq-q">Can it take complicated orders? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">InOrdera is designed to understand natural conversations, modifications and common restaurant ordering scenarios. When a request falls outside its configured capabilities, it can escalate to your team.</div>
+    </details>
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'customise'})">
+      <summary class="faq-q">Can I change what it says? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">Yes. Restaurant-specific menus, rules, tone and ordering behaviour can be configured.</div>
+    </details>
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'cost'})">
+      <summary class="faq-q">How much does it cost? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">Plans start from £149/month, depending on the features and restaurant setup. <span class="placeholder-flag">Pricing to be confirmed</span></div>
+    </details>
   </div>
 </div>
 
-<!-- FAQ -->
-<div style="background:var(--bg)">
-  <div class="section section-center">
-    <div class="eyebrow reveal">FAQ</div>
-    <h2 class="reveal">Common questions</h2>
-    <div class="faq-list reveal">
-      <details class="faq-item">
-        <summary class="faq-q">Does it actually sound human? <span class="faq-arrow">▾</span></summary>
-        <div class="faq-a">Yes. InOrdera is built on the latest conversational AI voice technology, trained specifically on UK accents, regional dialects, and food service vocabulary. Most callers don't know they're speaking to AI — unless you tell them.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">What happens if a caller asks something it can't handle? <span class="faq-arrow">▾</span></summary>
-        <div class="faq-a">InOrdera detects when a caller needs a human and transfers the call cleanly to your team with a brief handoff note. You're always in control. Edge cases don't get dropped.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Does it work with my existing POS system? <span class="faq-arrow">▾</span></summary>
-        <div class="faq-a">InOrdera integrates with all major UK POS systems including Lightspeed, Square, Epos Now, and others. Orders flow directly into your kitchen display or till — no double-entry, no missed tickets.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">How does allergen flagging work? <span class="faq-arrow">▾</span></summary>
-        <div class="faq-a">InOrdera automatically identifies all 14 UK allergens in your menu data. When a customer mentions an allergy or requests a modification, the AI flags it, notes it on the order, and creates a timestamped audit record — giving you the documented trail that Owen's Law will require.</div>
-      </details>
-      <details class="faq-item">
-        <summary class="faq-q">Is there a contract or can I cancel anytime? <span class="faq-arrow">▾</span></summary>
-        <div class="faq-a">Monthly rolling fee. No long-term contract. You can cancel anytime with 30 days notice. We're confident you won't want to — but there's no lock-in.</div>
-      </details>
-    </div>
+<!-- ══════════════════════ FINAL CTA ══════════════════════ -->
+<div class="cta-band" id="final-cta">
+  <h2>Your next customer is already on the phone.</h2>
+  <p>Don't make them wait for someone to answer.</p>
+  <div class="cta-actions">
+    <button class="btn-primary" onclick="trackEvent('hero_cta_click',{loc:'final_cta'});scrollTo('live-demo')">☎ Hear InOrdera Take an Order</button>
+    <button class="btn-ghost-dark" onclick="trackEvent('roi_calculator_started',{loc:'final_cta'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
   </div>
+  <p class="cta-note">No commission · Restaurant-focused · Human handoff available</p>
 </div>
 
-<!-- CTA -->
-<div class="cta-band" id="cta">
-  <h2>Meet your new<br>AI team member.</h2>
-  <p>Book a free demo. We'll show InOrdera live on your own menu in 30 minutes — answering calls, upselling, and flagging allergens.</p>
-  <button class="btn-primary" style="font-size:17px;padding:18px 40px" onclick="openDemoModal()">Book a Free Demo</button>
-  <p class="cta-note" style="margin-top:16px">No commitment · We'll show InOrdera live on your own menu</p>
-</div>
-
-<!-- FOOTER -->
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <div class="footer-logo-text">In<span>Ordera</span></div>
-        <p>AI-powered voice and chat ordering for independent restaurants and takeaways across the UK. Built in Britain, for Britain.</p>
+        <div class="logo">
+          <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="34" height="34" rx="9" fill="#c1440e"/>
+            <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
+          </svg>
+          <span class="logo-text">In<span>Ordera</span></span>
+        </div>
+        <p>AI ordering for independent restaurants.</p>
       </div>
       <div class="footer-links-grid">
         <div class="footer-col">
-          <div class="footer-col-title">Platform</div>
-          <a href="#">AI Voice Agent</a>
-          <a href="#">AI Chat Ordering</a>
-          <a href="#">Allergen Compliance</a>
+          <div class="footer-col-title">Product</div>
+          <a href="#how-it-works">How It Works</a>
+          <a href="#">Phone Ordering</a>
+          <a href="#">Website Ordering</a>
+          <a href="#upsell">Upselling</a>
+          <a href="#pos" onclick="trackEvent('integration_viewed',{loc:'footer'})">Integrations</a>
           <a href="#">Analytics</a>
-          <a href="#">Integrations</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-title">Company</div>
           <a href="#">About</a>
-          <a href="#">Blog</a>
+          <a href="#" onclick="openModal('sales');return false">Contact</a>
           <a href="careers.html">Careers</a>
-          <a href="#">Contact</a>
+          <a href="#">Partner Programme</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Resources</div>
+          <a href="#faq">FAQ</a>
+          <a href="#">Restaurant Resources</a>
+          <a href="#roi-calculator" onclick="trackEvent('roi_calculator_started',{loc:'footer'})">ROI Calculator</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-title">Legal</div>
           <a href="privacy-policy.html">Privacy Policy</a>
-          <a href="terms-of-service.html">Terms of Service</a>
+          <a href="terms-of-service.html">Terms</a>
           <a href="cookie-policy.html">Cookie Policy</a>
-          <a href="gdpr.html">GDPR</a>
+          <a href="gdpr.html">Data Protection</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England & Wales.</div>
-      <div class="footer-copy">Built for UK independent restaurants 🇬🇧</div>
+      <div class="footer-copy">© 2026 InOrdera Ltd. Registered in England &amp; Wales.</div>
+      <div class="footer-copy">Built for UK independent restaurants</div>
     </div>
   </div>
 </footer>
 
-<!-- DEMO MODAL -->
-<div class="modal-overlay" id="demo-modal" onclick="handleModalOverlay(event)">
+<!-- ══════════════════════ STICKY MOBILE CTA ══════════════════════ -->
+<div class="sticky-cta">
+  <button class="btn-primary" onclick="trackEvent('hero_cta_click',{loc:'sticky_mobile'});scrollTo('live-demo')">Try InOrdera Live →</button>
+</div>
+
+<!-- ══════════════════════ MODAL (shared by all CTAs) ══════════════════════ -->
+<div class="modal-overlay" id="lead-modal" onclick="handleModalOverlay(event)">
   <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button class="modal-close" onclick="closeDemoModal()" aria-label="Close">✕</button>
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
     <div class="modal-logo">
-      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="34" height="34" rx="9" fill="var(--accent)"/>
+      <svg viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="34" height="34" rx="9" fill="#c1440e"/>
         <path d="M10 12.5c0-.83.67-1.5 1.5-1.5h1.74c.35 0 .65.24.72.58l.74 3.7c.07.35-.08.71-.38.89l-1.12.67a9.04 9.04 0 0 0 4.46 4.46l.67-1.12c.18-.3.54-.45.89-.38l3.7.74c.34.07.58.37.58.72V22.5c0 .83-.67 1.5-1.5 1.5C12.96 24 10 21.04 10 12.5z" fill="white"/>
-        <rect x="18" y="8" width="9" height="7" rx="2" fill="white" opacity="0.35"/>
-        <path d="M19.5 14.5 L18 17 L21 14.5" fill="white" opacity="0.35"/>
-        <circle cx="20.5" cy="11.5" r="0.8" fill="var(--accent)"/>
-        <circle cx="22.5" cy="11.5" r="0.8" fill="var(--accent)"/>
-        <circle cx="24.5" cy="11.5" r="0.8" fill="var(--accent)"/>
       </svg>
       <span class="modal-logo-text">In<span>Ordera</span></span>
     </div>
-    <h2 id="modal-title">Book a Demo</h2>
-    <p class="modal-sub">We'll show InOrdera live on your own menu in 30 minutes.</p>
+    <h2 id="modal-title">Talk to us about your restaurant</h2>
+    <p class="modal-sub" id="modal-subtext">Tell us a bit about your restaurant and we'll be in touch.</p>
     <div class="modal-error" id="modal-error"></div>
-    <form id="demo-form" onsubmit="submitDemoForm(event)">
+    <form id="lead-form" onsubmit="return submitLeadForm(event)">
+      <input type="hidden" name="interest" id="interest-field" value="demo">
       <div class="form-grid">
         <div class="field">
-          <label>First name *</label>
-          <input type="text" name="first_name" placeholder="Jane" required>
+          <label for="f-first">First name *</label>
+          <input type="text" id="f-first" name="first_name" placeholder="Jane" required>
         </div>
         <div class="field">
-          <label>Last name *</label>
-          <input type="text" name="last_name" placeholder="Smith" required>
+          <label for="f-last">Last name *</label>
+          <input type="text" id="f-last" name="last_name" placeholder="Smith" required>
         </div>
         <div class="field span-2">
-          <label>Business email *</label>
-          <input type="email" name="email" placeholder="jane@myrestaurant.com" required>
+          <label for="f-email">Business email *</label>
+          <input type="email" id="f-email" name="email" placeholder="jane@myrestaurant.com" required oninput="trackEvent('contact_form_started',{})">
         </div>
         <div class="field span-2">
-          <label>Restaurant name *</label>
-          <input type="text" name="restaurant_name" placeholder="e.g. Spice Garden" required>
+          <label for="f-restaurant">Restaurant name *</label>
+          <input type="text" id="f-restaurant" name="restaurant_name" placeholder="e.g. Spice Garden" required>
         </div>
         <div class="field span-2">
-          <label>Phone number *</label>
+          <label for="f-phone">Phone number *</label>
           <div class="phone-wrap">
             <div class="phone-prefix">🇬🇧 +44</div>
-            <input type="tel" name="phone" placeholder="7700 900000" required>
+            <input type="tel" id="f-phone" name="phone" placeholder="7700 900000" required onfocus="trackEvent('phone_number_clicked',{})">
           </div>
         </div>
         <div class="field span-2">
-          <label>Number of locations *</label>
-          <select name="locations" required>
+          <label for="f-locations">Number of locations *</label>
+          <select id="f-locations" name="locations" required>
             <option value="" disabled selected>Select…</option>
             <option value="1">1 location</option>
             <option value="2-5">2–5 locations</option>
@@ -1153,129 +1211,139 @@ footer{background:var(--ink);padding:60px 40px 40px}
           </select>
         </div>
         <div class="span-2">
-          <button type="submit" class="btn-modal-submit" id="submit-btn">Book Demo</button>
+          <button type="submit" class="btn-modal-submit" id="submit-btn">Submit</button>
           <p class="modal-consent">By submitting you agree to our <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms-of-service.html">Terms of Service</a>.</p>
         </div>
       </div>
     </form>
     <div class="modal-success" id="modal-success">
       <div class="success-icon">✅</div>
-      <h3>You're booked in!</h3>
-      <p>We'll be in touch within one business day to confirm your demo time.<br>Looking forward to showing you InOrdera.</p>
-    </div>
-  </div>
-</div>
-
-<!-- TWEAKS PANEL -->
-<div id="tweaks">
-  <div class="tweaks-h">Tweaks</div>
-  <div class="tw-row">
-    <span class="tw-label">Colour Theme</span>
-    <div class="tw-tabs">
-      <button class="tw-tab" onclick="setTheme('teal',this)">Teal</button>
-      <button class="tw-tab on" onclick="setTheme('indigo',this)">Indigo</button>
-      <button class="tw-tab" onclick="setTheme('forest',this)">Forest</button>
-    </div>
-  </div>
-  <div class="tw-row">
-    <span class="tw-label">Hero Layout</span>
-    <div class="tw-tabs">
-      <button class="tw-tab" onclick="setHero('split',this)">Split</button>
-      <button class="tw-tab on" onclick="setHero('centered',this)">Centred</button>
-    </div>
-  </div>
-  <div class="tw-row">
-    <span class="tw-label">Nav Style</span>
-    <div class="tw-tabs">
-      <button class="tw-tab" onclick="setNav('light',this)">Light</button>
-      <button class="tw-tab on" onclick="setNav('dark',this)">Dark</button>
+      <h3>You're in!</h3>
+      <p>We'll be in touch within one business day.<br>Looking forward to showing you InOrdera.</p>
     </div>
   </div>
 </div>
 
 <script>
-/* ── REVEAL ─────────────────────────────────────── */
+/* ══════════════════════ REVEAL ON SCROLL ══════════════════════ */
 const obs = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) e.target.classList.add('visible');
-}), {threshold: 0.1});
+}), {threshold: 0.12});
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-/* ── TWEAKS ─────────────────────────────────────── */
-function setTheme(t, btn) {
-  document.body.dataset.theme = t === 'teal' ? '' : t;
-  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
+/* ══════════════════════ NAV / SCROLL HELPERS ══════════════════════ */
+function scrollTo(id){
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+function toggleMobileNav(){
+  const panel = document.getElementById('mobile-panel');
+  const btn = document.getElementById('burger-btn');
+  const open = panel.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
-function setHero(mode, btn) {
-  const hero = document.querySelector('.hero');
-  if (mode === 'centered') {
-    hero.style.gridTemplateColumns = '1fr';
-    hero.style.textAlign = 'center';
-    hero.querySelector('.hero-visual').style.display = 'none';
-    hero.querySelector('.hero-sub').style.maxWidth = '600px';
-    hero.querySelector('.hero-sub').style.margin = '0 auto 36px';
-    hero.querySelector('.hero-actions').style.justifyContent = 'center';
-    hero.querySelector('.hero-trust').style.justifyContent = 'center';
-  } else {
-    hero.style.gridTemplateColumns = '';
-    hero.style.textAlign = '';
-    hero.querySelector('.hero-visual').style.display = '';
-    hero.querySelector('.hero-sub').style.maxWidth = '';
-    hero.querySelector('.hero-sub').style.margin = '';
-    hero.querySelector('.hero-actions').style.justifyContent = '';
-    hero.querySelector('.hero-trust').style.justifyContent = '';
-  }
-  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
+/* ══════════════════════ ANALYTICS EVENT STUB ══════════════════════ */
+function trackEvent(name, data){
+  const payload = Object.assign({event: name}, data || {});
+  if (window.dataLayer) window.dataLayer.push(payload);
+  else console.log('[InOrdera event]', payload);
 }
 
-function setNav(mode, btn) {
-  const nav = document.querySelector('nav');
-  if (mode === 'dark') {
-    nav.style.background = 'rgba(11,31,46,0.95)';
-    nav.querySelectorAll('.nav-links a, .btn-nav-ghost').forEach(el => el.style.color = 'rgba(255,255,255,0.65)');
-    document.querySelector('.logo-text').style.color = '#fff';
-  } else {
-    nav.style.background = '';
-    nav.querySelectorAll('.nav-links a, .btn-nav-ghost').forEach(el => el.style.color = '');
-    document.querySelector('.logo-text').style.color = '';
-  }
-  btn.closest('.tw-tabs').querySelectorAll('.tw-tab').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
+/* ══════════════════════ ROI CALCULATOR ══════════════════════ */
+function formatGBP(n){
+  return '£' + Math.round(n).toLocaleString('en-GB');
+}
+function calcROI(){
+  const calls = parseInt(document.getElementById('roi-calls').value, 10);
+  const missedPct = parseInt(document.getElementById('roi-missed').value, 10);
+  const aov = parseInt(document.getElementById('roi-aov').value, 10);
+  const days = parseInt(document.getElementById('roi-days').value, 10);
+
+  document.getElementById('roi-calls-val').textContent = calls;
+  document.getElementById('roi-missed-val').textContent = missedPct + '%';
+  document.getElementById('roi-aov-val').textContent = '£' + aov;
+  document.getElementById('roi-days-val').textContent = days;
+
+  const missedPerDay = calls * (missedPct / 100);
+  const monthly = missedPerDay * aov * days;
+  const yearly = monthly * 12;
+
+  document.getElementById('roi-result-monthly').innerHTML = formatGBP(monthly) + '<span style="font-size:22px;font-weight:600;">/month</span>';
+  document.getElementById('roi-result-yearly').textContent = formatGBP(yearly) + '/year';
+  document.getElementById('roi-missed-calls-desc').textContent = missedPerDay.toFixed(1) + ' missed calls/day';
+}
+calcROI();
+
+/* ══════════════════════ PHONE DEMO CONVERSATION ══════════════════════ */
+let convoTimers = [];
+function playConvo(){
+  convoTimers.forEach(t => clearTimeout(t));
+  convoTimers = [];
+  document.querySelectorAll('.convo-msg').forEach(m => m.classList.remove('shown'));
+  document.getElementById('convo-confirm').classList.remove('shown');
+  const lines = document.querySelectorAll('.convo-msg');
+  lines.forEach((el, i) => {
+    convoTimers.push(setTimeout(() => el.classList.add('shown'), i * 900 + 300));
+  });
+  convoTimers.push(setTimeout(() => {
+    document.getElementById('convo-confirm').classList.add('shown');
+  }, lines.length * 900 + 500));
+}
+const convoObs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { playConvo(); convoObs.disconnect(); }
+}), {threshold: 0.4});
+convoObs.observe(document.getElementById('convo-inner'));
+
+/* ══════════════════════ DEMO CALL LINK ══════════════════════ */
+/* TODO: replace null with 'tel:+44XXXXXXXXXX' once a live demo number exists. */
+const DEMO_NUMBER = null;
+function handleDemoCallClick(e){
+  if (DEMO_NUMBER) { window.location.href = DEMO_NUMBER; return false; }
+  e.preventDefault();
+  openModal('demo_callback');
+  return false;
+}
+function submitCallbackRequest(e){
+  e.preventDefault();
+  const phone = document.getElementById('callback-phone').value;
+  openModal('demo_callback');
+  document.getElementById('f-phone').value = phone.replace(/^\+?44\s?/, '');
+  return false;
 }
 
-/* ── ROTATING WORD ──────────────────────────────── */
-const words = ['every call.', 'every order.', 'every upsell.', 'every allergen.', 'every customer.'];
-let wordIdx = 0;
-const rotEl = document.querySelector('.rotating-word');
-function rotateWord() {
-  rotEl.classList.add('fade-out');
-  setTimeout(() => {
-    wordIdx = (wordIdx + 1) % words.length;
-    rotEl.textContent = words[wordIdx];
-    rotEl.classList.remove('fade-out');
-    rotEl.classList.add('fade-in');
-    requestAnimationFrame(() => requestAnimationFrame(() => rotEl.classList.remove('fade-in')));
-  }, 360);
-}
-setInterval(rotateWord, 2400);
-
-/* ── DEMO MODAL ──────────────────────────────────── */
-function openDemoModal() {
-  document.getElementById('demo-modal').classList.add('open');
+/* ══════════════════════ MODAL ══════════════════════ */
+const modalCopy = {
+  demo:            {title:'Book a Demo', sub:"We'll show InOrdera live on your own menu.", interest:'demo'},
+  demo_callback:   {title:"We'll call you", sub:"Leave your number and restaurant details and we'll call to show you InOrdera live.", interest:'demo_callback'},
+  roi:             {title:'Talk to us about your restaurant', sub:"Tell us a bit about your restaurant and we'll show you what InOrdera could recover.", interest:'roi_followup'},
+  trial:           {title:'Start My Trial', sub:"We'll configure your menu and connect your phone so you can try InOrdera with real calls.", interest:'trial'},
+  founding:        {title:'Apply for the Founding Restaurant Programme', sub:"Tell us about your restaurant and we'll be in touch about founding pricing and setup.", interest:'founding_programme'},
+  sales:           {title:'Talk to Sales', sub:"For restaurant groups and multi-site setups — tell us about your business.", interest:'sales'},
+  integrations:    {title:'Check POS compatibility', sub:"Tell us which system you use and we'll confirm what's supported.", interest:'integrations'},
+  website_ordering:{title:'See Website Ordering', sub:"We'll walk you through how website ordering works for your restaurant.", interest:'website_ordering'}
+};
+function openModal(kind){
+  const copy = modalCopy[kind] || modalCopy.demo;
+  document.getElementById('modal-title').textContent = copy.title;
+  document.getElementById('modal-subtext').textContent = copy.sub;
+  document.getElementById('interest-field').value = copy.interest;
+  document.getElementById('lead-form').style.display = '';
+  document.getElementById('modal-success').style.display = 'none';
+  document.getElementById('lead-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
+  trackEvent('demo_booked', {interest: copy.interest});
 }
-function closeDemoModal() {
-  document.getElementById('demo-modal').classList.remove('open');
+function closeModal(){
+  document.getElementById('lead-modal').classList.remove('open');
   document.body.style.overflow = '';
 }
-function handleModalOverlay(e) {
-  if (e.target === document.getElementById('demo-modal')) closeDemoModal();
+function handleModalOverlay(e){
+  if (e.target === document.getElementById('lead-modal')) closeModal();
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDemoModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-async function submitDemoForm(e) {
+async function submitLeadForm(e){
   e.preventDefault();
   const btn = document.getElementById('submit-btn');
   const errEl = document.getElementById('modal-error');
@@ -1287,10 +1355,11 @@ async function submitDemoForm(e) {
   const payload = new URLSearchParams({
     first_name:      fd.get('first_name').trim(),
     last_name:       fd.get('last_name').trim(),
-    email:           fd.get('email').trim(),
+    email:            fd.get('email').trim(),
     restaurant_name: fd.get('restaurant_name').trim(),
     phone:           '+44 ' + fd.get('phone').trim(),
-    locations:       fd.get('locations')
+    locations:       fd.get('locations'),
+    interest:        fd.get('interest')
   });
 
   try {
@@ -1299,23 +1368,28 @@ async function submitDemoForm(e) {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: payload
     });
-    if (!res.ok) throw new Error(`Server responded with ${res.status}`);
-    document.getElementById('demo-form').style.display = 'none';
+    if (!res.ok) throw new Error('Server responded with ' + res.status);
+    trackEvent('contact_form_submitted', {interest: fd.get('interest')});
+    document.getElementById('lead-form').style.display = 'none';
     document.getElementById('modal-success').style.display = 'block';
   } catch (err) {
-    console.error('Demo form submission failed:', err);
+    console.error('Lead form submission failed:', err);
     errEl.textContent = 'Something went wrong — please try again or email us directly.';
     errEl.style.display = 'block';
     btn.disabled = false;
-    btn.textContent = 'Book Demo';
+    btn.textContent = 'Submit';
   }
+  return false;
 }
 
-/* ── TWEAKS TOGGLE ──────────────────────────────── */
-window.addEventListener('message', e => {
-  if (e.data?.type === '__activate_edit_mode') document.getElementById('tweaks').style.display = 'block';
-  if (e.data?.type === '__deactivate_edit_mode') document.getElementById('tweaks').style.display = 'none';
-});
+/* ══════════════════════ PRICING VIEWED ══════════════════════ */
+const pricingObs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { trackEvent('pricing_viewed', {}); pricingObs.disconnect(); }
+}), {threshold: 0.3});
+const pricingSection = document.getElementById('pricing');
+if (pricingSection) pricingObs.observe(pricingSection);
+
+/* ══════════════════════ HOST EDIT-MODE INTEGRATION (preserved) ══════════════════════ */
 window.parent.postMessage({type: '__edit_mode_available'}, '*');
 </script>
 </body>

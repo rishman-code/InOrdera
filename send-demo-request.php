@@ -25,6 +25,7 @@ $email          = clean_field($_POST['email'] ?? '');
 $restaurantName = clean_field($_POST['restaurant_name'] ?? '');
 $phone          = clean_field($_POST['phone'] ?? '');
 $locations      = clean_field($_POST['locations'] ?? '');
+$interest       = clean_field($_POST['interest'] ?? 'demo');
 
 if ($firstName === '' || $lastName === '' || $email === '' || $restaurantName === '' || $phone === '' || $locations === '') {
     http_response_code(400);
@@ -38,10 +39,23 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-$to = 'rishi.shinn@hotmail.co.uk';
-$subject = 'New demo request: ' . $restaurantName;
+$interestLabels = [
+    'demo'              => 'Book a demo',
+    'demo_callback'     => 'Live demo callback request',
+    'roi_followup'      => 'ROI calculator follow-up',
+    'trial'             => 'Free trial request',
+    'founding_programme'=> 'Founding Restaurant Programme application',
+    'sales'             => 'Talk to sales (multi-site)',
+    'integrations'      => 'POS integration enquiry',
+    'website_ordering'  => 'Website ordering enquiry',
+];
+$interestLabel = $interestLabels[$interest] ?? 'Book a demo';
 
-$body = "New demo request from the InOrdera website:\n\n"
+$to = 'rishi.shinn@hotmail.co.uk';
+$subject = 'New ' . strtolower($interestLabel) . ': ' . $restaurantName;
+
+$body = "New enquiry from the InOrdera website:\n\n"
+      . "Type: {$interestLabel}\n"
       . "Name: {$firstName} {$lastName}\n"
       . "Restaurant: {$restaurantName}\n"
       . "Email: {$email}\n"
