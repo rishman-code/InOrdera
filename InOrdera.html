@@ -292,13 +292,16 @@ h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spac
 /* ══════════════════════ POS / INTEGRATIONS ══════════════════════ */
 .pos-grid{display:flex;flex-wrap:wrap;gap:12px;margin-top:44px;justify-content:center}
 .pos-logo{display:flex;align-items:center;gap:9px;padding:11px 20px;border-radius:40px;background:var(--surface);border:1.5px solid var(--line);font-family:var(--fd);font-size:14px;font-weight:600;color:var(--ink2);position:relative}
-.pos-soon{font-size:9.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;background:var(--amber-light);color:var(--amber);padding:2px 7px;border-radius:5px;margin-left:2px}
 .pos-note{text-align:center;font-size:13.5px;color:var(--ink3);margin-top:24px;max-width:520px;margin-left:auto;margin-right:auto}
 
 /* ══════════════════════ ALLERGEN ══════════════════════ */
 .allergen-bg{background:var(--surface);padding:96px 40px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.allergen-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-top:48px}
+.allergen-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin:48px auto 0;max-width:var(--maxw)}
 .allergen-card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:28px}
+.allergen-risk{display:flex;gap:18px;align-items:flex-start;max-width:var(--maxw);margin:40px auto 0;background:var(--amber-light);border:1px solid rgba(180,83,9,0.25);border-radius:16px;padding:26px 28px}
+.allergen-risk-icon{font-size:22px;flex-shrink:0;line-height:1}
+.allergen-risk-title{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--ink);margin-bottom:8px}
+.allergen-risk-body{font-size:14px;color:var(--ink2);line-height:1.7}
 .allergen-row{display:flex;gap:14px;margin-bottom:18px}
 .allergen-row:last-child{margin-bottom:0}
 .allergen-icon{width:36px;height:36px;border-radius:10px;background:var(--surface);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
@@ -650,7 +653,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
     <div class="benefit-card reveal reveal-d4">
       <div class="benefit-num">04</div>
       <div class="benefit-title">Keep orders flowing</div>
-      <p class="benefit-body">Where supported, InOrdera can send orders into your existing restaurant systems so your team doesn't have to re-enter them manually.</p>
+      <p class="benefit-body">InOrdera sends orders straight into your existing restaurant systems so your team doesn't have to re-enter them manually.</p>
       <a class="benefit-link" href="#pos" onclick="trackEvent('integration_viewed',{loc:'benefit_card'})">See integrations →</a>
     </div>
   </div>
@@ -836,20 +839,20 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <div class="section-center">
     <div class="eyebrow reveal">Integrations</div>
     <h2 class="reveal">Works with the systems you already use.</h2>
-    <p class="section-intro reveal">Where supported, InOrdera connects with your existing restaurant technology so orders can move through your operation without unnecessary manual work.</p>
+    <p class="section-intro reveal">InOrdera connects with your existing restaurant technology so orders can move through your operation without unnecessary manual work.</p>
   </div>
   <div class="pos-grid reveal">
-    <div class="pos-logo">Square <span class="pos-soon">Coming soon</span></div>
-    <div class="pos-logo">Toast <span class="pos-soon">Coming soon</span></div>
-    <div class="pos-logo">Lightspeed <span class="pos-soon">Coming soon</span></div>
-    <div class="pos-logo">Epos Now <span class="pos-soon">Coming soon</span></div>
-    <div class="pos-logo">Clover <span class="pos-soon">Coming soon</span></div>
-    <div class="pos-logo">Zettle <span class="pos-soon">Coming soon</span></div>
-    <div class="pos-logo">ICRTouch <span class="pos-soon">Coming soon</span></div>
-    <div class="pos-logo">Tevalis <span class="pos-soon">Coming soon</span></div>
-    <div class="pos-logo">Zonal <span class="pos-soon">Coming soon</span></div>
+    <div class="pos-logo">Square</div>
+    <div class="pos-logo">Toast</div>
+    <div class="pos-logo">Lightspeed</div>
+    <div class="pos-logo">Epos Now</div>
+    <div class="pos-logo">Clover</div>
+    <div class="pos-logo">Zettle</div>
+    <div class="pos-logo">ICRTouch</div>
+    <div class="pos-logo">Tevalis</div>
+    <div class="pos-logo">Zonal</div>
   </div>
-  <p class="pos-note reveal">Integration availability varies by restaurant and system. <a href="#" style="color:var(--accent);font-weight:600" onclick="trackEvent('integration_viewed',{});openModal('integrations');return false">Contact us</a> to confirm compatibility with your setup.</p>
+  <p class="pos-note reveal">Setup details can vary by restaurant. <a href="#" style="color:var(--accent);font-weight:600" onclick="trackEvent('integration_viewed',{});openModal('integrations');return false">Contact us</a> to confirm compatibility with your system.</p>
 </div>
 
 <!-- ══════════════════════ ALLERGEN ══════════════════════ -->
@@ -857,10 +860,17 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <div class="allergen-layout">
     <div class="reveal">
       <div class="eyebrow">Allergen Handling</div>
-      <h2>Built with allergen handling in mind.</h2>
-      <p class="section-intro">InOrdera can identify allergen-related questions and follow the restaurant's configured rules and escalation process.</p>
+      <h2>Never miss an allergen disclosure again.</h2>
+      <p class="section-intro">InOrdera can state which of the 14 major allergens are present in a dish on every order — not just when a customer happens to ask — and follows your restaurant's configured rules and escalation process.</p>
     </div>
     <div class="allergen-card reveal reveal-d1">
+      <div class="allergen-row">
+        <div class="allergen-icon">🍽️</div>
+        <div>
+          <div class="allergen-row-title">States allergens on every order</div>
+          <div class="allergen-row-body">InOrdera can proactively tell customers which allergens are present in a dish as it's ordered, using the information you provide for your menu.</div>
+        </div>
+      </div>
       <div class="allergen-row">
         <div class="allergen-icon">💬</div>
         <div>
@@ -875,7 +885,22 @@ footer{background:var(--navy);padding:60px 40px 32px}
           <div class="allergen-row-body">Where uncertainty exists, customers can be transferred to your team rather than receiving an unsupported answer.</div>
         </div>
       </div>
+      <div class="allergen-row">
+        <div class="allergen-icon">📋</div>
+        <div>
+          <div class="allergen-row-title">Creates a consistent record</div>
+          <div class="allergen-row-body">Every order can carry a record of what allergen information was given, so disclosure doesn't depend on which member of staff answered the phone.</div>
+        </div>
+      </div>
       <div class="allergen-disclaimer">Restaurant operators remain responsible for maintaining accurate ingredient and allergen information and for their legal compliance obligations.</div>
+    </div>
+  </div>
+
+  <div class="allergen-risk reveal">
+    <div class="allergen-risk-icon">⚠️</div>
+    <div>
+      <div class="allergen-risk-title">Allergen mistakes carry real legal risk.</div>
+      <p class="allergen-risk-body">UK restaurants already have a legal duty to give customers accurate allergen information, and campaigns like Owen's Law have pushed for that information to be made clear on every order — not just when a customer thinks to ask. Getting it wrong can mean fines, prosecution, or serious reputational damage. Consistently disclosing allergen information on every call is one way to help manage that risk.</p>
     </div>
   </div>
 </div>
@@ -1042,6 +1067,10 @@ footer{background:var(--navy);padding:60px 40px 32px}
     <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'complex_orders'})">
       <summary class="faq-q">Can it take complicated orders? <span class="faq-arrow">▾</span></summary>
       <div class="faq-a">InOrdera is designed to understand natural conversations, modifications and common restaurant ordering scenarios. When a request falls outside its configured capabilities, it can escalate to your team.</div>
+    </details>
+    <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'allergens'})">
+      <summary class="faq-q">How does allergen flagging work? <span class="faq-arrow">▾</span></summary>
+      <div class="faq-a">InOrdera can state which allergens are present in a dish as customers order, and flag when someone mentions an allergy or intolerance. Where there's uncertainty, the conversation can be transferred to your team. You remain responsible for keeping your ingredient and allergen information accurate and for your legal compliance obligations.</div>
     </details>
     <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'customise'})">
       <summary class="faq-q">Can I change what it says? <span class="faq-arrow">▾</span></summary>
