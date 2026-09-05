@@ -71,7 +71,8 @@ h2 em{font-style:normal;color:var(--accent)}
   font-size:15.5px;font-weight:700;padding:16px 30px;border-radius:var(--r);
   transition:background 0.18s,transform 0.12s;
   box-shadow:0 6px 20px rgba(193,68,14,0.28);
-  white-space:nowrap;
+  white-space:normal;
+  max-width:100%;
 }
 .btn-primary:hover{background:var(--accent-hover);transform:translateY(-2px)}
 .btn-secondary{
@@ -207,12 +208,15 @@ h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spac
 .roi-bg{background:var(--bg2);padding:96px 40px}
 .roi-inner{max-width:var(--maxw);margin:0 auto}
 .roi-layout{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:start;margin-top:48px}
-.roi-form{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:32px}
+.roi-form{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:32px;min-width:0}
+.roi-group{margin-bottom:28px}
+.roi-group:last-child{margin-bottom:0}
+.roi-group-title{font-size:11.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .roi-field{margin-bottom:22px}
-.roi-field:last-child{margin-bottom:0}
-.roi-field-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
-.roi-field label{font-size:14px;font-weight:600;color:var(--ink)}
-.roi-field-val{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--accent)}
+.roi-group .roi-field:last-child{margin-bottom:0}
+.roi-field-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}
+.roi-field label{font-size:14px;font-weight:600;color:var(--ink);min-width:0}
+.roi-field-val{font-family:var(--fd);font-size:16px;font-weight:700;color:var(--accent);flex-shrink:0;white-space:nowrap}
 .roi-field input[type=range]{
   width:100%;height:8px;border-radius:6px;background:var(--line);
   -webkit-appearance:none;appearance:none;outline:none;cursor:pointer;
@@ -225,13 +229,16 @@ h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spac
   width:26px;height:26px;border-radius:50%;background:var(--accent);border:4px solid #fff;
   box-shadow:0 2px 8px rgba(24,27,34,0.25);cursor:pointer;
 }
-.roi-result{background:var(--navy);border-radius:18px;padding:36px;color:#fff}
+.roi-result{background:var(--navy);border-radius:18px;padding:36px;color:#fff;min-width:0}
 .roi-result-label{font-size:13px;font-weight:600;letter-spacing:0.04em;color:rgba(255,255,255,0.55);margin-bottom:10px;text-transform:uppercase}
 .roi-result-num{font-family:var(--fd);font-size:clamp(40px,4.4vw,56px);font-weight:800;letter-spacing:-0.03em;color:#ff9466;line-height:1}
 .roi-result-sub{font-size:15px;color:rgba(255,255,255,0.7);margin-top:14px;line-height:1.6}
 .roi-result-year{font-family:var(--fd);font-size:18px;font-weight:700;color:#fff;margin-top:6px}
 .roi-result .btn-primary{margin-top:26px;width:100%}
 .roi-disclaimer{font-size:12px;color:rgba(255,255,255,0.4);margin-top:16px;line-height:1.6}
+.roi-breakdown{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.14);display:flex;flex-direction:column;gap:9px}
+.roi-breakdown-row{display:flex;justify-content:space-between;font-size:13.5px;color:rgba(255,255,255,0.65)}
+.roi-breakdown-row span:last-child{font-weight:700;color:#fff}
 
 /* ══════════════════════ HOW IT WORKS ══════════════════════ */
 .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;position:relative}
@@ -313,7 +320,7 @@ h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spac
 .dash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:10px}
 .dash-top-label{font-size:13px;font-weight:600;color:rgba(255,255,255,0.5)}
 .dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.dash-tile{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:22px 20px}
+.dash-tile{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:22px 20px;min-width:0}
 .dash-tile-num{font-family:var(--fd);font-size:30px;font-weight:800;color:#fff;letter-spacing:-0.02em}
 .dash-tile-label{font-size:12.5px;color:rgba(255,255,255,0.5);margin-top:6px}
 .dash-example-tag{font-size:11px;color:rgba(255,255,255,0.35);margin-top:24px;text-align:center}
@@ -505,7 +512,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
     <p class="hero-sub">InOrdera answers your restaurant's calls, takes orders, recommends extras and sends them straight to your team — even when your staff are busy.</p>
     <div class="hero-actions">
       <button class="btn-primary" onclick="return openCalendly('hero_primary')">☎ Hear InOrdera Take an Order</button>
-      <button class="btn-secondary" onclick="trackEvent('roi_calculator_started',{loc:'hero_secondary'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
+      <button class="btn-secondary" onclick="trackEvent('roi_calculator_started',{loc:'hero_secondary'});scrollToSection('roi-calculator')">Calculate My Lost Revenue →</button>
     </div>
     <p class="hero-trust"><b>No new staff</b><span class="sep">·</span><b>Zero commission</b><span class="sep">·</span><b>Works with your existing setup</b><span class="sep">·</span><b>Go live in under a day</b></p>
   </div>
@@ -654,34 +661,66 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <div class="roi-inner">
     <div class="eyebrow reveal">The Business Case</div>
     <h2 class="reveal">How much revenue could your restaurant be losing?</h2>
-    <p class="section-intro reveal">Even a handful of missed calls can add up quickly. Estimate what those missed orders could be worth.</p>
+    <p class="section-intro reveal">Missed calls, orders with no upsell, and commission on orders that could go direct all add up. Estimate what they could be worth for your restaurant.</p>
 
     <div class="roi-layout">
       <div class="roi-form reveal">
-        <div class="roi-field">
-          <div class="roi-field-top"><label for="roi-calls">Calls received per day</label><span class="roi-field-val" id="roi-calls-val">40</span></div>
-          <input type="range" id="roi-calls" min="5" max="150" value="40" step="1" oninput="calcROI()">
+        <div class="roi-group">
+          <div class="roi-group-title">Missed orders</div>
+          <div class="roi-field">
+            <div class="roi-field-top"><label for="roi-calls">Calls received per day</label><span class="roi-field-val" id="roi-calls-val">40</span></div>
+            <input type="range" id="roi-calls" min="5" max="150" value="40" step="1" oninput="calcROI()">
+          </div>
+          <div class="roi-field">
+            <div class="roi-field-top"><label for="roi-missed">Percentage of calls missed</label><span class="roi-field-val" id="roi-missed-val">20%</span></div>
+            <input type="range" id="roi-missed" min="0" max="80" value="20" step="1" oninput="calcROI()">
+          </div>
+          <div class="roi-field">
+            <div class="roi-field-top"><label for="roi-aov">Average order value</label><span class="roi-field-val" id="roi-aov-val">£25</span></div>
+            <input type="range" id="roi-aov" min="8" max="60" value="25" step="1" oninput="calcROI()">
+          </div>
+          <div class="roi-field">
+            <div class="roi-field-top"><label for="roi-days">Days open per month</label><span class="roi-field-val" id="roi-days-val">26</span></div>
+            <input type="range" id="roi-days" min="10" max="31" value="26" step="1" oninput="calcROI()">
+          </div>
         </div>
-        <div class="roi-field">
-          <div class="roi-field-top"><label for="roi-missed">Percentage of calls missed</label><span class="roi-field-val" id="roi-missed-val">20%</span></div>
-          <input type="range" id="roi-missed" min="0" max="80" value="20" step="1" oninput="calcROI()">
+
+        <div class="roi-group">
+          <div class="roi-group-title">Upselling</div>
+          <div class="roi-field">
+            <div class="roi-field-top"><label for="roi-orders">Total orders per month</label><span class="roi-field-val" id="roi-orders-val">500</span></div>
+            <input type="range" id="roi-orders" min="50" max="3000" value="500" step="10" oninput="calcROI()">
+          </div>
+          <div class="roi-field">
+            <div class="roi-field-top"><label for="roi-upsell">Extra £ per order from upselling</label><span class="roi-field-val" id="roi-upsell-val">£2.00</span></div>
+            <input type="range" id="roi-upsell" min="0" max="8" value="2" step="0.5" oninput="calcROI()">
+          </div>
         </div>
-        <div class="roi-field">
-          <div class="roi-field-top"><label for="roi-aov">Average order value</label><span class="roi-field-val" id="roi-aov-val">£25</span></div>
-          <input type="range" id="roi-aov" min="8" max="60" value="25" step="1" oninput="calcROI()">
-        </div>
-        <div class="roi-field">
-          <div class="roi-field-top"><label for="roi-days">Days open per month</label><span class="roi-field-val" id="roi-days-val">26</span></div>
-          <input type="range" id="roi-days" min="10" max="31" value="26" step="1" oninput="calcROI()">
+
+        <div class="roi-group">
+          <div class="roi-group-title">Commission Savings</div>
+          <div class="roi-field">
+            <div class="roi-field-top"><label for="roi-platform-orders">Orders per month via delivery apps</label><span class="roi-field-val" id="roi-platform-orders-val">150</span></div>
+            <input type="range" id="roi-platform-orders" min="0" max="1500" value="150" step="10" oninput="calcROI()">
+          </div>
+          <div class="roi-field">
+            <div class="roi-field-top"><label for="roi-commission">Average commission charged</label><span class="roi-field-val" id="roi-commission-val">25%</span></div>
+            <input type="range" id="roi-commission" min="0" max="35" value="25" step="1" oninput="calcROI()">
+          </div>
         </div>
       </div>
 
       <div class="roi-result reveal reveal-d1">
         <div class="roi-result-label">Estimated potential revenue</div>
         <div class="roi-result-num" id="roi-result-monthly">£5,200<span style="font-size:22px;font-weight:600;">/month</span></div>
-        <p class="roi-result-sub">That's <strong id="roi-result-yearly" style="color:#fff">£62,400/year</strong> in potential orders, based on <span id="roi-missed-calls-desc">8 missed calls/day</span>.</p>
+        <div class="roi-breakdown">
+          <div class="roi-breakdown-row"><span>Missed orders recovered</span><span id="roi-part-missed">£4,160</span></div>
+          <div class="roi-breakdown-row"><span>Upselling uplift</span><span id="roi-part-upsell">£1,000</span></div>
+          <div class="roi-breakdown-row"><span>Commission saved</span><span id="roi-part-commission">£938</span></div>
+        </div>
+        <p class="roi-result-sub">That's <strong id="roi-result-yearly" style="color:#fff">£62,400/year</strong> in potential revenue, based on <span id="roi-missed-calls-desc">8 missed calls/day</span>.</p>
         <button class="btn-primary" onclick="trackEvent('roi_calculator_completed',{});openModal('roi')">See what InOrdera could recover</button>
-        <p class="roi-disclaimer">These figures are estimates based on the information you enter and are not a guarantee of revenue.</p>
+        <p class="roi-disclaimer">These figures are estimates based on the information you enter and are not a guarantee of revenue. Commission savings assume orders currently placed via third-party delivery apps could be moved to direct phone or website ordering.</p>
       </div>
     </div>
   </div>
@@ -1021,7 +1060,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <p>Don't make them wait for someone to answer.</p>
   <div class="cta-actions">
     <button class="btn-primary" onclick="return openCalendly('final_cta')">☎ Hear InOrdera Take an Order</button>
-    <button class="btn-ghost-dark" onclick="trackEvent('roi_calculator_started',{loc:'final_cta'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
+    <button class="btn-ghost-dark" onclick="trackEvent('roi_calculator_started',{loc:'final_cta'});scrollToSection('roi-calculator')">Calculate My Lost Revenue →</button>
   </div>
   <p class="cta-note">No commission · Restaurant-focused · Human handoff available</p>
 </div>
@@ -1156,7 +1195,7 @@ const obs = new IntersectionObserver(es => es.forEach(e => {
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
 /* ══════════════════════ NAV / SCROLL HELPERS ══════════════════════ */
-function scrollTo(id){
+function scrollToSection(id){
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
@@ -1196,19 +1235,34 @@ function calcROI(){
   const missedPct = parseInt(document.getElementById('roi-missed').value, 10);
   const aov = parseInt(document.getElementById('roi-aov').value, 10);
   const days = parseInt(document.getElementById('roi-days').value, 10);
+  const orders = parseInt(document.getElementById('roi-orders').value, 10);
+  const upsell = parseFloat(document.getElementById('roi-upsell').value);
+  const platformOrders = parseInt(document.getElementById('roi-platform-orders').value, 10);
+  const commissionPct = parseInt(document.getElementById('roi-commission').value, 10);
 
   document.getElementById('roi-calls-val').textContent = calls;
   document.getElementById('roi-missed-val').textContent = missedPct + '%';
   document.getElementById('roi-aov-val').textContent = '£' + aov;
   document.getElementById('roi-days-val').textContent = days;
+  document.getElementById('roi-orders-val').textContent = orders.toLocaleString('en-GB');
+  document.getElementById('roi-upsell-val').textContent = '£' + upsell.toFixed(2);
+  document.getElementById('roi-platform-orders-val').textContent = platformOrders.toLocaleString('en-GB');
+  document.getElementById('roi-commission-val').textContent = commissionPct + '%';
 
   const missedPerDay = calls * (missedPct / 100);
-  const monthly = missedPerDay * aov * days;
+  const missedMonthly = missedPerDay * aov * days;
+  const upsellMonthly = orders * upsell;
+  const commissionMonthly = platformOrders * aov * (commissionPct / 100);
+
+  const monthly = missedMonthly + upsellMonthly + commissionMonthly;
   const yearly = monthly * 12;
 
   document.getElementById('roi-result-monthly').innerHTML = formatGBP(monthly) + '<span style="font-size:22px;font-weight:600;">/month</span>';
   document.getElementById('roi-result-yearly').textContent = formatGBP(yearly) + '/year';
   document.getElementById('roi-missed-calls-desc').textContent = missedPerDay.toFixed(1) + ' missed calls/day';
+  document.getElementById('roi-part-missed').textContent = formatGBP(missedMonthly);
+  document.getElementById('roi-part-upsell').textContent = formatGBP(upsellMonthly);
+  document.getElementById('roi-part-commission').textContent = formatGBP(commissionMonthly);
 }
 calcROI();
 
