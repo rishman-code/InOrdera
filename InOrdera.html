@@ -505,7 +505,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
     <p class="hero-sub">InOrdera answers your restaurant's calls, takes orders, recommends extras and sends them straight to your team — even when your staff are busy.</p>
     <div class="hero-actions">
       <button class="btn-primary" onclick="return openCalendly('hero_primary')">☎ Hear InOrdera Take an Order</button>
-      <button class="btn-secondary" onclick="trackEvent('roi_calculator_started',{loc:'hero_secondary'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
+      <button class="btn-secondary" onclick="trackEvent('roi_calculator_started',{loc:'hero_secondary'});scrollToSection('roi-calculator')">Calculate My Lost Revenue →</button>
     </div>
     <p class="hero-trust"><b>No new staff</b><span class="sep">·</span><b>Zero commission</b><span class="sep">·</span><b>Works with your existing setup</b><span class="sep">·</span><b>Go live in under a day</b></p>
   </div>
@@ -1021,7 +1021,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <p>Don't make them wait for someone to answer.</p>
   <div class="cta-actions">
     <button class="btn-primary" onclick="return openCalendly('final_cta')">☎ Hear InOrdera Take an Order</button>
-    <button class="btn-ghost-dark" onclick="trackEvent('roi_calculator_started',{loc:'final_cta'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
+    <button class="btn-ghost-dark" onclick="trackEvent('roi_calculator_started',{loc:'final_cta'});scrollToSection('roi-calculator')">Calculate My Lost Revenue →</button>
   </div>
   <p class="cta-note">No commission · Restaurant-focused · Human handoff available</p>
 </div>
@@ -1156,7 +1156,7 @@ const obs = new IntersectionObserver(es => es.forEach(e => {
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
 /* ══════════════════════ NAV / SCROLL HELPERS ══════════════════════ */
-function scrollTo(id){
+function scrollToSection(id){
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
 }
