@@ -8,6 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
 /* ══════════════════════ THEME TOKENS ══════════════════════ */
 :root{
@@ -476,7 +478,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
       <li><a href="#faq" data-event="nav_click">FAQ</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn-nav" onclick="trackEvent('hero_cta_click',{loc:'nav'});scrollTo('live-demo')">Hear It Live</button>
+      <button class="btn-nav" onclick="return openCalendly('nav')">Hear It Live</button>
     </div>
     <button class="nav-burger" onclick="toggleMobileNav()" aria-label="Open menu" aria-expanded="false" id="burger-btn">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -489,7 +491,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <a href="#pricing" onclick="toggleMobileNav()">Pricing</a>
   <a href="#results" onclick="toggleMobileNav()">Results</a>
   <a href="#faq" onclick="toggleMobileNav()">FAQ</a>
-  <button class="btn-primary" onclick="toggleMobileNav();trackEvent('hero_cta_click',{loc:'mobile_nav'});scrollTo('live-demo')">☎ Try It</button>
+  <button class="btn-primary" onclick="toggleMobileNav();return openCalendly('mobile_nav')">☎ Try It</button>
 </div>
 
 <div id="top"></div>
@@ -502,7 +504,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
     <h1>Never miss an order again.</h1>
     <p class="hero-sub">InOrdera answers your restaurant's calls, takes orders, recommends extras and sends them straight to your team — even when your staff are busy.</p>
     <div class="hero-actions">
-      <button class="btn-primary" onclick="trackEvent('hero_cta_click',{loc:'hero_primary'});scrollTo('live-demo')">☎ Hear InOrdera Take an Order</button>
+      <button class="btn-primary" onclick="return openCalendly('hero_primary')">☎ Hear InOrdera Take an Order</button>
       <button class="btn-secondary" onclick="trackEvent('roi_calculator_started',{loc:'hero_secondary'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
     </div>
     <p class="hero-trust"><b>No new staff</b><span class="sep">·</span><b>Zero commission</b><span class="sep">·</span><b>Works with your existing setup</b><span class="sep">·</span><b>Go live in under a day</b></p>
@@ -545,11 +547,11 @@ footer{background:var(--navy);padding:60px 40px 32px}
     <div class="reveal">
       <div class="eyebrow on-dark">Try It Yourself</div>
       <h2>Hear your restaurant's AI assistant.</h2>
-      <p class="section-intro">Don't just read about it. Request a live demo and hear how InOrdera handles a real restaurant order — on your own menu.</p>
+      <p class="section-intro">Don't just read about it. Book a live demo and hear how InOrdera handles a real restaurant order — on your own menu.</p>
     </div>
     <div class="livedemo-card reveal reveal-d1">
-      <p style="font-size:14.5px;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:18px">Tell us a bit about your restaurant and we'll get InOrdera on the phone with you.</p>
-      <button class="btn-primary" onclick="trackEvent('live_demo_click',{});openModal('demo')" style="width:100%">Request a Live Demo →</button>
+      <p style="font-size:14.5px;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:18px">Pick a time that works for you and we'll walk you through InOrdera live.</p>
+      <button class="btn-primary" onclick="return openCalendly('live_demo_section')" style="width:100%">Book a Live Demo →</button>
     </div>
   </div>
 </div>
@@ -721,7 +723,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
       <div class="eyebrow">Hear The Difference</div>
       <h2>Your busiest phone call is now handled.</h2>
       <p class="section-intro">InOrdera answers customers when your team is busy, takes the order and handles routine questions — so staff can focus on the restaurant. It's designed to understand natural conversation, not rigid commands.</p>
-      <button class="btn-secondary" onclick="trackEvent('live_demo_click',{loc:'phone_demo'});scrollTo('live-demo')">Try InOrdera yourself →</button>
+      <button class="btn-secondary" onclick="return openCalendly('phone_demo')">Try InOrdera yourself →</button>
     </div>
     <div class="convo-card reveal reveal-d1">
       <div class="convo-inner" id="convo-inner">
@@ -1018,7 +1020,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <h2>Your next customer is already on the phone.</h2>
   <p>Don't make them wait for someone to answer.</p>
   <div class="cta-actions">
-    <button class="btn-primary" onclick="trackEvent('hero_cta_click',{loc:'final_cta'});scrollTo('live-demo')">☎ Hear InOrdera Take an Order</button>
+    <button class="btn-primary" onclick="return openCalendly('final_cta')">☎ Hear InOrdera Take an Order</button>
     <button class="btn-ghost-dark" onclick="trackEvent('roi_calculator_started',{loc:'final_cta'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
   </div>
   <p class="cta-note">No commission · Restaurant-focused · Human handoff available</p>
@@ -1079,7 +1081,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
 
 <!-- ══════════════════════ STICKY MOBILE CTA ══════════════════════ -->
 <div class="sticky-cta">
-  <button class="btn-primary" onclick="trackEvent('hero_cta_click',{loc:'sticky_mobile'});scrollTo('live-demo')">Try InOrdera Live →</button>
+  <button class="btn-primary" onclick="return openCalendly('sticky_mobile')">Try InOrdera Live →</button>
 </div>
 
 <!-- ══════════════════════ MODAL (shared by all CTAs) ══════════════════════ -->
@@ -1170,6 +1172,19 @@ function trackEvent(name, data){
   const payload = Object.assign({event: name}, data || {});
   if (window.dataLayer) window.dataLayer.push(payload);
   else console.log('[InOrdera event]', payload);
+}
+
+/* ══════════════════════ CALENDLY BOOKING ══════════════════════ */
+const CALENDLY_URL = 'https://calendly.com/inordera-sales';
+function openCalendly(loc){
+  trackEvent('live_demo_click', {loc: loc || ''});
+  trackEvent('demo_booked', {interest: 'live_demo'});
+  if (window.Calendly) {
+    Calendly.initPopupWidget({url: CALENDLY_URL});
+  } else {
+    window.open(CALENDLY_URL, '_blank', 'noopener');
+  }
+  return false;
 }
 
 /* ══════════════════════ ROI CALCULATOR ══════════════════════ */
