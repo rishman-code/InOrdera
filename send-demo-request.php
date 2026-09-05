@@ -48,6 +48,7 @@ $interestLabels = [
     'sales'             => 'Talk to sales (multi-site)',
     'integrations'      => 'POS integration enquiry',
     'website_ordering'  => 'Website ordering enquiry',
+    'pricing'           => 'Pricing enquiry',
 ];
 $interestLabel = $interestLabels[$interest] ?? 'Book a demo';
 

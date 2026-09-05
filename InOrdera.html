@@ -343,23 +343,10 @@ h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spac
 
 /* ══════════════════════ PRICING ══════════════════════ */
 .pricing-bg{background:var(--surface);padding:96px 40px}
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
-.pricing-card{background:var(--surface);border:1.5px solid var(--line);border-radius:20px;padding:34px;position:relative;transition:box-shadow 0.2s,transform 0.2s}
-.pricing-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
-.pricing-card.popular{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-light)}
-.popular-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:5px 14px;border-radius:40px;white-space:nowrap}
-.plan-name{font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
-.plan-price{font-family:var(--fd);font-size:38px;font-weight:800;letter-spacing:-0.03em;line-height:1}
-.plan-price span{font-size:15px;font-weight:500;color:var(--ink3);font-family:var(--fb)}
-.plan-tagline{font-size:13.5px;color:var(--ink2);margin:12px 0 24px;padding-bottom:24px;border-bottom:1px solid var(--line)}
-.plan-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.plan-features li{font-size:13.5px;color:var(--ink2);display:flex;align-items:flex-start;gap:9px}
-.plan-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0}
-.btn-plan{width:100%;padding:14px;border-radius:var(--r);font-size:14.5px;font-weight:700;background:var(--accent);color:#fff;transition:background 0.18s}
-.btn-plan:hover{background:var(--accent-hover)}
-.btn-plan.outline{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
-.btn-plan.outline:hover{background:var(--accent-light)}
-.pricing-disclaimer{text-align:center;font-size:12.5px;color:var(--ink3);max-width:600px;margin:32px auto 0;line-height:1.7}
+.pricing-contact{max-width:640px;margin:48px auto 0;background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:48px;text-align:center}
+.pricing-contact-icon{width:52px;height:52px;border-radius:14px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 20px}
+.pricing-contact h3{font-family:var(--fd);font-size:24px;font-weight:800;margin-bottom:12px}
+.pricing-contact p{font-size:15px;color:var(--ink2);line-height:1.7;max-width:480px;margin:0 auto 26px}
 .price-anchor{max-width:640px;margin:56px auto 0;text-align:center;background:var(--bg2);border-radius:16px;padding:32px}
 .price-anchor strong{display:block;font-family:var(--fd);font-size:19px;font-weight:700;margin-bottom:8px}
 .price-anchor p{font-size:14.5px;color:var(--ink2);line-height:1.6;margin-bottom:16px}
@@ -457,7 +444,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
   .seq-row{grid-template-columns:1fr 1fr}
   .seq-arrow{display:none}
   .steps-grid{grid-template-columns:1fr}
-  .pricing-grid{grid-template-columns:1fr}
+  .pricing-contact{padding:36px 24px}
   .dash-grid{grid-template-columns:1fr 1fr}
   .footer-top{grid-template-columns:1fr}
   .footer-links-grid{grid-template-columns:1fr 1fr}
@@ -964,66 +951,21 @@ footer{background:var(--navy);padding:60px 40px 32px}
 <!-- ══════════════════════ PRICING ══════════════════════ -->
 <div class="pricing-bg" id="pricing">
   <div class="section-center" style="max-width:var(--maxw);margin:0 auto;padding:0 40px">
-    <div class="eyebrow reveal">Plans</div>
-    <h2 class="reveal">Simple, transparent pricing.</h2>
-    <p class="section-intro reveal">Every plan is a flat monthly fee with zero per-order commission.</p>
+    <div class="eyebrow reveal">Pricing</div>
+    <h2 class="reveal">Pricing built around your restaurant.</h2>
+    <p class="section-intro reveal">Call volume, menu size and number of locations all affect what makes sense for your restaurant — so we work it out with you rather than publishing a one-size-fits-all price. No commission on orders, ever.</p>
   </div>
 
-  <div class="pricing-grid reveal">
-    <div class="pricing-card">
-      <div class="plan-name">Starter</div>
-      <div class="plan-price">£149<span>/month</span></div>
-      <div class="plan-tagline">For smaller restaurants.</div>
-      <ul class="plan-features">
-        <li>AI phone answering</li>
-        <li>AI ordering</li>
-        <li>Website ordering</li>
-        <li>Basic upselling</li>
-        <li>Allergen-aware workflows</li>
-        <li>Basic analytics</li>
-        <li>Standard support</li>
-        <li>£0 commission</li>
-      </ul>
-      <button class="btn-plan outline" onclick="trackEvent('pricing_cta_clicked',{plan:'starter'});openModal('trial')">Start Free Trial →</button>
-    </div>
-    <div class="pricing-card popular">
-      <div class="popular-badge">Most Popular</div>
-      <div class="plan-name">Professional</div>
-      <div class="plan-price">£299<span>/month</span></div>
-      <div class="plan-tagline">Everything in Starter, plus more.</div>
-      <ul class="plan-features">
-        <li>Everything in Starter</li>
-        <li>Advanced analytics</li>
-        <li>POS integrations where supported</li>
-        <li>Advanced upselling</li>
-        <li>Multiple languages</li>
-        <li>Custom AI configuration</li>
-        <li>Priority support</li>
-        <li>Assisted setup</li>
-        <li>£0 commission</li>
-      </ul>
-      <button class="btn-plan" onclick="trackEvent('pricing_cta_clicked',{plan:'professional'});openModal('trial')">Start Free Trial →</button>
-    </div>
-    <div class="pricing-card">
-      <div class="plan-name">Multi-Site</div>
-      <div class="plan-price">From £499<span>/month</span></div>
-      <div class="plan-tagline">For restaurant groups.</div>
-      <ul class="plan-features">
-        <li>Multiple locations</li>
-        <li>Central management</li>
-        <li>Advanced reporting</li>
-        <li>Custom integrations</li>
-        <li>Dedicated support</li>
-      </ul>
-      <button class="btn-plan outline" onclick="trackEvent('pricing_cta_clicked',{plan:'multi_site'});openModal('sales')">Talk to Sales →</button>
-    </div>
+  <div class="pricing-contact reveal">
+    <div class="pricing-contact-icon">💬</div>
+    <h3>Let's talk about your restaurant.</h3>
+    <p>Tell us a bit about your setup and we'll put together pricing that makes sense for you — no obligation.</p>
+    <button class="btn-primary" onclick="trackEvent('pricing_cta_clicked',{plan:'contact'});openModal('pricing')">Talk to us about pricing →</button>
   </div>
-
-  <p class="pricing-disclaimer reveal">Prices shown are proposed plans and may be updated before launch. <span class="placeholder-flag">To be confirmed</span></p>
 
   <div class="price-anchor reveal">
     <strong>One extra order a day could cover the cost.</strong>
-    <p>Depending on your average order value and plan, recovering even a small number of missed orders can make InOrdera commercially worthwhile.</p>
+    <p>Depending on your average order value, recovering even a small number of missed orders can make InOrdera commercially worthwhile.</p>
     <a href="#roi-calculator" onclick="trackEvent('roi_calculator_started',{loc:'pricing_anchor'})">Calculate your restaurant's numbers →</a>
   </div>
 </div>
@@ -1086,7 +1028,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
     </details>
     <details class="faq-item" ontoggle="if(this.open)trackEvent('faq_opened',{q:'cost'})">
       <summary class="faq-q">How much does it cost? <span class="faq-arrow">▾</span></summary>
-      <div class="faq-a">Plans start from £149/month, depending on the features and restaurant setup. <span class="placeholder-flag">Pricing to be confirmed</span></div>
+      <div class="faq-a">It depends on your call volume, menu size and number of locations, so we work out pricing with you rather than publishing a fixed rate. <a href="#pricing" style="color:var(--accent);font-weight:600">Talk to us</a> and we'll put together numbers for your restaurant.</div>
     </details>
   </div>
 </div>
@@ -1321,7 +1263,8 @@ const modalCopy = {
   founding:        {title:'Apply for the Founding Restaurant Programme', sub:"Tell us about your restaurant and we'll be in touch about founding pricing and setup.", interest:'founding_programme'},
   sales:           {title:'Talk to Sales', sub:"For restaurant groups and multi-site setups — tell us about your business.", interest:'sales'},
   integrations:    {title:'Check POS compatibility', sub:"Tell us which system you use and we'll confirm what's supported.", interest:'integrations'},
-  website_ordering:{title:'See Website Ordering', sub:"We'll walk you through how website ordering works for your restaurant.", interest:'website_ordering'}
+  website_ordering:{title:'See Website Ordering', sub:"We'll walk you through how website ordering works for your restaurant.", interest:'website_ordering'},
+  pricing:         {title:'Talk to us about pricing', sub:"Tell us about your call volume, menu and locations and we'll put together pricing for your restaurant.", interest:'pricing'}
 };
 function openModal(kind){
   const copy = modalCopy[kind] || modalCopy.demo;
