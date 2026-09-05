@@ -41,7 +41,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 $interestLabels = [
     'demo'              => 'Book a demo',
-    'demo_callback'     => 'Live demo callback request',
     'roi_followup'      => 'ROI calculator follow-up',
     'trial'             => 'Free trial request',
     'founding_programme'=> 'Founding Restaurant Programme application',

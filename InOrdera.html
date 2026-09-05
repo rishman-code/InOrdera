@@ -174,17 +174,6 @@ h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spac
 .livedemo-inner h2{color:#fff;font-size:clamp(24px,2.8vw,34px);margin-bottom:10px}
 .livedemo-inner .section-intro{color:rgba(255,255,255,0.6);margin-bottom:0}
 .livedemo-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:16px;padding:24px}
-.demo-number-row{display:flex;align-items:center;gap:14px;margin-bottom:16px}
-.demo-number{font-family:var(--fd);font-size:22px;font-weight:700;color:#fff;letter-spacing:-0.01em}
-.demo-number.tbc{font-size:14px;color:rgba(255,255,255,0.5);font-family:var(--fb);font-weight:500;font-style:italic}
-.livedemo-card .btn-primary{width:100%;margin-bottom:14px}
-.livedemo-alt{font-size:13px;color:rgba(255,255,255,0.55);border-top:1px solid rgba(255,255,255,0.12);padding-top:14px;margin-top:2px}
-.livedemo-alt-form{display:flex;gap:8px;margin-top:10px}
-.livedemo-alt-form input{flex:1;padding:11px 13px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.06);color:#fff;font-family:var(--fb);font-size:13.5px;outline:none}
-.livedemo-alt-form input::placeholder{color:rgba(255,255,255,0.4)}
-.livedemo-alt-form input:focus{border-color:var(--accent)}
-.livedemo-alt-form button{background:rgba(255,255,255,0.14);color:#fff;font-size:13px;font-weight:600;padding:0 16px;border-radius:8px;white-space:nowrap;transition:background 0.18s}
-.livedemo-alt-form button:hover{background:rgba(255,255,255,0.24)}
 
 /* ══════════════════════ PROBLEM SEQUENCE ══════════════════════ */
 .problem-bg{background:var(--surface);padding:96px 40px}
@@ -361,6 +350,7 @@ h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spac
 .trial-step p{font-size:14.5px;color:rgba(255,255,255,0.7);line-height:1.6}
 .trial-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:18px;padding:32px;text-align:center}
 .trial-card .btn-primary{width:100%;margin-top:18px}
+.trial-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,148,102,0.15);color:#ff9466;font-size:13px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;padding:8px 16px;border-radius:40px}
 
 /* ══════════════════════ FAQ ══════════════════════ */
 .faq-list{margin-top:48px;max-width:760px;margin-left:auto;margin-right:auto}
@@ -515,7 +505,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
       <button class="btn-primary" onclick="trackEvent('hero_cta_click',{loc:'hero_primary'});scrollTo('live-demo')">☎ Hear InOrdera Take an Order</button>
       <button class="btn-secondary" onclick="trackEvent('roi_calculator_started',{loc:'hero_secondary'});scrollTo('roi-calculator')">Calculate My Lost Revenue →</button>
     </div>
-    <p class="hero-trust"><b>No new staff</b><span class="sep">·</span><b>Zero commission</b><span class="sep">·</span><b>Works with your existing setup</b></p>
+    <p class="hero-trust"><b>No new staff</b><span class="sep">·</span><b>Zero commission</b><span class="sep">·</span><b>Works with your existing setup</b><span class="sep">·</span><b>Go live in under a day</b></p>
   </div>
 
   <div class="hero-visual" aria-hidden="true">
@@ -554,22 +544,12 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <div class="livedemo-inner">
     <div class="reveal">
       <div class="eyebrow on-dark">Try It Yourself</div>
-      <h2>Call your restaurant's AI assistant.</h2>
-      <p class="section-intro">Don't read about it. Try it.<br>Hear how InOrdera handles a real restaurant order.</p>
+      <h2>Hear your restaurant's AI assistant.</h2>
+      <p class="section-intro">Don't just read about it. Request a live demo and hear how InOrdera handles a real restaurant order — on your own menu.</p>
     </div>
     <div class="livedemo-card reveal reveal-d1">
-      <div class="demo-number-row">
-        <span class="demo-number tbc" id="demo-number-display">Demo line — number to be added</span>
-      </div>
-      <a class="btn-primary" id="demo-call-link" href="#live-demo" onclick="trackEvent('live_demo_click',{});return handleDemoCallClick(event)" style="width:100%">Call the Demo →</a>
-      <div class="livedemo-alt">
-        Prefer a demo? Enter your number and we'll show you how it works.
-        <form class="livedemo-alt-form" onsubmit="return submitCallbackRequest(event)">
-          <label for="callback-phone" class="sr-only">Your phone number</label>
-          <input type="tel" id="callback-phone" placeholder="Your phone number" required>
-          <button type="submit">Request call</button>
-        </form>
-      </div>
+      <p style="font-size:14.5px;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:18px">Tell us a bit about your restaurant and we'll get InOrdera on the phone with you.</p>
+      <button class="btn-primary" onclick="trackEvent('live_demo_click',{});openModal('demo')" style="width:100%">Request a Live Demo →</button>
     </div>
   </div>
 </div>
@@ -729,7 +709,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
   </div>
 
   <div class="steps-closing reveal">
-    <strong>That's it.</strong>
+    <strong>That's it. Go live in under a day.</strong>
     <span>No complicated software rollout. No new hardware. No lengthy staff training.</span>
   </div>
 </div>
@@ -986,8 +966,8 @@ footer{background:var(--navy);padding:60px 40px 32px}
       </div>
     </div>
     <div class="trial-card reveal reveal-d1">
-      <span class="placeholder-flag">Trial length to be confirmed</span>
-      <p style="color:rgba(255,255,255,0.7);font-size:14.5px;margin-top:14px;line-height:1.6">We'll confirm your trial length when we set up your account.</p>
+      <span class="trial-badge">7-Day Free Trial</span>
+      <p style="color:rgba(255,255,255,0.7);font-size:14.5px;margin-top:14px;line-height:1.6">Try InOrdera on your own menu for 7 days, then decide if it's right for your restaurant.</p>
       <button class="btn-primary" onclick="trackEvent('trial_started',{loc:'trial_section'});openModal('trial')">Start My Trial →</button>
     </div>
   </div>
@@ -1237,29 +1217,11 @@ const convoObs = new IntersectionObserver(es => es.forEach(e => {
 }), {threshold: 0.4});
 convoObs.observe(document.getElementById('convo-inner'));
 
-/* ══════════════════════ DEMO CALL LINK ══════════════════════ */
-/* TODO: replace null with 'tel:+44XXXXXXXXXX' once a live demo number exists. */
-const DEMO_NUMBER = null;
-function handleDemoCallClick(e){
-  if (DEMO_NUMBER) { window.location.href = DEMO_NUMBER; return false; }
-  e.preventDefault();
-  openModal('demo_callback');
-  return false;
-}
-function submitCallbackRequest(e){
-  e.preventDefault();
-  const phone = document.getElementById('callback-phone').value;
-  openModal('demo_callback');
-  document.getElementById('f-phone').value = phone.replace(/^\+?44\s?/, '');
-  return false;
-}
-
 /* ══════════════════════ MODAL ══════════════════════ */
 const modalCopy = {
-  demo:            {title:'Book a Demo', sub:"We'll show InOrdera live on your own menu.", interest:'demo'},
-  demo_callback:   {title:"We'll call you", sub:"Leave your number and restaurant details and we'll call to show you InOrdera live.", interest:'demo_callback'},
+  demo:            {title:'Request a Live Demo', sub:"Tell us a bit about your restaurant and we'll get InOrdera on the phone with you.", interest:'demo'},
   roi:             {title:'Talk to us about your restaurant', sub:"Tell us a bit about your restaurant and we'll show you what InOrdera could recover.", interest:'roi_followup'},
-  trial:           {title:'Start My Trial', sub:"We'll configure your menu and connect your phone so you can try InOrdera with real calls.", interest:'trial'},
+  trial:           {title:'Start My Trial', sub:"We'll configure your menu and connect your phone so you can try InOrdera with real calls for 7 days.", interest:'trial'},
   founding:        {title:'Apply for the Founding Restaurant Programme', sub:"Tell us about your restaurant and we'll be in touch about founding pricing and setup.", interest:'founding_programme'},
   sales:           {title:'Talk to Sales', sub:"For restaurant groups and multi-site setups — tell us about your business.", interest:'sales'},
   integrations:    {title:'Check POS compatibility', sub:"Tell us which system you use and we'll confirm what's supported.", interest:'integrations'},
