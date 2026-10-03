@@ -3,7 +3,8 @@ const path = require('path');
 const { test, expect } = require('@playwright/test');
 const { openHome } = require('./helpers');
 
-const OUTBOX = path.join(__dirname, '..', 'test-results', 'outbox.log');
+const { OUTBOX } = require('./fixtures/fake-smtp');
+const LEADS = path.join(__dirname, '..', 'test-results', 'leads.csv');
 
 // Each button that opens the shared lead form, and the enquiry type it should send.
 const MODAL_CTAS = [
@@ -78,13 +79,19 @@ test('submits through the real PHP handler and emails the enquiry', async ({ pag
   await expect(page.locator('#modal-success')).toBeVisible();
   await expect(page.locator('#lead-form')).toBeHidden();
 
-  const mail = fs.readFileSync(OUTBOX, 'utf8');
-  const block = mail.slice(mail.indexOf(`Subject: New pricing enquiry: ${restaurant}`));
+  const block = fs.readFileSync(OUTBOX, 'utf8').split('--- MESSAGE').find(m => m.includes(restaurant));
+  expect(block).toContain('auth=hello@inordera.com:test-password');
+  expect(block).toContain('to=<rishi.shinn@hotmail.co.uk>');
+  expect(block).toContain('From: InOrdera Website <hello@inordera.com>');
+  expect(block).toContain(`Subject: New pricing enquiry: ${restaurant}`);
   expect(block).toContain('Type: Pricing enquiry');
   expect(block).toContain('Name: Test Enquiry');
   expect(block).toContain('Phone: +44 7700 900000');
   expect(block).toContain('Locations: 2-5');
   expect(block).toContain('Reply-To: Test Enquiry <test@example.com>');
+
+  const lead = fs.readFileSync(LEADS, 'utf8').split('\n').find(l => l.includes(restaurant));
+  expect(lead).toContain(`"Pricing enquiry",Test,Enquiry,"${restaurant}",test@example.com,"'+44 7700 900000",2-5`);
 });
 
 test('shows an error and lets the user retry if the server fails', async ({ page }) => {

@@ -1,4 +1,10 @@
+const fs = require('fs');
+const path = require('path');
 const { test, expect } = require('@playwright/test');
+const { OUTBOX } = require('./fixtures/fake-smtp');
+
+const LEADS = path.join(__dirname, '..', 'test-results', 'leads.csv');
+const read = f => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : '');
 
 // Server-side checks on the PHP handler; browser-independent, so desktop only.
 test.skip(({ isMobile }) => isMobile);
@@ -30,9 +36,8 @@ test('honeypot submissions get a fake success and send no email', async ({ reque
   const restaurant = `Bot Bistro ${Date.now()}`;
   const res = await request.post('/send-demo-request.php', { form: { ...VALID, restaurant_name: restaurant, 'bot-field': 'spam' } });
   expect(await res.json()).toEqual({ success: true });
-  const fs = require('fs');
-  const outbox = fs.readFileSync(require('path').join(__dirname, '..', 'test-results', 'outbox.log'), 'utf8');
-  expect(outbox).not.toContain(restaurant);
+  expect(read(OUTBOX)).not.toContain(restaurant);
+  expect(read(LEADS)).not.toContain(restaurant);
 });
 
 test('rejects an invalid email with 400', async ({ request }) => {
@@ -45,7 +50,21 @@ test('strips newlines so headers cannot be injected', async ({ request }) => {
     form: { ...VALID, first_name: 'Eve\r\nBcc: victim@example.com' },
   });
   expect(res.status()).toBe(200);
-  const fs = require('fs');
-  const outbox = fs.readFileSync(require('path').join(__dirname, '..', 'test-results', 'outbox.log'), 'utf8');
-  expect(outbox).not.toMatch(/^Bcc: victim@example\.com/m);
+  expect(read(OUTBOX)).not.toMatch(/^Bcc: victim@example\.com/m);
+});
+
+test('saves the lead even when the email is rejected', async ({ request }) => {
+  const restaurant = `SMTPFAIL Bistro ${Date.now()}`;
+  const res = await request.post('/send-demo-request.php', { form: { ...VALID, restaurant_name: restaurant } });
+  expect(res.status()).toBe(200);
+  expect(read(OUTBOX)).not.toContain(restaurant);
+  expect(read(LEADS)).toContain(restaurant);
+});
+
+test('neutralises spreadsheet formulas in saved leads', async ({ request }) => {
+  const restaurant = `=HYPERLINK("http://evil.example") ${Date.now()}`;
+  const res = await request.post('/send-demo-request.php', { form: { ...VALID, restaurant_name: restaurant } });
+  expect(res.status()).toBe(200);
+  const line = read(LEADS).split('\n').find(l => l.includes('evil.example'));
+  expect(line).toContain(`"'=HYPERLINK(""http://evil.example"")`);
 });
