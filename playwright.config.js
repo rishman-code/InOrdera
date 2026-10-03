@@ -14,10 +14,13 @@ module.exports = defineConfig({
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
-  // PHP's built-in server runs send-demo-request.php for real. mail() is
-  // redirected to a file so tests can read the email instead of sending it.
+  // Starts a fake SMTP server that writes emails to test-results/smtp-outbox.log.
+  globalSetup: require.resolve('./tests/fixtures/global-setup'),
+  // PHP's built-in server runs send-demo-request.php for real, configured to
+  // send through the fake SMTP server and save leads to test-results/leads.csv.
   webServer: {
-    command: `mkdir -p test-results && php -d sendmail_path="cat >> test-results/outbox.log" -S 127.0.0.1:${PORT}`,
+    command: `php -S 127.0.0.1:${PORT}`,
+    env: { INORDERA_CONFIG: 'tests/fixtures/inordera-config.php' },
     url: `http://127.0.0.1:${PORT}/InOrdera.html`,
     reuseExistingServer: !process.env.CI,
   },
