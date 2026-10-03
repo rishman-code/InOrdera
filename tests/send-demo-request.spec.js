@@ -26,6 +26,15 @@ for (const field of ['first_name', 'last_name', 'email', 'restaurant_name', 'pho
   });
 }
 
+test('honeypot submissions get a fake success and send no email', async ({ request }) => {
+  const restaurant = `Bot Bistro ${Date.now()}`;
+  const res = await request.post('/send-demo-request.php', { form: { ...VALID, restaurant_name: restaurant, 'bot-field': 'spam' } });
+  expect(await res.json()).toEqual({ success: true });
+  const fs = require('fs');
+  const outbox = fs.readFileSync(require('path').join(__dirname, '..', 'test-results', 'outbox.log'), 'utf8');
+  expect(outbox).not.toContain(restaurant);
+});
+
 test('rejects an invalid email with 400', async ({ request }) => {
   const res = await request.post('/send-demo-request.php', { form: { ...VALID, email: 'not-an-email' } });
   expect(res.status()).toBe(400);

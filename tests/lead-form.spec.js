@@ -97,12 +97,11 @@ test('shows an error and lets the user retry if the server fails', async ({ page
   await expect(page.locator('#modal-error')).toBeVisible();
   await expect(page.locator('#submit-btn')).toBeEnabled();
   await expect(page.locator('#submit-btn')).toHaveText('Submit');
+  // Keeps what the visitor typed so they can retry.
+  await expect(page.locator('#f-first')).toHaveValue('Test');
 });
 
-// Known bug: after a successful submit the Submit button stays disabled ("Submitting…"),
-// so reopening the form leaves it unusable. Remove test.fail once fixed.
 test('form is usable again when reopened after a successful submit', async ({ page }) => {
-  test.fail();
   await openHome(page);
   await page.route('**/send-demo-request.php', r => r.fulfill({ status: 200, body: '{"success":true}' }));
   await page.evaluate(() => openModal('demo'));
@@ -115,4 +114,39 @@ test('form is usable again when reopened after a successful submit', async ({ pa
   await expect(page.locator('#lead-form')).toBeVisible();
   await expect(page.locator('#submit-btn')).toBeEnabled();
   await expect(page.locator('#submit-btn')).toHaveText('Submit');
+  await expect(page.locator('#f-first')).toHaveValue('');
+  await expect(page.locator('#f-first')).toHaveValue('');
 });
+
+test('honeypot field is hidden from people and sent empty', async ({ page }) => {
+  await openHome(page);
+  let body;
+  await page.route('**/send-demo-request.php', r => { body = new URLSearchParams(r.request().postData()); r.fulfill({ status: 200, body: '{"success":true}' }); });
+  await page.evaluate(() => openModal('demo'));
+  await expect(page.locator('#f-bot')).not.toBeInViewport();
+  await fillForm(page);
+  await page.locator('#submit-btn').click();
+  await expect(page.locator('#modal-success')).toBeVisible();
+  expect(body.has('bot-field')).toBe(true);
+  expect(body.get('bot-field')).toBe('');
+});
+
+for (const [typed, sent] of [
+  ['7700 900000', '+44 7700 900000'],
+  ['07700 900000', '+44 7700 900000'],
+  ['+44 7700 900000', '+44 7700 900000'],
+  ['+447700900000', '+44 7700900000'],
+  ['0044 7700 900000', '+44 7700 900000'],
+  ['+44 (0)7700 900000', '+44 7700 900000'],
+]) {
+  test(`phone "${typed}" is sent as "${sent}"`, async ({ page }) => {
+    await openHome(page);
+    let body;
+    await page.route('**/send-demo-request.php', r => { body = new URLSearchParams(r.request().postData()); r.fulfill({ status: 200, body: '{"success":true}' }); });
+    await page.evaluate(() => openModal('demo'));
+    await fillForm(page, { phone: typed });
+    await page.locator('#submit-btn').click();
+    await expect(page.locator('#modal-success')).toBeVisible();
+    expect(body.get('phone')).toBe(sent);
+  });
+}

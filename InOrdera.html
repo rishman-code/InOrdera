@@ -1168,6 +1168,10 @@ footer{background:var(--navy);padding:60px 40px 32px}
     <div class="modal-error" id="modal-error"></div>
     <form id="lead-form" onsubmit="return submitLeadForm(event)">
       <input type="hidden" name="interest" id="interest-field" value="demo">
+      <div class="sr-only" aria-hidden="true">
+        <label for="f-bot">Leave this field empty</label>
+        <input type="text" id="f-bot" name="bot-field" tabindex="-1" autocomplete="off">
+      </div>
       <div class="form-grid">
         <div class="field">
           <label for="f-first">First name *</label>
@@ -1246,7 +1250,6 @@ function trackEvent(name, data){
 const CALENDLY_URL = 'https://calendly.com/inordera-sales';
 function openCalendly(loc){
   trackEvent('live_demo_click', {loc: loc || ''});
-  trackEvent('demo_booked', {interest: 'live_demo'});
   if (window.Calendly) {
     Calendly.initPopupWidget({url: CALENDLY_URL});
   } else {
@@ -1254,6 +1257,11 @@ function openCalendly(loc){
   }
   return false;
 }
+window.addEventListener('message', e => {
+  if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') {
+    trackEvent('demo_booked', {interest: 'live_demo'});
+  }
+});
 
 /* ══════════════════════ ROI CALCULATOR ══════════════════════ */
 function formatGBP(n){
@@ -1333,9 +1341,13 @@ function openModal(kind){
   document.getElementById('interest-field').value = copy.interest;
   document.getElementById('lead-form').style.display = '';
   document.getElementById('modal-success').style.display = 'none';
+  document.getElementById('modal-error').style.display = 'none';
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = false;
+  btn.textContent = 'Submit';
   document.getElementById('lead-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
-  trackEvent('demo_booked', {interest: copy.interest});
+  trackEvent('lead_form_opened', {interest: copy.interest});
 }
 function closeModal(){
   document.getElementById('lead-modal').classList.remove('open');
@@ -1346,6 +1358,10 @@ function handleModalOverlay(e){
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+// "07700 900000", "+44 7700 900000" and "0044 7700…" all become "+44 7700 900000".
+function formatUKPhone(raw){
+  return '+44 ' + raw.trim().replace(/^(\+|00)44\s*/, '').replace(/^\(?0\)?\s*/, '');
+}
 async function submitLeadForm(e){
   e.preventDefault();
   const btn = document.getElementById('submit-btn');
@@ -1360,9 +1376,10 @@ async function submitLeadForm(e){
     last_name:       fd.get('last_name').trim(),
     email:            fd.get('email').trim(),
     restaurant_name: fd.get('restaurant_name').trim(),
-    phone:           '+44 ' + fd.get('phone').trim(),
+    phone:           formatUKPhone(fd.get('phone')),
     locations:       fd.get('locations'),
-    interest:        fd.get('interest')
+    interest:        fd.get('interest'),
+    'bot-field':     fd.get('bot-field') || ''
   });
 
   try {
@@ -1373,6 +1390,7 @@ async function submitLeadForm(e){
     });
     if (!res.ok) throw new Error('Server responded with ' + res.status);
     trackEvent('contact_form_submitted', {interest: fd.get('interest')});
+    e.target.reset();
     document.getElementById('lead-form').style.display = 'none';
     document.getElementById('modal-success').style.display = 'block';
   } catch (err) {
