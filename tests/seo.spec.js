@@ -33,3 +33,44 @@ for (const f of ['/YumDial.html', '/YumDial%20v2.html', '/downloader.html']) {
     expect(await (await request.get(f)).text()).toContain('<meta name="robots" content="noindex, nofollow">');
   });
 }
+
+test.describe('delivery app commission guide', () => {
+  const url = '/delivery-app-commission-uk.html';
+
+  test('has SEO tags and valid structured data', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', e => errors.push(e.message));
+    await page.goto(url);
+    await expect(page.locator('h1')).toContainText('Deliveroo, Uber Eats and Just Eat commission');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://inordera.com' + url);
+    const data = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
+    const faq = data['@graph'].find(n => n['@type'] === 'FAQPage');
+    const onPage = await page.locator('#faq ~ h3').allTextContents();
+    expect(faq.mainEntity.map(q => q.name)).toEqual(onPage);
+    expect(errors).toEqual([]);
+  });
+
+  test('calculator works out yearly commission and savings', async ({ page }) => {
+    await page.goto(url);
+    await expect(page.locator('#c-year')).toHaveText('£51,480');
+    await expect(page.locator('#c-keep')).toHaveText('£12,870');
+    await page.fill('#c-orders', '100');
+    await page.fill('#c-aov', '20');
+    await page.fill('#c-rate', '14');
+    await page.fill('#c-shift', '50');
+    await expect(page.locator('#c-year')).toHaveText('£14,560');
+    await expect(page.locator('#c-keep')).toHaveText('£7,280');
+  });
+
+  test('does not scroll sideways', async ({ page }) => {
+    await page.goto(url);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test('is in the sitemap and linked from the home page', async ({ page, request }) => {
+    expect(await (await request.get('/sitemap.xml')).text()).toContain('https://inordera.com' + url);
+    await page.goto('/InOrdera.html');
+    expect(await page.locator('a[href="delivery-app-commission-uk.html"]').count()).toBeGreaterThan(0);
+  });
+});
