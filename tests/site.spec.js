@@ -55,3 +55,11 @@ test('mobile burger menu opens and closes', async ({ page, isMobile }) => {
   await panel.getByRole('link', { name: 'FAQ' }).click();
   await expect(panel).not.toHaveClass(/open/);
 });
+
+test('sales phone number and email are shown and linked', async ({ page }) => {
+  await openHome(page);
+  await expect(page.locator('a[href="tel:+447939578707"]:visible').first()).toBeVisible();
+  await expect(page.locator('footer a[href="tel:+447939578707"]')).toHaveText(/07939 578707/);
+  await expect(page.locator('footer a[href="mailto:sales@inordera.com"]')).toHaveText('sales@inordera.com');
+  await expect(page.locator('#final-cta a[href="mailto:sales@inordera.com"]')).toBeVisible();
+});
