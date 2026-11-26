@@ -1,5 +1,4 @@
 # InOrdera: AI phone ordering for UK takeaways and restaurants.
-# The old downloader page carries a noindex tag, so it stays crawlable here.
 User-agent: *
 Allow: /
 Disallow: /send-demo-request.php

@@ -21,7 +21,8 @@ RewriteRule ^ / [L,R=301]
   Require all denied
 </FilesMatch>
 <IfModule mod_alias.c>
-  # Old YumDial pages were retired; send any old links to the homepage.
+  # Old YumDial and downloader pages were retired; send any old links to the homepage.
   RedirectMatch 301 ^/YumDial(%20|\s)?(v2)?\.html$ https://inordera.com/
+  RedirectMatch 301 ^/downloader\.html$ https://inordera.com/
   RedirectMatch 404 ^/(node_modules|tests|test-results)(/|$)
 </IfModule>
