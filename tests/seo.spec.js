@@ -74,3 +74,44 @@ test.describe('delivery app commission guide', () => {
     expect(await page.locator('a[href="delivery-app-commission-uk.html"]').count()).toBeGreaterThan(0);
   });
 });
+
+test.describe('restaurant staff costs guide', () => {
+  const url = '/restaurant-staff-costs-uk.html';
+
+  test('has SEO tags and valid structured data', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', e => errors.push(e.message));
+    await page.goto(url);
+    await expect(page.locator('h1')).toContainText('Restaurant staff costs in the UK');
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://inordera.com' + url);
+    const data = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());
+    const faq = data['@graph'].find(n => n['@type'] === 'FAQPage');
+    const onPage = await page.locator('#faq ~ h3').allTextContents();
+    expect(faq.mainEntity.map(q => q.name)).toEqual(onPage);
+    expect(errors).toEqual([]);
+  });
+
+  test('calculator matches the worked example', async ({ page }) => {
+    await page.goto(url);
+    await expect(page.locator('#s-total')).toHaveText('£21,176');
+    await expect(page.locator('#s-hourly')).toHaveText('£16.29');
+    await page.fill('#s-rate', '12.71');
+    await expect(page.locator('#s-total')).toHaveText('£20,339');
+    await page.fill('#s-hours', '0');
+    await expect(page.locator('#s-total')).toHaveText('£0');
+  });
+
+  test('does not scroll sideways', async ({ page }) => {
+    await page.goto(url);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test('is in the sitemap and linked from the home page and commission guide', async ({ page, request }) => {
+    expect(await (await request.get('/sitemap.xml')).text()).toContain('https://inordera.com' + url);
+    for (const from of ['/InOrdera.html', '/delivery-app-commission-uk.html']) {
+      await page.goto(from);
+      expect(await page.locator('a[href="restaurant-staff-costs-uk.html"]').count(), from).toBeGreaterThan(0);
+    }
+  });
+});
