@@ -115,3 +115,12 @@ test.describe('restaurant staff costs guide', () => {
     }
   });
 });
+
+test('home page links to both guides from a Guides section and the menu', async ({ page }) => {
+  await openHome(page);
+  await expect(page.locator('.hero-eyebrow')).toContainText('Takeaways');
+  const guides = page.locator('#guides');
+  await expect(guides.locator('a[href="restaurant-staff-costs-uk.html"]')).toHaveCount(1);
+  await expect(guides.locator('a[href="delivery-app-commission-uk.html"]')).toHaveCount(1);
+  expect(await page.locator('a[href="#guides"]').count()).toBeGreaterThan(0);
+});

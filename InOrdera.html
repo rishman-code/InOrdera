@@ -343,6 +343,7 @@ h1{font-size:clamp(38px,4.6vw,58px);font-weight:800;line-height:1.06;letter-spac
 /* ══════════════════════ BENEFITS 4-CARD ══════════════════════ */
 .benefits-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:52px}
 .benefit-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px 26px;transition:box-shadow 0.2s,transform 0.2s}
+.guides-grid{grid-template-columns:repeat(2,1fr);max-width:880px}
 .benefit-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
 .benefit-num{font-family:var(--fd);font-size:13px;font-weight:700;color:var(--accent);margin-bottom:14px}
 .benefit-title{font-family:var(--fd);font-size:18px;font-weight:700;margin-bottom:10px}
@@ -639,6 +640,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
       <li><a href="#features" data-event="nav_click">Features</a></li>
       <li><a href="#pricing" data-event="nav_click">Pricing</a></li>
       <li><a href="#results" data-event="nav_click">Results</a></li>
+      <li><a href="#guides" data-event="nav_click">Guides</a></li>
       <li><a href="#faq" data-event="nav_click">FAQ</a></li>
     </ul>
     <div class="nav-right">
@@ -655,6 +657,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
   <a href="#features" onclick="toggleMobileNav()">Features</a>
   <a href="#pricing" onclick="toggleMobileNav()">Pricing</a>
   <a href="#results" onclick="toggleMobileNav()">Results</a>
+  <a href="#guides" onclick="toggleMobileNav()">Guides</a>
   <a href="#faq" onclick="toggleMobileNav()">FAQ</a>
   <a href="tel:+447939578707" onclick="trackEvent('phone_click',{loc:'mobile_nav'})">Call us: 07939 578707</a>
   <a href="mailto:sales@inordera.com" onclick="trackEvent('email_click',{loc:'mobile_nav'})">sales@inordera.com</a>
@@ -666,7 +669,7 @@ footer{background:var(--navy);padding:60px 40px 32px}
 <!-- ══════════════════════ HERO ══════════════════════ -->
 <div class="hero">
   <div class="hero-left">
-    <div class="hero-eyebrow">AI Ordering for Restaurants</div>
+    <div class="hero-eyebrow">AI Phone Ordering for UK Takeaways &amp; Restaurants</div>
     <p class="hero-lead">Your phone is ringing.<br>Your staff are too busy to answer it.</p>
     <h1>Never miss an order again.</h1>
     <p class="hero-sub">InOrdera answers your restaurant's calls, takes orders, recommends extras and sends them straight to your team — even when your staff are busy.</p>
@@ -1192,6 +1195,27 @@ footer{background:var(--navy);padding:60px 40px 32px}
       <span class="trial-badge">7-Day Free Trial</span>
       <p style="color:rgba(255,255,255,0.7);font-size:14.5px;margin-top:14px;line-height:1.6">Try InOrdera on your own menu for 7 days, then decide if it's right for your restaurant.</p>
       <button class="btn-primary" onclick="trackEvent('trial_started',{loc:'trial_section'});openModal('trial')">Start My Trial →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ COST GUIDES ══════════════════════ -->
+<div class="section" id="guides">
+  <div class="eyebrow reveal">Guides for Takeaway Owners</div>
+  <h2 class="reveal">Cut your two biggest costs:<br><em>staff and commission.</em></h2>
+  <p class="section-intro reveal">Wages rise to £13.21 an hour in April 2027, and delivery apps can take around 30% of an order. These free UK guides show what each really costs your takeaway or restaurant, with calculators for your own numbers.</p>
+  <div class="benefits-grid guides-grid">
+    <div class="benefit-card reveal reveal-d1">
+      <div class="benefit-num">Guide</div>
+      <div class="benefit-title">Restaurant staff costs in the UK</div>
+      <p class="benefit-body">What one member of staff really costs once National Insurance, pension and holiday are added, and what changes in April 2027.</p>
+      <a class="benefit-link" href="restaurant-staff-costs-uk.html" onclick="trackEvent('guide_click',{guide:'staff_costs'})">Work out your staff costs →</a>
+    </div>
+    <div class="benefit-card reveal reveal-d2">
+      <div class="benefit-num">Guide</div>
+      <div class="benefit-title">Deliveroo, Uber Eats &amp; Just Eat commission</div>
+      <p class="benefit-body">What each delivery app charges UK restaurants, where a £20 order goes, and how much you'd keep by taking orders direct.</p>
+      <a class="benefit-link" href="delivery-app-commission-uk.html" onclick="trackEvent('guide_click',{guide:'commission'})">See what the apps charge →</a>
     </div>
   </div>
 </div>

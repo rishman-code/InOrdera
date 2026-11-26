@@ -1,1 +1,22 @@
 DirectoryIndex InOrdera.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# One address for the site: https://inordera.com (no www, no plain http).
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://inordera.com%{REQUEST_URI} [L,R=301]
+
+# The homepage file is served at /, so send direct requests for it there.
+RewriteCond %{THE_REQUEST} \s/+InOrdera\.html[\s?] [NC]
+RewriteRule ^ / [L,R=301]
+</IfModule>
+
+# Block repo tooling and dotfiles if they ever reach the server.
+<FilesMatch "^(\.|package(-lock)?\.json$|playwright\.config\.js$|inordera-config)">
+  Require all denied
+</FilesMatch>
+<IfModule mod_alias.c>
+  RedirectMatch 404 ^/(node_modules|tests|test-results)(/|$)
+</IfModule>
