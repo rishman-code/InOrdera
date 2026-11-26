@@ -1,5 +1,8 @@
 DirectoryIndex InOrdera.html
 
+# No public folder listings.
+Options -Indexes
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
@@ -9,7 +12,7 @@ RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://inordera.com%{REQUEST_URI} [L,R=301]
 
 # The homepage file is served at /, so send direct requests for it there.
-RewriteCond %{THE_REQUEST} \s/+InOrdera\.html[\s?] [NC]
+RewriteCond %{THE_REQUEST} \s/+(InOrdera|index)\.html[\s?] [NC]
 RewriteRule ^ / [L,R=301]
 </IfModule>
 
@@ -18,5 +21,8 @@ RewriteRule ^ / [L,R=301]
   Require all denied
 </FilesMatch>
 <IfModule mod_alias.c>
+  # Old YumDial and downloader pages were retired; send any old links to the homepage.
+  RedirectMatch 301 ^/YumDial(%20|\s)?(v2)?\.html$ https://inordera.com/
+  RedirectMatch 301 ^/downloader\.html$ https://inordera.com/
   RedirectMatch 404 ^/(node_modules|tests|test-results)(/|$)
 </IfModule>
