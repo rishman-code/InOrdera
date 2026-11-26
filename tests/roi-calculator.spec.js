@@ -55,3 +55,17 @@ test('"See what InOrdera could recover" opens the lead form', async ({ page }) =
   await expect(page.locator('#lead-modal')).toHaveClass(/open/);
   await expect(page.locator('#interest-field')).toHaveValue('roi_followup');
 });
+
+test('figures in the page source match the calculated defaults', async ({ page, request }) => {
+  // Visitors without JavaScript, search engines and link previews see the
+  // numbers written in the HTML, so they must agree with calcROI().
+  const html = await (await request.get('/InOrdera.html')).text();
+  await openHome(page);
+  for (const id of ['roi-part-missed', 'roi-part-upsell', 'roi-part-commission', 'roi-result-yearly', 'roi-missed-calls-desc']) {
+    const shown = await page.locator(`#${id}`).textContent();
+    expect(html, id).toContain(`id="${id}"`);
+    expect(html.split(`id="${id}"`)[1].split('<')[0], id).toContain(shown);
+  }
+  const monthly = (await page.locator('#roi-result-monthly').textContent()).replace('/month', '');
+  expect(html.split('id="roi-result-monthly">')[1].split('<')[0]).toBe(monthly);
+});
