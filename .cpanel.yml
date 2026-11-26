@@ -1,6 +1,12 @@
 ---
+# Deploy only the public website files. Repo tooling (node_modules, tests,
+# test-results, package files, Playwright config, config examples) stays out
+# of public_html.
 deployment:
   tasks:
     - export DEPLOYPATH=/home/inoratey/public_html/
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/cp -R .htaccess $DEPLOYPATH
+    - /bin/cp *.html $DEPLOYPATH
+    - /bin/cp *.png *.ico *.svg $DEPLOYPATH
+    - /bin/cp robots.txt sitemap.xml $DEPLOYPATH
+    - /bin/cp send-demo-request.php $DEPLOYPATH
+    - /bin/cp .htaccess $DEPLOYPATH
