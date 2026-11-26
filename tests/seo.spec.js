@@ -28,9 +28,15 @@ for (const f of ['/robots.txt', '/sitemap.xml', '/favicon.ico', '/favicon.svg', 
   });
 }
 
-for (const f of ['/YumDial.html', '/YumDial%20v2.html', '/downloader.html']) {
+for (const f of ['/downloader.html']) {
   test(`${f} is marked noindex`, async ({ request }) => {
     expect(await (await request.get(f)).text()).toContain('<meta name="robots" content="noindex, nofollow">');
+  });
+}
+
+for (const f of ['/YumDial.html', '/YumDial%20v2.html']) {
+  test(`${f} has been retired`, async ({ request }) => {
+    expect((await request.get(f, { maxRedirects: 0 })).status()).not.toBe(200);
   });
 }
 

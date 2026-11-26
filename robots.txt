@@ -1,5 +1,5 @@
 # InOrdera: AI phone ordering for UK takeaways and restaurants.
-# Old YumDial and downloader pages carry a noindex tag, so they stay crawlable here.
+# The old downloader page carries a noindex tag, so it stays crawlable here.
 User-agent: *
 Allow: /
 Disallow: /send-demo-request.php
